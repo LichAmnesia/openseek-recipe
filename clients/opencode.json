@@ -1,0 +1,26 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "model": "rtx6000/qwen38-exl3-ple8",
+  "small_model": "rtx6000/qwen38-exl3-ple8",
+  "provider": {
+    "rtx6000": {
+      "npm": "@ai-sdk/openai-compatible",
+      "name": "RTX PRO 6000 (vLLM)",
+      "options": {
+        "baseURL": "http://YOUR_GPU_HOST:8001/v1",
+        "apiKey": "not-needed"
+      },
+      "models": {
+        "qwen38-exl3-ple8": {
+          "name": "Qwen3.8-Flash-Next EXL3 K4.25 PLE-FP8",
+          "tool_call": true,
+          "reasoning": true,
+          "limit": {
+            "context": 262144,
+            "output": 32768
+          }
+        }
+      }
+    }
+  }
+}

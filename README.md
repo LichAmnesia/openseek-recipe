@@ -1,0 +1,154 @@
+# Qwen3.8-Flash-Next on one RTX PRO 6000
+
+Run **Qwen3.8-Flash-Next** (125B MoE, 6B active, 262K context, vision, tool calling) on a
+single **RTX PRO 6000 Blackwell 96 GB** with vLLM. You get an OpenAI-compatible endpoint
+that coding agents (OpenCode, Codex CLI, anything OpenAI-compatible) can drive.
+
+Measured on a **300 W Max-Q** card:
+
+| | |
+|---|---|
+| Decode, C1 (code / math) | **181 / 186 tok/s** |
+| Decode, seven-workload weighted | **134.4 tok/s** (−9% vs the 400 W reference) |
+| Decode, 16 concurrent | **595 tok/s** aggregate |
+| TTFT | **85–102 ms** |
+| SWE-bench Pro (50-instance stratified subset) | **66.0%** (33/50), Qwen's card says 62.5 |
+| Tool calling / vision | 16/16 / 1, 4 and 16 images pass |
+| VRAM / power | 92.8 GB / 300 W |
+
+All numbers and raw files: [docs/benchmarks.md](docs/benchmarks.md),
+[docs/swebench-pro.md](docs/swebench-pro.md), [results/](results/).
+
+## What this repo is
+
+The hard engineering is in [`tpurtell/sm12x-exl3-qwen3.8-flash-next`](https://github.com/tpurtell/sm12x-exl3-qwen3.8-flash-next)
+(Apache-2.0): a patched vLLM image for SM120, EXL3 K4.25 experts, the PLE n-gram table
+mmap'd from disk, and tuned MTP. This repo pins that recipe and adds:
+
+- a **preflight check** that reads the machine before anything gets downloaded
+- **one-command lifecycle** (`start / stop / recreate / logs / status`) with a restart policy
+- a **smoke test** that checks a real tool call, reasoning and the Responses API, not just "HTTP 200"
+- **client configs** for OpenCode and Codex CLI
+- **first-party Max-Q 300 W numbers**. Every number published before this came from 400 W or 600 W cards.
+
+## Requirements
+
+| | Minimum | Tested |
+|---|---|---|
+| GPU | RTX PRO 6000 Blackwell 96 GB (Workstation, Max-Q or Server) | Max-Q Workstation, 300 W |
+| Driver | `nvidia-open`, CUDA 13 capable | 610.57 |
+| Host RAM | 64 GB free (PLE table is ~48 GiB FP8) | 128 GB |
+| Disk | ~150 GB on local NVMe (120 GB weights + 29 GB image) | 990 EVO Plus 4 TB |
+| OS | x86_64 Linux with Docker + NVIDIA Container Toolkit | Arch (Omarchy), kernel 7.2 |
+
+## Quickstart
+
+On the GPU box:
+
+```bash
+git clone https://github.com/LichAmnesia/qwen38-flash-next-rtx6000.git
+cd qwen38-flash-next-rtx6000
+cp .env.example .env              # defaults work for a single RTX PRO 6000
+
+scripts/doctor.sh                 # read-only preflight: GPU, RAM, disk, docker, port
+scripts/install-prereqs.sh        # only if doctor says docker / nvidia runtime is missing
+scripts/setup.sh                  # pinned recipe + image (~29 GB) + weights (~120 GB)
+scripts/ctl.sh start              # create container, wait until /v1/models answers (~3–5 min)
+python3 scripts/smoke_test.py     # models, chat, reasoning, tool call, Responses API, streaming
+```
+
+Expected smoke test:
+
+```text
+[PASS] GET /v1/models          ...  qwen38-exl3-ple8 max_model_len=262144
+[PASS] chat (thinking off)     ...  'SMOKE_OK'
+[PASS] reasoning (thinking on) ...  answer='391' reasoning_chars=...
+[PASS] tool call               ...  get_weather({"city": "Tokyo", "unit": "c"})
+[PASS] POST /v1/responses      ...  status=completed text='RESPONSES_OK'
+[PASS] streaming               ...  TTFT ~100 ms ...
+6/6 passed
+```
+
+The endpoint is `http://<gpu-host>:8001/v1` and the model id is `qwen38-exl3-ple8`. No
+API key is needed. If other machines can't connect, open the port in your firewall (see
+[troubleshooting](docs/troubleshooting.md)).
+
+## Connect a coding agent
+
+See [clients/README.md](clients/README.md). In short:
+
+```bash
+# OpenCode
+OPENCODE_CONFIG=clients/opencode.json opencode -m rtx6000/qwen38-exl3-ple8
+
+# Codex CLI (copy the profile to ~/.codex/rtx6000.config.toml first)
+codex -p rtx6000
+```
+
+Edit `YOUR_GPU_HOST` in both files first.
+
+## Day-2 operations
+
+```bash
+scripts/ctl.sh status      # container state, API up/down, VRAM / power / temp
+scripts/ctl.sh logs        # follow vLLM logs
+scripts/ctl.sh stop        # frees all 93 GB of VRAM within seconds
+scripts/ctl.sh start       # restarts the existing container
+scripts/ctl.sh recreate    # apply .env changes (serve flags are fixed at container creation)
+PART=core scripts/bench.sh # rerun the benchmark suite (~4 min) and print a summary
+```
+
+The container is created with `--restart unless-stopped`. It comes back after a reboot,
+but stays down after a manual `stop`.
+
+## The serve configuration
+
+This is what `scripts/ctl.sh start` runs, through the upstream `start.sh`:
+
+```bash
+vllm serve <exl3-ple8 snapshot> --served-model-name qwen38-exl3-ple8 --port 8001 \
+  --tensor-parallel-size 1 --distributed-executor-backend mp \
+  --max-model-len 262144 --max-num-seqs 16 --max-num-batched-tokens 2048 \
+  --gpu-memory-utilization 0.94 --kv-cache-dtype fp8 \
+  --enable-auto-tool-choice --tool-call-parser qwen3_coder --reasoning-parser qwen3 \
+  --speculative-config '{"method":"mtp","num_speculative_tokens":3}'
+```
+
+The container also gets `VLLM_PLE_MMAP=1` and related env from the recipe. Why each part
+matters:
+
+| Choice | Why |
+|---|---|
+| `exl3-ple8` profile | EXL3 K4.25 experts on GPU. The 51B-param n-gram (PLE) table is FP8 and **mmap'd from NVMe**, so the host only needs page cache, not 95 GB of pinned RAM. Best fit for a 128 GB box |
+| FP8 KV cache | KV pool of 842K tokens, 3.2× the full 262K context, with 16 slots |
+| MTP 3 | 52% draft acceptance on mixed work and 97% on repetitive output. This is where the 100→200 tok/s spread comes from |
+| `qwen3_coder` tool parser + `qwen3` reasoning parser | Tool calls arrive as proper `tool_calls` and thinking goes to `reasoning_content`. Coding agents need both |
+| `gpu-memory-utilization 0.94` | Leaves ~5 GB for CUDA context and graphs. Don't run anything else on the card |
+
+## Things I measured or hit that aren't in the upstream README
+
+1. **The checkpoint is 120 GB, not 48 GiB.** The "~48 GiB" in the upstream profile table
+   is the PLE table alone. Size your disk for 150 GB.
+2. **Max-Q costs about 10%, not 25%.** On 25% less power, decode drops 9% (C1 weighted)
+   and 9.8% (C16).
+3. **Max-Q runs an untuned MoE kernel.** B12x has no profile under the Max-Q device name
+   and falls back to a heuristic. The die and SM count (188) are the same as the 400 W
+   card, so there is probably more to recover.
+4. **A tok/s number without a workload doesn't tell you much.** The same server does
+   102 tok/s on multilingual prose and 215 tok/s on repetitive output, because MTP
+   acceptance runs from 52% to 97%.
+5. **SWE-bench Pro has three harness traps that fail silently.** One of them burned 186
+   model calls before it showed up. Write-up and fixes: [docs/swebench-pro.md](docs/swebench-pro.md).
+
+## Credits
+
+- Serving recipe, patched vLLM image, benchmark suite: [tpurtell/sm12x-exl3-qwen3.8-flash-next](https://github.com/tpurtell/sm12x-exl3-qwen3.8-flash-next) (Apache-2.0)
+- EXL3 K4.25 + FP8 PLE checkpoint: [wrldsuksgo2mars/Qwen3.8-Flash-Next-EXL3-K4.25-PLE-FP8-v1](https://huggingface.co/wrldsuksgo2mars/Qwen3.8-Flash-Next-EXL3-K4.25-PLE-FP8-v1)
+- Model: [Qwen/Qwen3.8-Flash-Next](https://huggingface.co/Qwen/Qwen3.8-Flash-Next). Check the model license before using it commercially.
+
+The scripts in this repo are MIT-licensed. The upstream recipe is cloned at run time
+into `vendor/` and is not redistributed here.
+
+---
+
+中文说明见 [README.zh-CN.md](README.zh-CN.md)。

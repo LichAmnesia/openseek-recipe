@@ -1,0 +1,5 @@
+.env
+vendor/
+results/*-local-*/
+__pycache__/
+*.bak

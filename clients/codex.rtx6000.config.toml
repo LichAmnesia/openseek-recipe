@@ -1,0 +1,18 @@
+# Codex CLI profile. Save as ~/.codex/rtx6000.config.toml, run: codex -p rtx6000
+# Verified with codex-cli 0.154.0. Older releases used [profiles.<name>] instead.
+model = "qwen38-exl3-ple8"
+model_provider = "rtx6000"
+model_context_window = 262144
+model_auto_compact_token_limit = 196608
+model_reasoning_effort = "medium"
+model_reasoning_summary = "none"
+web_search = "disabled"
+approval_policy = "on-request"
+sandbox_mode = "workspace-write"
+
+[model_providers.rtx6000]
+name = "RTX PRO 6000 vLLM"
+base_url = "http://YOUR_GPU_HOST:8001/v1"
+wire_api = "responses"
+requires_openai_auth = false
+supports_websockets = false
