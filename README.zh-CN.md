@@ -39,3 +39,5 @@ python3 scripts/smoke_test.py   # 依次验证 models、chat、思考模式、�
 ## 致谢
 
 真正难的工程在 [tpurtell/sm12x-exl3-qwen3.8-flash-next](https://github.com/tpurtell/sm12x-exl3-qwen3.8-flash-next)（Apache-2.0）。本仓库做的是：钉住它的版本，补上体检、生命周期管理、冒烟测试、客户端配置，以及第一份 Max-Q 300W 的实测数据。权重来自 [wrldsuksgo2mars](https://huggingface.co/wrldsuksgo2mars/Qwen3.8-Flash-Next-EXL3-K4.25-PLE-FP8-v1)，模型来自 [Qwen](https://huggingface.co/Qwen/Qwen3.8-Flash-Next)。
+
+本仓库不分发任何模型权重或镜像，`setup.sh` 会从原始来源下载。Qwen 模型和 EXL3 量化权重在 Hugging Face 上的许可都是 `license: other`，使用前请自行阅读并接受，商用前尤其要看清楚。

@@ -144,7 +144,12 @@ matters:
 
 - Serving recipe, patched vLLM image, benchmark suite: [tpurtell/sm12x-exl3-qwen3.8-flash-next](https://github.com/tpurtell/sm12x-exl3-qwen3.8-flash-next) (Apache-2.0)
 - EXL3 K4.25 + FP8 PLE checkpoint: [wrldsuksgo2mars/Qwen3.8-Flash-Next-EXL3-K4.25-PLE-FP8-v1](https://huggingface.co/wrldsuksgo2mars/Qwen3.8-Flash-Next-EXL3-K4.25-PLE-FP8-v1)
-- Model: [Qwen/Qwen3.8-Flash-Next](https://huggingface.co/Qwen/Qwen3.8-Flash-Next). Check the model license before using it commercially.
+- Model: [Qwen/Qwen3.8-Flash-Next](https://huggingface.co/Qwen/Qwen3.8-Flash-Next)
+
+**This repo does not redistribute any model weights or container images.** `scripts/setup.sh`
+downloads them from their original sources. Both the Qwen model and the EXL3 quant are
+listed on Hugging Face under `license: other`. Read and accept those terms yourself,
+especially before any commercial use.
 
 The scripts in this repo are MIT-licensed. The upstream recipe is cloned at run time
 into `vendor/` and is not redistributed here.
