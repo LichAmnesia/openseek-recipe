@@ -21,6 +21,9 @@ else
   ok "pulled and tagged $image"
 fi
 
+log "KV-offload image (recipe image + lmcache $LMCACHE_VERSION)"
+bash "$REPO_ROOT/scripts/build-kv-image.sh"
+
 log "Checkpoint for QUANT=$QUANT (exl3-ple8 is ~120 GB, 22 shards)"
 mkdir -p "$HF_CACHE"
 ( source "$RECIPE_DIR/model-profiles.sh"

@@ -27,8 +27,10 @@ fi
 
 log "Memory and disk"
 ram_gb=$(awk '/MemTotal/ {printf "%d", $2/1024/1024}' /proc/meminfo)
-if (( ram_gb >= 120 )); then ok "RAM ${ram_gb} GiB"
-elif (( ram_gb >= 64 )); then warn "RAM ${ram_gb} GiB. Works with mmap PLE, but page-cache misses will cost decode speed. 128 GB recommended."
+# PLE page cache (~35-48 GiB) + OS/vLLM (~10 GiB) + pinned KV RAM tier.
+need_gb=$(( KV_RAM_GB + 56 ))
+if (( ram_gb >= need_gb )); then ok "RAM ${ram_gb} GiB (KV RAM tier ${KV_RAM_GB} GiB + ~56 GiB PLE/system)"
+elif (( ram_gb >= 64 )); then bad "RAM ${ram_gb} GiB is too small for KV_RAM_GB=${KV_RAM_GB} (needs ~${need_gb}). Use legacy/no-offload/ (see its README), or lower KV_RAM_GB; below ~1.5x the GPU KV pool (~48 GiB) the tier barely hits."
 else bad "RAM ${ram_gb} GiB. Need at least 64 GiB free for the PLE table."; fi
 mkdir -p "$HF_CACHE" 2>/dev/null || true
 free_gb=$(df -BG --output=avail "$HF_CACHE" 2>/dev/null | tail -1 | tr -dc '0-9')
@@ -49,10 +51,14 @@ else
   bad "docker not installed (run scripts/install-prereqs.sh)"
 fi
 
-log "Port"
-if command -v ss >/dev/null && ss -ltn "sport = :$PORT" | grep -q LISTEN; then
-  warn "Port $PORT already in use (an existing server? check scripts/ctl.sh status)"
-else ok "port $PORT free"; fi
+log "Ports"
+for p in "$PORT" "$LMCACHE_PORT" "$LMCACHE_HTTP_PORT" "$LMCACHE_METRICS_PORT"; do
+  if command -v ss >/dev/null && ss -ltn "sport = :$p" | grep -q LISTEN; then
+    warn "Port $p already in use (an existing server? check scripts/ctl.sh status)"
+  else ok "port $p free"; fi
+done
+if command -v docker >/dev/null && docker image inspect "$KV_IMAGE" >/dev/null 2>&1; then ok "KV-offload image $KV_IMAGE present"
+else warn "KV-offload image $KV_IMAGE not built yet (scripts/setup.sh builds it)"; fi
 
 echo
 if (( fails )); then die "$fails blocking issue(s)"; fi

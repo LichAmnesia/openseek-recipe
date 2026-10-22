@@ -7,7 +7,7 @@
 | Container exits during startup, `CUDA out of memory` | Something else holds VRAM. `nvidia-smi`, stop it. The server claims 94% of the card |
 | Startup takes 10+ min the first time | Cold page cache: 120 GB of weights read from disk. Later starts with warm cache take ~3 min |
 | `b12x policy fallback: moe.decode is using a heuristic ... max-q` | Expected on the Max-Q edition: no tuned profile name match. Costs some speed, not correctness |
-| `max_num_scheduled_tokens is set to 2048 based on the speculative decoding settings` | Expected with MTP 3. Raise `MAX_BATCHED_TOKENS` in `.env` + `scripts/ctl.sh recreate` if you care about high-concurrency throughput |
+| `max_num_scheduled_tokens is set to ... based on the speculative decoding settings` | Expected with MTP 3 |
 | Edited `.env`, nothing changed | Serve flags are baked in at container creation. `scripts/ctl.sh recreate` |
 | Server down after reboot | Created before restart policy was set, or you `docker stop`ped it (`unless-stopped` respects that). `scripts/ctl.sh start` |
 | LAN clients time out, localhost works | Host firewall. Example: `sudo ufw allow from 192.168.1.0/24 to any port 8001 proto tcp` |
@@ -15,6 +15,14 @@
 | HTTP 404 `model ... does not exist` | Use the id from `/v1/models` (`qwen38-exl3-ple8`), not the Hugging Face repo name. In OpenCode the `rtx6000/` prefix is client-side only |
 | Swap grows a little during benchmarks | Cold anonymous pages pushed out under page-cache pressure from the 120 GB checkpoint. ~1 GiB observed, no throughput dip |
 | Slow decode on a 64 GB RAM host | PLE table (~48 GiB FP8) is mmap'd; page-cache misses dominate. 128 GB RAM recommended |
+| `Image qwen38-rtx:lmc056 not found` | `scripts/build-kv-image.sh` (setup.sh runs it). Needs the recipe image first |
+| `tokens_per_block=8 not divisible by tokens_per_hash=3200` | vLLM native KV offload; not supported by this image's vLLM fork. Use the default LMCache setup |
+| `Failed to promote local KV cache specs to one unified type` | Old LMCache connector (`LMCacheConnectorV1` / LMCache < 0.5.6). Use `LMCacheMPConnector` with the explicit module path, as `scripts/ctl.sh` does |
+| `LMCache server exited` / port 6555 in use | Another LMCache or service on that port. Change `LMCACHE_PORT` (+ HTTP/metrics ports) in `.env`, `scripts/ctl.sh recreate` |
+| RAM-tier hits stay at 0% (`scripts/ctl.sh status`) | Tier smaller than the GPU pool (it is inclusive), or `KV_BLOCK_TOKENS` ≠ the `Setting attention block size to N` value after changing MTP/KV dtype |
+| First long request after restart takes minutes | PLE table faulting back into page cache after the 64 GiB tier was pinned. One-time per restart |
+| Requests hang after `qwen38-lmcache` restarted on its own | vLLM lost its KV registration. `scripts/ctl.sh restart` |
+| Host swaps heavily / OOM with the RAM tier | Lower `KV_RAM_GB` (≥ ~48 or it stops hitting) or use `legacy/no-offload` |
 | Download is slow / rate-limited | Anonymous HF pulls are throttled. Log in on the host (`huggingface-cli login`) before `scripts/setup.sh` |
 
 Wrong-host sanity check: the `/v1/models` response should show `max_model_len: 262144`.

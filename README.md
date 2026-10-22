@@ -15,9 +15,11 @@ Measured on a **300 W Max-Q** card:
 | SWE-bench Pro (50-instance stratified subset) | **66.0%** (33/50), Qwen's card says 62.5 |
 | Tool calling / vision | 16/16 / 1, 4 and 16 images pass |
 | VRAM / power | 92.8 GB / 300 W |
+| Long agent session evicted from GPU, back from the RAM tier | **0.64 s** instead of 19.5 s re-prefill (130K tokens) |
 
 All numbers and raw files: [docs/benchmarks.md](docs/benchmarks.md),
-[docs/swebench-pro.md](docs/swebench-pro.md), [results/](results/).
+[docs/swebench-pro.md](docs/swebench-pro.md), [docs/kv-ram-offload.md](docs/kv-ram-offload.md),
+[results/](results/).
 
 ## What this repo is
 
@@ -27,6 +29,10 @@ mmap'd from disk, and tuned MTP. This repo pins that recipe and adds:
 
 - a **preflight check** that reads the machine before anything gets downloaded
 - **one-command lifecycle** (`start / stop / recreate / logs / status`) with a restart policy
+- a **64 GiB host-RAM tier for the KV cache** (LMCache), on by default. Agent sessions pushed
+  out of the GPU KV pool come back over PCIe instead of being re-prefilled. See
+  [docs/kv-ram-offload.md](docs/kv-ram-offload.md); the GPU-only setup is in
+  [legacy/no-offload](legacy/no-offload/README.md)
 - a **smoke test** that checks a real tool call, reasoning and the Responses API, not just "HTTP 200"
 - **client configs** for OpenCode and Codex CLI
 - **first-party Max-Q 300 W numbers**. Every number published before this came from 400 W or 600 W cards.
@@ -37,7 +43,7 @@ mmap'd from disk, and tuned MTP. This repo pins that recipe and adds:
 |---|---|---|
 | GPU | RTX PRO 6000 Blackwell 96 GB (Workstation, Max-Q or Server) | Max-Q Workstation, 300 W |
 | Driver | `nvidia-open`, CUDA 13 capable | 610.57 |
-| Host RAM | 64 GB free (PLE table is ~48 GiB FP8) | 128 GB |
+| Host RAM | 128 GB (PLE page cache + 64 GiB KV tier). 64 GB works only with [legacy/no-offload](legacy/no-offload/README.md) | 128 GB |
 | Disk | ~150 GB on local NVMe (120 GB weights + 29 GB image) | 990 EVO Plus 4 TB |
 | OS | x86_64 Linux with Docker + NVIDIA Container Toolkit | Arch (Omarchy), kernel 7.2 |
 
@@ -52,8 +58,8 @@ cp .env.example .env              # defaults work for a single RTX PRO 6000
 
 scripts/doctor.sh                 # read-only preflight: GPU, RAM, disk, docker, port
 scripts/install-prereqs.sh        # only if doctor says docker / nvidia runtime is missing
-scripts/setup.sh                  # pinned recipe + image (~29 GB) + weights (~120 GB)
-scripts/ctl.sh start              # create container, wait until /v1/models answers (~3–5 min)
+scripts/setup.sh                  # pinned recipe + image (~29 GB) + KV-offload image + weights (~120 GB)
+scripts/ctl.sh start              # LMCache + vLLM containers, wait until /v1/models answers (~3–5 min)
 python3 scripts/smoke_test.py     # models, chat, reasoning, tool call, Responses API, streaming
 ```
 
@@ -90,28 +96,40 @@ Edit `YOUR_GPU_HOST` in both files first.
 ## Day-2 operations
 
 ```bash
-scripts/ctl.sh status      # container state, API up/down, VRAM / power / temp
-scripts/ctl.sh logs        # follow vLLM logs
-scripts/ctl.sh stop        # frees all 93 GB of VRAM within seconds
-scripts/ctl.sh start       # restarts the existing container
-scripts/ctl.sh recreate    # apply .env changes (serve flags are fixed at container creation)
-PART=core scripts/bench.sh # rerun the benchmark suite (~4 min) and print a summary
+scripts/ctl.sh status       # both containers, API up/down, GPU vs RAM-tier hit rates, VRAM / RAM
+scripts/ctl.sh logs         # follow vLLM logs (`logs lmcache` for the KV tier)
+scripts/ctl.sh stop         # frees all 93 GB of VRAM and the 64 GiB RAM tier within seconds
+scripts/ctl.sh start        # restarts the existing containers (LMCache first)
+scripts/ctl.sh recreate     # apply .env changes (serve flags are fixed at container creation)
+scripts/ctl.sh down         # remove both containers
+PART=core scripts/bench.sh  # rerun the benchmark suite (~4 min) and print a summary
+python3 scripts/kv_bench.py run all   # KV-tier bench: eviction/restore, 9-session rotation, decode (~12 min)
 ```
 
-The container is created with `--restart unless-stopped`. It comes back after a reboot,
-but stays down after a manual `stop`.
+Both containers are created with `--restart unless-stopped`. They come back after a reboot,
+but stay down after a manual `stop`.
 
 ## The serve configuration
 
-This is what `scripts/ctl.sh start` runs, through the upstream `start.sh`:
+This is what `scripts/ctl.sh start` runs. First the KV tier:
+
+```bash
+lmcache server --host localhost --port 6555 --chunk-size 3200 --separate-object-groups \
+  --l1-size-gb 64 --eviction-policy LRU --eviction-trigger-watermark 0.95
+```
+
+then vLLM through the upstream `start.sh`, on `qwen38-rtx:lmc056` (the recipe image plus
+the `lmcache==0.5.6` wheel, built by `scripts/build-kv-image.sh`):
 
 ```bash
 vllm serve <exl3-ple8 snapshot> --served-model-name qwen38-exl3-ple8 --port 8001 \
   --tensor-parallel-size 1 --distributed-executor-backend mp \
-  --max-model-len 262144 --max-num-seqs 16 --max-num-batched-tokens 2048 \
+  --max-model-len 262144 --max-num-seqs 16 --max-num-batched-tokens 6399 \
   --gpu-memory-utilization 0.94 --kv-cache-dtype fp8 \
   --enable-auto-tool-choice --tool-call-parser qwen3_coder --reasoning-parser qwen3 \
-  --speculative-config '{"method":"mtp","num_speculative_tokens":3}'
+  --speculative-config '{"method":"mtp","num_speculative_tokens":3}' \
+  --enable-prefix-caching --mamba-cache-mode align \
+  --kv-transfer-config '{"kv_connector":"LMCacheMPConnector","kv_connector_module_path":"lmcache.integration.vllm.lmcache_mp_connector","kv_role":"kv_both","kv_connector_extra_config":{"lmcache.mp.port":6555}}'
 ```
 
 The container also gets `VLLM_PLE_MMAP=1` and related env from the recipe. Why each part
@@ -123,6 +141,8 @@ matters:
 | FP8 KV cache | KV pool of 842K tokens, 3.2× the full 262K context, with 16 slots |
 | MTP 3 | 52% draft acceptance on mixed work and 97% on repetitive output. This is where the 100→200 tok/s spread comes from |
 | `qwen3_coder` tool parser + `qwen3` reasoning parser | Tool calls arrive as proper `tool_calls` and thinking goes to `reasoning_content`. Coding agents need both |
+| LMCache MP connector, 64 GiB RAM tier | GPU pool ~0.8M tokens + RAM tier ~1.25M tokens. Evicted sessions restore in ~0.6 s instead of a full re-prefill. Only LMCache ≥ 0.5.6 handles this model's QSA scratch ring; vLLM native offload in this image does not. [Details](docs/kv-ram-offload.md) |
+| `max-num-batched-tokens 6399` | 2×3200−1. Must be ≥ the 3200-token unified block size; 2N−1 lets decodes share a step with one prefill block |
 | `gpu-memory-utilization 0.94` | Leaves ~5 GB for CUDA context and graphs. Don't run anything else on the card |
 
 ## Things I measured or hit that aren't in the upstream README
@@ -139,6 +159,9 @@ matters:
    acceptance runs from 52% to 97%.
 5. **SWE-bench Pro has three harness traps that fail silently.** One of them burned 186
    model calls before it showed up. Write-up and fixes: [docs/swebench-pro.md](docs/swebench-pro.md).
+6. **A KV RAM tier smaller than the GPU pool does nothing.** LMCache's tier also holds what
+   is already on the GPU, so 32 GiB (~0.6M tokens) measured ~0 hits against a ~0.8M GPU pool.
+   64 GiB (~1.25M tokens) cut a 9-session agent rotation from 142 s to 10.7 s per round.
 
 ## Credits
 

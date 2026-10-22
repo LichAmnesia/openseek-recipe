@@ -1,0 +1,67 @@
+{
+ "label": "baseline",
+ "started": "2026-10-21T19:09:21",
+ "g1": {
+  "needle": 52445,
+  "a_cold": {
+   "ttft": 18.529,
+   "total": 18.546,
+   "prompt_tokens": 130062,
+   "text": "52445"
+  },
+  "a_gpu_hit": {
+   "ttft": 1.111,
+   "total": 1.122,
+   "prompt_tokens": 130062,
+   "text": "52445"
+  },
+  "evictors": [
+   {
+    "ttft": 19.079,
+    "prompt_tokens": 135431
+   },
+   {
+    "ttft": 19.074,
+    "prompt_tokens": 135431
+   },
+   {
+    "ttft": 19.381,
+    "prompt_tokens": 135431
+   },
+   {
+    "ttft": 19.592,
+    "prompt_tokens": 135431
+   },
+   {
+    "ttft": 19.834,
+    "prompt_tokens": 135431
+   },
+   {
+    "ttft": 19.978,
+    "prompt_tokens": 135431
+   }
+  ],
+  "a_after_evict": {
+   "ttft": 19.532,
+   "total": 19.544,
+   "prompt_tokens": 130062,
+   "text": "52445"
+  },
+  "a_after_evict_again": {
+   "ttft": 1.141,
+   "total": 1.15,
+   "prompt_tokens": 130062,
+   "text": "52445"
+  },
+  "metrics_delta": {
+   "vllm:prefix_cache_queries_total": 1332834.0,
+   "vllm:prefix_cache_hits_total": 249600.0,
+   "vllm:external_prefix_cache_queries_total": 0.0,
+   "vllm:external_prefix_cache_hits_total": 0.0,
+   "vllm:num_preemptions_total": 0.0,
+   "vllm:prompt_tokens_total": 1332834.0
+  },
+  "answers_match": true,
+  "needle_found": true
+ }
+}
