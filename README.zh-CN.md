@@ -6,7 +6,7 @@
 **SparkDash**。统一入口是仓库内的 `./recipe`，不会替换现有 `openseek` 命令。
 
 首个已验证 recipe：**Qwen3.8-Flash-Next + 单张 RTX PRO 6000 Blackwell Max-Q 96GB**。
-其他模型、硬件和自制量化制品属于后续计划，尚未验证支持。见[改造路线](docs/ROADMAP.md)。
+其他模型、硬件和自制量化制品属于后续计划，尚未验证支持。配置与命令见 [CLI 指南](docs/CLI.md)。
 
 仓库原名 `qwen38-flash-next-rtx6000`。
 

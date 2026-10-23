@@ -1,5 +1,6 @@
 .env
 .recipe/
+/docs/ROADMAP.md
 vendor/
 results/*-local-*/
 __pycache__/

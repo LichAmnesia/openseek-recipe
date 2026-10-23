@@ -11,7 +11,7 @@ entry point is `./recipe`, so it does not replace your `openseek` command.
 **First validated recipe:** Qwen3.8-Flash-Next on one RTX PRO 6000 Blackwell Max-Q
 96 GB. The supported setup is described below. Additional models, hardware,
 and project-produced quantizations are planned, not validated support. See the
-[CLI/configuration guide](docs/CLI.md) and [roadmap](docs/ROADMAP.md).
+[CLI/configuration guide](docs/CLI.md).
 
 Previously published as `qwen38-flash-next-rtx6000`.
 
