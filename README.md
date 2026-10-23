@@ -1,4 +1,21 @@
-# Qwen3.8-Flash-Next on one RTX PRO 6000
+# OpenSeek Recipe
+
+Reproducible recipes for running open-weight models on local hardware: pinned
+checkpoints and runtimes, preflight checks, serving, client integration, and
+measurements you can inspect and repeat.
+
+**This repository is the recipe manager.** Use OpenSeek TUI for chat and coding;
+future performance/monitoring integration belongs to SparkDash. The repository
+entry point is `./recipe`, so it does not replace your `openseek` command.
+
+**First validated recipe:** Qwen3.8-Flash-Next on one RTX PRO 6000 Blackwell Max-Q
+96 GB. The supported setup is described below. Additional models, hardware,
+and project-produced quantizations are planned, not validated support. See the
+[CLI/configuration guide](docs/CLI.md) and [roadmap](docs/ROADMAP.md).
+
+Previously published as `qwen38-flash-next-rtx6000`.
+
+## Qwen3.8-Flash-Next on one RTX PRO 6000
 
 Run **Qwen3.8-Flash-Next** (125B MoE, 6B active, 262K context, vision, tool calling) on a
 single **RTX PRO 6000 Blackwell 96 GB** with vLLM. You get an OpenAI-compatible endpoint
@@ -44,24 +61,43 @@ mmap'd from disk, and tuned MTP. This repo pins that recipe and adds:
 | GPU | RTX PRO 6000 Blackwell 96 GB (Workstation, Max-Q or Server) | Max-Q Workstation, 300 W |
 | Driver | `nvidia-open`, CUDA 13 capable | 610.57 |
 | Host RAM | 128 GB (PLE page cache + 64 GiB KV tier). 64 GB works only with [legacy/no-offload](legacy/no-offload/README.md) | 128 GB |
-| Disk | ~150 GB on local NVMe (120 GB weights + 29 GB image) | 990 EVO Plus 4 TB |
+| Disk | Plan ~160 GiB (~172 GB) on local NVMe for the 119.5 GiB checkpoint, image and build reserve | 990 EVO Plus 4 TB |
 | OS | x86_64 Linux with Docker + NVIDIA Container Toolkit | Arch (Omarchy), kernel 7.2 |
+| Host Python | Python 3.10+; standard library only for `./recipe` | CLI checks on macOS; GPU recipe targets Linux |
 
 ## Quickstart
 
 On the GPU box:
 
 ```bash
-git clone https://github.com/LichAmnesia/qwen38-flash-next-rtx6000.git
-cd qwen38-flash-next-rtx6000
-cp .env.example .env              # defaults work for a single RTX PRO 6000
-
-scripts/doctor.sh                 # read-only preflight: GPU, RAM, disk, docker, port
-scripts/install-prereqs.sh        # only if doctor says docker / nvidia runtime is missing
-scripts/setup.sh                  # pinned recipe + image (~29 GB) + KV-offload image + weights (~120 GB)
-scripts/ctl.sh start              # LMCache + vLLM containers, wait until /v1/models answers (~3–5 min)
-python3 scripts/smoke_test.py     # models, chat, reasoning, tool call, Responses API, streaming
+git clone https://github.com/LichAmnesia/openseek-recipe.git
+cd openseek-recipe
+./recipe models list
+./recipe models select qwen38-flash-next  # saves selection locally; does not change a running service
+./recipe install --dry-run               # inspect the selected model, runtime and commands
+./recipe install                         # preflight, pinned images, checkpoint download + SHA256
+./recipe start                           # starts LMCache then vLLM; waits for the API
+./recipe smoke                           # chat, reasoning, tools, Responses API and streaming
+./recipe connection                      # endpoint/model JSON for OpenSeek TUI or another client
 ```
+
+If preflight reports missing Docker/NVIDIA prerequisites, run
+`scripts/install-prereqs.sh` and retry. The installer does not perform system-wide
+package upgrades automatically. Only the listed Qwen model/profile is currently
+registered; there is no placeholder OpenSeek-owned checkpoint.
+
+Model selection lives in ignored `.recipe/config.json`. Local flags/environment
+and the legacy `.env` remain available for paths, ports and resource settings;
+see [configuration precedence](docs/CLI.md#configuration). Runtime commits,
+base image digest, the LMCache wheel hash, and all **40 checkpoint files** are
+pinned in `locks/`. The selected checkpoint totals **128.33 GB decimal** (~119.5
+GiB), including 22 weight shards. An intact cache is reused; installation still
+hash-checks every file and may take several minutes without downloading again.
+
+For an existing deployment using the old unlabelled image, install the locked
+image first and explicitly use `./recipe recreate` when ready to switch. A
+plain `start`/`restart` refuses a mismatched image. Changing configuration also
+requires `recreate`; selecting a model alone never switches a running service.
 
 Expected smoke test:
 
@@ -147,8 +183,8 @@ matters:
 
 ## Things I measured or hit that aren't in the upstream README
 
-1. **The checkpoint is 120 GB, not 48 GiB.** The "~48 GiB" in the upstream profile table
-   is the PLE table alone. Size your disk for 150 GB.
+1. **The checkpoint is 119.5 GiB (128.33 GB), not 48 GiB.** The "~48 GiB" in the upstream
+   profile table is the PLE table alone. Plan ~160 GiB for weights, image and build reserve.
 2. **Max-Q costs about 10%, not 25%.** On 25% less power, decode drops 9% (C1 weighted)
    and 9.8% (C16).
 3. **Max-Q runs an untuned MoE kernel.** B12x has no profile under the Max-Q device name

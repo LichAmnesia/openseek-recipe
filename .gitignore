@@ -1,4 +1,5 @@
 .env
+.recipe/
 vendor/
 results/*-local-*/
 __pycache__/

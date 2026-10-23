@@ -8,6 +8,19 @@ source "$(dirname -- "${BASH_SOURCE[0]}")/common.sh"
 exists()  { docker container inspect "${1:-$CONTAINER_NAME}" >/dev/null 2>&1; }
 running() { [[ "$(docker container inspect -f '{{.State.Running}}' "${1:-$CONTAINER_NAME}" 2>/dev/null)" == true ]]; }
 
+validate_locked_containers() {
+  [[ "${OPENSEEK_RESOLVED:-0}" == 1 ]] || return 0
+  require_recipe; require_kv_image; require_checkpoint
+  local expected c
+  expected="$(docker image inspect -f '{{.Id}}' "$KV_IMAGE")"
+  for c in "$CONTAINER_NAME" "$LMCACHE_CONTAINER"; do
+    if exists "$c"; then
+      [[ "$(docker container inspect -f '{{.Image}}' "$c")" == "$expected" ]] \
+        || die "$c uses a different image. Use ./recipe recreate to apply the selected lock."
+    fi
+  done
+}
+
 wait_ready() {
   local timeout="${READY_TIMEOUT:-900}" start=$SECONDS
   log "Waiting for $BASE_URL/v1/models (first start: weight load + CUDA graph capture, ~3-5 min)"
@@ -70,7 +83,9 @@ down() {
 cmd="${1:-status}"; shift || true
 case "$cmd" in
   start)
-    if running && running "$LMCACHE_CONTAINER"; then ok "$CONTAINER_NAME + $LMCACHE_CONTAINER already running"
+    validate_locked_containers
+    if running && running "$LMCACHE_CONTAINER"; then
+      ok "$CONTAINER_NAME + $LMCACHE_CONTAINER already running (use recreate to apply configuration changes)"
     elif exists && exists "$LMCACHE_CONTAINER"; then
       docker stop "$CONTAINER_NAME" "$LMCACHE_CONTAINER" >/dev/null
       require_free_gpu; log "Starting existing $LMCACHE_CONTAINER + $CONTAINER_NAME"
@@ -80,12 +95,14 @@ case "$cmd" in
     wait_ready ;;
   recreate)
     # Serve flags are baked into the containers at creation. Use this after editing .env.
+    require_recipe; require_kv_image; require_checkpoint
     down; create "$@"; wait_ready ;;
   stop)
     exists && docker stop "$CONTAINER_NAME" >/dev/null
     exists "$LMCACHE_CONTAINER" && docker stop "$LMCACHE_CONTAINER" >/dev/null
     ok "stopped (VRAM and the ${KV_RAM_GB} GiB RAM tier released)" ;;
   restart)
+    validate_locked_containers
     docker stop "$CONTAINER_NAME" >/dev/null
     docker restart "$LMCACHE_CONTAINER" >/dev/null; wait_lmcache
     docker start "$CONTAINER_NAME" >/dev/null; wait_ready ;;

@@ -1,0 +1,20 @@
+{
+  "schema_version": 1,
+  "id": "qwen38-flash-next",
+  "name": "Qwen3.8-Flash-Next \u00b7 EXL3 K4.25 / FP8 PLE",
+  "backend": "qwen38-sm120-vllm",
+  "lock": "qwen38-exl3-ple8",
+  "default_profile": "rtx-pro-6000-kv64",
+  "profiles": [
+    "rtx-pro-6000-kv64"
+  ],
+  "served_model": "qwen38-exl3-ple8",
+  "status": "validated-runtime",
+  "publisher": "wrldsuksgo2mars",
+  "env": {
+    "QUANT": "exl3-ple8",
+    "MAX_MODEL_LEN": "262144",
+    "MTP_TOKENS": "3"
+  },
+  "license_notice": "https://huggingface.co/wrldsuksgo2mars/Qwen3.8-Flash-Next-EXL3-K4.25-PLE-FP8-v1/blob/888306bd3996d6317758c07df50622829259ad17/NOTICE.txt"
+}

@@ -1,4 +1,16 @@
-# 单张 RTX PRO 6000 跑 Qwen3.8-Flash-Next
+# OpenSeek Recipe
+
+可复现的本地模型部署：固定权重与 runtime 版本、硬件体检、服务管理、客户端接入和原始评测结果。
+
+这个仓库负责 **recipe**。聊天和 coding 使用已有 **OpenSeek TUI**；性能与监控后续联动
+**SparkDash**。统一入口是仓库内的 `./recipe`，不会替换现有 `openseek` 命令。
+
+首个已验证 recipe：**Qwen3.8-Flash-Next + 单张 RTX PRO 6000 Blackwell Max-Q 96GB**。
+其他模型、硬件和自制量化制品属于后续计划，尚未验证支持。见[改造路线](docs/ROADMAP.md)。
+
+仓库原名 `qwen38-flash-next-rtx6000`。
+
+## 单张 RTX PRO 6000 跑 Qwen3.8-Flash-Next
 
 用一张 **RTX PRO 6000 Blackwell 96GB**，通过 vLLM 跑 **Qwen3.8-Flash-Next**（125B MoE / 6B 激活 / 262K 上下文 / 视觉 / 工具调用）。跑起来就是一个 OpenAI 兼容端点，OpenCode、Codex CLI 等 coding agent 可以直接接。
 
@@ -15,17 +27,32 @@
 | 显存 / 功耗 | 92.8 GB / 300 W |
 | 长会话被挤出 GPU 后从内存层拉回 | **0.64 s**（不用再花 19.5 s 重算 130K token） |
 
-## 五步跑起来
+## Clone 后统一使用 recipe
 
 ```bash
-git clone https://github.com/LichAmnesia/qwen38-flash-next-rtx6000.git
-cd qwen38-flash-next-rtx6000 && cp .env.example .env
-scripts/doctor.sh            # 只读体检：GPU、内存、磁盘、docker、端口
-scripts/install-prereqs.sh   # 体检报 docker / nvidia runtime 缺失时才需要跑
-scripts/setup.sh             # 固定版本的 recipe + 镜像 ~29GB + KV offload 镜像 + 权重 ~120GB
-scripts/ctl.sh start         # 起 LMCache + vLLM 两个容器，等 /v1/models 就绪（约 3–5 分钟）
-python3 scripts/smoke_test.py   # 依次验证 models、chat、思考模式、真实工具调用、Responses API、流式输出
+git clone https://github.com/LichAmnesia/openseek-recipe.git
+cd openseek-recipe
+./recipe models list
+./recipe models select qwen38-flash-next  # 只保存本地选择，不切换正在运行的服务
+./recipe install --dry-run               # 预览配置和安装步骤
+./recipe install                         # 体检、固定镜像、断点下载、完整 SHA256 校验
+./recipe start                           # LMCache → vLLM，等待 API
+./recipe smoke                           # 真实工具调用、推理、Responses、流式等六项检查
+./recipe connection                      # 输出给 OpenSeek TUI 使用的 endpoint/model
 ```
+
+需要宿主 Python 3.10+；CLI 本身不依赖第三方 Python 包。体检提示缺 Docker/NVIDIA runtime 时，
+先运行 `scripts/install-prereqs.sh`，再重试。当前登记一个已验证 Qwen 配置；未来自己的 HF 发布
+完成制品和 loader 验证后再登记，不提前放不存在的模型。
+
+选择保存于忽略提交的 `.recipe/config.json`；权重 40 个文件的 revision/大小/SHA256、
+runtime commit、基础镜像 digest 和 LMCache wheel hash 固定于 `locks/`。
+完整快照为 **128.33 GB（十进制，约 119.5 GiB）**，包含 22 个权重分片。
+重复安装复用完整缓存，但会重新计算 hash，可能耗时数分钟。
+配置优先级、命令和注册新模型见 [docs/CLI.md](docs/CLI.md)。
+
+已有旧服务时先安装新锁定镜像，再自行执行 `./recipe recreate` 切换；`start/restart` 遇到
+旧镜像会明确报版本不一致。修改配置也需 `recreate`，保存模型选择本身不影响正在运行的服务。
 
 默认开启 **KV cache 内存层**：一个独立的 LMCache 容器在主机内存里留 64 GiB，长会话被挤出 GPU 的 KV 池后从内存拉回，不用整段重算。需要 128GB 内存；原来只用 GPU 的版本放在 [legacy/no-offload](legacy/no-offload/README.md)。原理、内存怎么算、已知限制见 [docs/kv-ram-offload.md](docs/kv-ram-offload.md)。
 
@@ -33,7 +60,7 @@ python3 scripts/smoke_test.py   # 依次验证 models、chat、思考模式、�
 
 ## 几个上游 README 没写、要自己踩才知道的点
 
-1. **权重实际是 120GB，不是 48GiB**：48GiB 只是 PLE 表本身的大小，磁盘至少留 150GB。
+1. **完整快照为 119.5 GiB（128.33 GB），不是 48 GiB**：48 GiB 只是 PLE 表本身，连同镜像和构建预留建议留约 160 GiB。
 2. **Max-Q 少了 25% 功耗，速度只掉约 10%**：C1 加权掉 9%，C16 掉 9.8%。
 3. **Max-Q 上的 MoE kernel 还没调过**：B12x 找不到 Max-Q 的 profile，退回启发式配置。芯片和 SM 数跟 400W 版一样，还有提升空间。
 4. **只报 tok/s 不说负载，意义不大**：MTP 接受率从 52% 到 97% 不等，同一个服务在多语言散文上是 102 tok/s，在重复性输出上能到 215 tok/s。

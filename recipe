@@ -1,0 +1,6 @@
+#!/usr/bin/env python3
+"""OpenSeek Recipe entry point. No third-party Python packages required."""
+from recipe_lib.cli import main
+
+if __name__ == "__main__":
+    raise SystemExit(main())

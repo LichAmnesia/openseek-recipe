@@ -4,7 +4,7 @@ set -euo pipefail
 
 REPO_ROOT="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")/.." && pwd)"
 
-if [[ -f "$REPO_ROOT/.env" ]]; then
+if [[ "${OPENSEEK_RESOLVED:-0}" != 1 && -f "$REPO_ROOT/.env" ]]; then
   set -a
   # shellcheck disable=SC1091
   source "$REPO_ROOT/.env"
@@ -43,10 +43,10 @@ CONTAINER_NAME="qwen38-${QUANT}"
 MODEL_ID="qwen38-${QUANT}"
 BASE_URL="${BASE_URL:-http://127.0.0.1:${PORT}}"
 
-log()  { printf '\033[1;36m==>\033[0m %s\n' "$*"; }
-ok()   { printf '\033[1;32m ok\033[0m %s\n' "$*"; }
-warn() { printf '\033[1;33mwarn\033[0m %s\n' "$*"; }
-die()  { printf '\033[1;31mfail\033[0m %s\n' "$*" >&2; exit 1; }
+log()  { printf '==> %s\n' "$*" >&2; }
+ok()   { printf ' ok %s\n' "$*" >&2; }
+warn() { printf 'warn %s\n' "$*" >&2; }
+die()  { printf 'fail %s\n' "$*" >&2; exit 1; }
 
 require_free_gpu() {
   local used
@@ -54,12 +54,41 @@ require_free_gpu() {
   (( used < 2000 )) || die "GPU $GPU already has ${used} MiB in use. Free it first; the server claims ${GPU_MEMORY_UTILIZATION} of VRAM."
 }
 
-recipe_image() { (source "$RECIPE_DIR/platform-config.sh"; echo "$DEFAULT_IMAGE"); }
+recipe_image() {
+  if [[ -n "${BASE_IMAGE:-}" ]]; then printf '%s\n' "$BASE_IMAGE"
+  else (source "$RECIPE_DIR/platform-config.sh"; echo "$DEFAULT_IMAGE"); fi
+}
 
 require_kv_image() {
   docker image inspect "$KV_IMAGE" >/dev/null 2>&1 || die "Image $KV_IMAGE not found. Run scripts/build-kv-image.sh (scripts/setup.sh does it too)."
+  if [[ "${OPENSEEK_RESOLVED:-0}" == 1 ]]; then
+    local label
+    label="$(docker image inspect -f '{{ index .Config.Labels "org.openseek.recipe.lock-sha256" }}' "$KV_IMAGE")"
+    [[ "$label" == "$LOCK_SHA256" ]] || die "Image lock does not match. Run ./recipe install to build the selected locked image."
+  fi
 }
 
 require_recipe() {
   [[ -x "$RECIPE_DIR/start.sh" ]] || die "Upstream recipe not found at $RECIPE_DIR. Run scripts/setup.sh first."
+  if [[ "${OPENSEEK_RESOLVED:-0}" == 1 ]]; then
+    [[ "$(git -C "$RECIPE_DIR" rev-parse HEAD)" == "$RECIPE_COMMIT" ]] || die "Upstream commit differs from the lock. Run ./recipe install."
+    git -C "$RECIPE_DIR" diff --quiet HEAD -- || die "Upstream recipe has tracked changes; preserve them before reinstalling."
+    (source "$RECIPE_DIR/model-profiles.sh"
+      [[ "$MODEL_REPO" == "$LOCKED_MODEL_REPO" && "$MODEL_REVISION" == "$LOCKED_MODEL_REVISION" ]]) \
+      || die "Selected checkpoint does not match this runtime adapter. A new HF publisher needs a qualified adapter."
+  fi
+}
+
+require_checkpoint() {
+  [[ "${OPENSEEK_RESOLVED:-0}" == 1 ]] || return 0
+  PYTHONPATH="$REPO_ROOT${PYTHONPATH:+:$PYTHONPATH}" python3 -c '
+from pathlib import Path
+import sys
+from recipe_lib.artifacts import verify
+from recipe_lib.config import load_lock
+r = verify(load_lock(Path(sys.argv[1])), Path(sys.argv[2]), full=False)
+if not r["ok"]:
+    print("Checkpoint incomplete or wrong size: " + str(r["failures"][:3]), file=sys.stderr)
+    sys.exit(1)
+' "$MODEL_LOCK" "$HF_CACHE" || die "Run ./recipe install before changing containers."
 }

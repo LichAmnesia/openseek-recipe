@@ -1,0 +1,24 @@
+{
+  "schema_version": 1,
+  "id": "rtx-pro-6000-kv64",
+  "name": "RTX PRO 6000 Blackwell 96 GB \u00b7 128 GB host RAM \u00b7 64 GiB KV tier",
+  "env": {
+    "GPU_MEMORY_UTILIZATION": "0.94",
+    "MAX_NUM_SEQS": "16",
+    "KV_RAM_GB": "64",
+    "KV_RAM_WATERMARK": "0.95",
+    "KV_BLOCK_TOKENS": "3200",
+    "MAX_BATCHED_TOKENS": "6399"
+  },
+  "requirements": {
+    "os": "Linux",
+    "architecture": "x86_64",
+    "gpu_vram_mib": 95000,
+    "host_ram_gib": 120,
+    "disk_free_gb": 160
+  },
+  "evidence": [
+    "results/2026-09-21-maxq-300w",
+    "results/2026-10-21-maxq-kv-ram-offload"
+  ]
+}

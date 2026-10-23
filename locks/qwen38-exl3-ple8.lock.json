@@ -1,0 +1,223 @@
+{
+  "schema_version": 1,
+  "model": {
+    "repo_id": "wrldsuksgo2mars/Qwen3.8-Flash-Next-EXL3-K4.25-PLE-FP8-v1",
+    "revision": "888306bd3996d6317758c07df50622829259ad17",
+    "files": [
+      {
+        "path": ".gitattributes",
+        "size": 1692,
+        "sha256": "cbd8ff8b87966445aafdab28a9ccbc7006411f42fdc32606e94aca71b9d1de02"
+      },
+      {
+        "path": "LICENSE",
+        "size": 3235,
+        "sha256": "a0dc422560841fd68e06d974907f8b4c709bca44a67daad2b528437bdf676c08"
+      },
+      {
+        "path": "LICENSE-NVIDIA.pdf",
+        "size": 79005,
+        "sha256": "4d2fb590aa9b30c47f2058bff17291df7fa2aa0c1bd775a20703da9bb267cfab"
+      },
+      {
+        "path": "NOTICE.txt",
+        "size": 406,
+        "sha256": "b5468f4773aa0ac9c30474af68930694b953b64147b36708ac9d51676135575c"
+      },
+      {
+        "path": "README.md",
+        "size": 2979,
+        "sha256": "f7b8b5c5ac7d4b5c0e3b39ffae8e58f722f94192c6903985e06bd594749bb66a"
+      },
+      {
+        "path": "chat_template.jinja",
+        "size": 8952,
+        "sha256": "c3cf9e34abf4f9e36c2d72165aa9c132d3e2a725b6c2586aaa3a8af9d7a81041"
+      },
+      {
+        "path": "config.json",
+        "size": 8759,
+        "sha256": "010c1c4d2931b8c90beb56da26cb1c48bf03a844f1ad181f9a01362b0d7c3ea9"
+      },
+      {
+        "path": "generation_config.json",
+        "size": 202,
+        "sha256": "e70c136c1b78ddc1fb0905bac8e733a4dc448d4f852a5dd75143fffc70be550e"
+      },
+      {
+        "path": "hybrid-provenance.json",
+        "size": 6775525,
+        "sha256": "64b93bb30a077c5d4664b74447d66ae06f372824abb4e41f5799eafac72b26ac"
+      },
+      {
+        "path": "merges.txt",
+        "size": 3353259,
+        "sha256": "a9d356d7bdf1ef4949e3e748e95b8e10ad9d4e2e838eddc38a0a7b6b94d1db8d"
+      },
+      {
+        "path": "model-00001-of-00022.safetensors",
+        "size": 6813262858,
+        "sha256": "35a802283cd8158a135a1c80a98552ea715d2d98b33e519f17a873b494d9207e"
+      },
+      {
+        "path": "model-00002-of-00022.safetensors",
+        "size": 4000020872,
+        "sha256": "cdf344666d6d9ac9664d6ce3af0e394e53bdf47a45e173b20b8f81141046de01"
+      },
+      {
+        "path": "model-00003-of-00022.safetensors",
+        "size": 4000020872,
+        "sha256": "0912fa01155788b715e8b3135dbed5f1a8972d1b8cd30890c7702e896e46e841"
+      },
+      {
+        "path": "model-00004-of-00022.safetensors",
+        "size": 4000020872,
+        "sha256": "73833daea85cb174e421b6a8a92042a8a759c89ddb8ab9835f6bd7e5eef689d5"
+      },
+      {
+        "path": "model-00005-of-00022.safetensors",
+        "size": 4000020856,
+        "sha256": "6ec0bf62f7816fb883baaa6efaba9cf66ce6a76469b1e43cfd5a42fac2ab15ab"
+      },
+      {
+        "path": "model-00006-of-00022.safetensors",
+        "size": 4000020856,
+        "sha256": "95b3e7ca95b5d13cb82d2040dbb83604d160421bb185e5eaa82651728fb84210"
+      },
+      {
+        "path": "model-00007-of-00022.safetensors",
+        "size": 4000020856,
+        "sha256": "0d3809e5c08df1e7515235caa4953140a671ebc895f0b8f20c8692dd2945ba68"
+      },
+      {
+        "path": "model-00008-of-00022.safetensors",
+        "size": 4000020864,
+        "sha256": "2efa35bd79e69b6734660f2c10ffdd4bb92318c350ac7075cbc4f0427c1e4d6a"
+      },
+      {
+        "path": "model-00009-of-00022.safetensors",
+        "size": 4000020856,
+        "sha256": "552a58c521634a8d4e3faba3766606fd8e3702834d5314909ae4c0f4cf8e4e1f"
+      },
+      {
+        "path": "model-00010-of-00022.safetensors",
+        "size": 4000020856,
+        "sha256": "5b697199e587fcce3f242a48c35b00db5b4923504a2d282bb8dc2e2edc268669"
+      },
+      {
+        "path": "model-00011-of-00022.safetensors",
+        "size": 4000020856,
+        "sha256": "9f3e05934266bd2d221da3839f9ba9b570db00dc85157db301cd54fbef9f12d8"
+      },
+      {
+        "path": "model-00012-of-00022.safetensors",
+        "size": 4000020856,
+        "sha256": "7cb326dff92e0ed0051185f77386e50aa8837e6aeac089af5b186a0306aee811"
+      },
+      {
+        "path": "model-00013-of-00022.safetensors",
+        "size": 4000020856,
+        "sha256": "fe39ed72cc9f5e6e57f3ba406a0d0f6b3219a2d662eb8a188e8304ef542f95ff"
+      },
+      {
+        "path": "model-00014-of-00022.safetensors",
+        "size": 6573463592,
+        "sha256": "731fb1dbd209a99c49a9077b77c347d813bec34cf61f5d3d1a1596f1ed2f80f2"
+      },
+      {
+        "path": "model-00015-of-00022.safetensors",
+        "size": 8594199088,
+        "sha256": "d59582fc6003cb8317aa98df7f3c955673f2443122e024e698da8434f4c3abd0"
+      },
+      {
+        "path": "model-00016-of-00022.safetensors",
+        "size": 8594452588,
+        "sha256": "91f5b22728fdfe1b90a22a1faba2fc858e84f98ffef631c3d599bc954fcfb2c6"
+      },
+      {
+        "path": "model-00017-of-00022.safetensors",
+        "size": 8593885304,
+        "sha256": "72e5076af5117e4c5974e78705b43432fc51dc0ac8c9ffb068c179f4515205db"
+      },
+      {
+        "path": "model-00018-of-00022.safetensors",
+        "size": 8594207876,
+        "sha256": "2ac4852891025cebd5e912c3ded965bf25517414190ecc59bc9025372012d5e2"
+      },
+      {
+        "path": "model-00019-of-00022.safetensors",
+        "size": 8594481976,
+        "sha256": "64db96ef9410180fd6a91bb3543410569517089c998784dcb0780a912391c2d2"
+      },
+      {
+        "path": "model-00020-of-00022.safetensors",
+        "size": 8594097792,
+        "sha256": "618dea2daa9cd7f3dc513095b65e502e4e0a083ff01264e441c6af894a092006"
+      },
+      {
+        "path": "model-00021-of-00022.safetensors",
+        "size": 8594262328,
+        "sha256": "488a74ab139de724bdca81e353aceb12d570d43dd349dd8d640f801ef41b72e1"
+      },
+      {
+        "path": "model-00022-of-00022.safetensors",
+        "size": 6659901432,
+        "sha256": "33972d955d842b54de4449786f064a6fd4dc452c12c61b9d438d220e997c6e32"
+      },
+      {
+        "path": "model.safetensors.index.json",
+        "size": 31334809,
+        "sha256": "7c5308aea7607bbbd9c1fadc4ae2ea41bf1cb24f247ee4d480b9389acf75c8dc"
+      },
+      {
+        "path": "preprocessor_config.json",
+        "size": 390,
+        "sha256": "27225450ac9c6529872ee1924fcb0962ff5634834f817040f444118116f4e516"
+      },
+      {
+        "path": "quantize_config.json",
+        "size": 66141603,
+        "sha256": "0770aec31bc944255fbb41805f80fd627c8b4f5b42ae84b63b2ad26aa97e96c5"
+      },
+      {
+        "path": "tokenizer.json",
+        "size": 12809320,
+        "sha256": "0997f410c57a1f4e53b09e4be8f4a172d90edd9564368fb0847030937229b9f3"
+      },
+      {
+        "path": "tokenizer_config.json",
+        "size": 17928,
+        "sha256": "b11349aafa7cdc6a320767cf7ceb29ed82f7eda5d65e8e0819e76f0ce947bf27"
+      },
+      {
+        "path": "video_preprocessor_config.json",
+        "size": 385,
+        "sha256": "7768af27c1fafa9cc9011c1dc20067e03f8915e03b63504550e11d5066986d13"
+      },
+      {
+        "path": "vocab.json",
+        "size": 6722759,
+        "sha256": "ce99b4cb2983d118806ce0a8b777a35b093e2000a503ebde25853284c9dfa003"
+      },
+      {
+        "path": "release-manifest.json",
+        "size": 8616,
+        "sha256": "3d040f365cbbae07dd758084bb4a8092a8cc0d8f4a829edc19b6a78c171310b2"
+      }
+    ]
+  },
+  "runtime": {
+    "recipe_repo": "https://github.com/tpurtell/sm12x-exl3-qwen3.8-flash-next.git",
+    "recipe_commit": "847f45b1730069eab4bdb5e29361f9ea94ac5e05",
+    "base_image": "ghcr.io/tpurtell/rtx6k-exl3-qwen3.8-flash-next@sha256:0f3fdb9e1073446ca756db7541bbcfe943a7e5c43aa97e85cbcba982d82b7516",
+    "lmcache": {
+      "version": "0.5.6",
+      "wheel": "lmcache-0.5.6-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl",
+      "sha256": "c7892944ca91ec965c3448b2e30e0869f86a2499bdd01b70eb988e3436d71e4e"
+    }
+  },
+  "provenance": {
+    "file_hashes": "Pinned publisher release-manifest.json; LFS hashes and sizes cross-checked against pinned HF API",
+    "publisher_manifest_url": "https://huggingface.co/wrldsuksgo2mars/Qwen3.8-Flash-Next-EXL3-K4.25-PLE-FP8-v1/resolve/888306bd3996d6317758c07df50622829259ad17/release-manifest.json"
+  }
+}

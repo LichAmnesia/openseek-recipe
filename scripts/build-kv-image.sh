@@ -8,6 +8,7 @@ base="$(recipe_image)"
 docker image inspect "$base" >/dev/null 2>&1 || die "Base image $base not found. Run scripts/setup.sh first."
 
 if docker image inspect "$KV_IMAGE" >/dev/null 2>&1 && [[ "${FORCE:-0}" != 1 ]]; then
+  require_kv_image
   ok "$KV_IMAGE already present ($(docker image inspect -f '{{.Id}}' "$KV_IMAGE" | cut -c1-19))"
   exit 0
 fi
@@ -16,13 +17,21 @@ ctx="$(mktemp -d)"
 # The wheel is written by root inside the container; clean it up the same way.
 trap 'docker run --rm -v "$ctx:/ctx" --entrypoint sh "$base" -c "rm -rf /ctx/*" >/dev/null 2>&1; rm -rf "$ctx"' EXIT
 log "Downloading lmcache==$LMCACHE_VERSION wheel inside $base (matches its Python/ABI)"
-docker run --rm -v "$ctx:/out" -e HOME=/tmp --entrypoint python3 "$base" \
-  -m pip download --quiet --no-deps --only-binary=:all: "lmcache==$LMCACHE_VERSION" -d /out
+if [[ -n "${LMCACHE_WHEEL_SHA256:-}" ]]; then
+  printf 'lmcache==%s --hash=sha256:%s\n' "$LMCACHE_VERSION" "$LMCACHE_WHEEL_SHA256" > "$ctx/requirements.txt"
+  docker run --rm -v "$ctx:/out" -e HOME=/tmp --entrypoint python3 "$base" \
+    -m pip download --quiet --no-deps --only-binary=:all: --require-hashes -r /out/requirements.txt -d /out
+else
+  docker run --rm -v "$ctx:/out" -e HOME=/tmp --entrypoint python3 "$base" \
+    -m pip download --quiet --no-deps --only-binary=:all: "lmcache==$LMCACHE_VERSION" -d /out
+fi
 wheel="$(cd "$ctx" && ls lmcache-*.whl)" || die "wheel download failed"
+[[ -z "${LMCACHE_WHEEL:-}" || "$wheel" == "$LMCACHE_WHEEL" ]] || die "LMCache wheel differs from the lock ($wheel)"
 ok "$wheel"
 
 cat > "$ctx/Dockerfile" <<EOF
 FROM $base
+LABEL org.openseek.recipe.lock-sha256="${LOCK_SHA256:-legacy-unlocked}"
 COPY $wheel /tmp/
 RUN python3 -m pip install --no-deps /tmp/$wheel && rm /tmp/$wheel
 EOF
