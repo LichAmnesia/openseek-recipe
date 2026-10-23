@@ -14,8 +14,10 @@ The `./recipe` entry point, JSON model/profile configuration, immutable locks,
 checkpoint integrity verification and offline regression gates are implemented
 in 0.1.0. Later milestones below remain planned.
 
-This is a recipe repository. **OpenSeek TUI owns chat/coding. SparkDash owns
-future readiness/resource/KV/performance visualization and diagnostics.**
+This is a recipe repository. **OpenSeek TUI owns chat/coding. The existing
+OpenSeek Perf project (`osp`) owns performance testing, telemetry, reports,
+visualization and diagnostics.** The earlier SparkDash reference points to this
+local perf integration; osp already has a SparkDash telemetry adapter.
 The recipe exports connection metadata and runs the chosen backend.
 
 ## Reference and scope
@@ -68,9 +70,14 @@ shard is detected. Capture exact versions and raw output in the release receipt.
 - Keep installation progress, selection and actionable prerequisite/download
   errors in this repo. Reuse OpenSeek TUI for conversation; export its connection
   metadata instead of implementing a second TUI or browser chat.
-- Keep performance, VRAM/RAM/KV monitoring, dashboards and deeper diagnostics
-  with SparkDash. Agree its integration contract later; do not build a parallel
-  collector or dashboard in the recipe repository.
+- Reuse the existing OpenSeek Perf (`osp`) project for performance testing,
+  VRAM/RAM/KV telemetry, reports and diagnostics. Its local checkout is
+  `../openseek-perf` in this workspace; it already has engine metrics and
+  SparkDash telemetry adapters. Do not build parallel collectors or a dashboard
+  in the recipe repository.
+- Later, adapt `recipe connection` / `recipe lock` metadata into osp's actual
+  target/run contract. Carry endpoint, served model, HF revision, image digest,
+  profile and lock identity; let osp own measurement and result artifacts.
 - Keep the OpenAI-compatible API and tested client configurations. Add an
   Anthropic-compatible gateway only with protocol and tool-result tests;
   changing a URL alone is not protocol compatibility.
@@ -80,8 +87,9 @@ shard is detected. Capture exact versions and raw output in the release receipt.
 
 Acceptance: another user can clone, select a real published model, install a
 compatible locked recipe, and use it from OpenSeek TUI. Selecting a model alone
-does not stop or silently replace an existing service. SparkDash integration is
-an independent later gate.
+does not stop or silently replace an existing service. OpenSeek Perf integration
+is an independent later gate: qualify a real run with the correct model/runtime
+identity and existing telemetry, while keeping inference usable without osp.
 
 ## 3. Choose the Hugging Face artifact strategy
 
