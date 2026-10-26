@@ -1,0 +1,144 @@
+{
+  "api_benchmark_ok": true,
+  "api_benchmark_error": null,
+  "mode": "TP1/eager/no speculation/bootstrap host plan",
+  "c1_median_observed_decode_tok_s": 10.637378890294988,
+  "c1_median_ttft_s": 5.30955845490098,
+  "valid_api_samples": [
+    {
+      "case": "c1_trial_1",
+      "prompt_tokens": 1550,
+      "completion_tokens": 256,
+      "ttft_s": 8.449028980918229,
+      "total_s": 32.56222796579823,
+      "observed_decode_tok_s": 10.575202944130476,
+      "total_output_tok_s": 7.861869902418529,
+      "finish_reason": "length",
+      "text_events": 256,
+      "output_excerpt": "Discuss Linux filesystem caching, memory mapping, event loops, and deterministic testing.\nDiscuss Linux filesystem caching, memory mapping, event loops, and deterministic testing.\nDiscuss Linux filesystem caching, memory mapping, event loops, and deterministic testing.\nDiscuss Linux filesystem caching, memory mapping, event loops, and deterministic testing.\nDiscuss Linux filesystem caching, memory mapping, event loops, and deterministic testing.\nDiscuss Linux filesystem caching, memory mapping, ",
+      "usage": {
+        "prompt_tokens": 1550,
+        "total_tokens": 1806,
+        "completion_tokens": 256
+      },
+      "cached_prompt_tokens_reported": null,
+      "prefix_cache_counter_deltas": {
+        "vllm:prefix_cache_queries_total": 1550.0,
+        "vllm:prefix_cache_hits_total": 0.0
+      },
+      "valid_speed_sample": true
+    },
+    {
+      "case": "c1_trial_2",
+      "prompt_tokens": 1550,
+      "completion_tokens": 256,
+      "ttft_s": 5.30955845490098,
+      "total_s": 29.28168451366946,
+      "observed_decode_tok_s": 10.637378890294988,
+      "total_output_tok_s": 8.742666422776752,
+      "finish_reason": "length",
+      "text_events": 256,
+      "output_excerpt": "Discuss Linux filesystem caching, memory mapping, event loops, and deterministic testing.\nDiscuss Linux filesystem caching, memory mapping, event loops, and deterministic testing.\nDiscuss Linux filesystem caching, memory mapping, event loops, and deterministic testing.\nDiscuss Linux filesystem caching, memory mapping, event loops, and deterministic testing.\nDiscuss Linux filesystem caching, memory mapping, event loops, and deterministic testing.\nDiscuss Linux filesystem caching, memory mapping, ",
+      "usage": {
+        "prompt_tokens": 1550,
+        "total_tokens": 1806,
+        "completion_tokens": 256
+      },
+      "cached_prompt_tokens_reported": null,
+      "prefix_cache_counter_deltas": {
+        "vllm:prefix_cache_queries_total": 1550.0,
+        "vllm:prefix_cache_hits_total": 0.0
+      },
+      "valid_speed_sample": true
+    },
+    {
+      "case": "c1_trial_3",
+      "prompt_tokens": 1550,
+      "completion_tokens": 256,
+      "ttft_s": 5.235767890699208,
+      "total_s": 29.147726102732122,
+      "observed_decode_tok_s": 10.664145222076387,
+      "total_output_tok_s": 8.78284635644371,
+      "finish_reason": "length",
+      "text_events": 256,
+      "output_excerpt": "Discuss Linux filesystem caching, memory mapping, event loops, and deterministic testing.\nDiscuss Linux filesystem caching, memory mapping, event loops, and deterministic testing.\nDiscuss Linux filesystem caching, memory mapping, event loops, and deterministic testing.\nDiscuss Linux filesystem caching, memory mapping, event loops, and deterministic testing.\nDiscuss Linux filesystem caching, memory mapping, event loops, and deterministic testing.\nDiscuss Linux filesystem caching, memory mapping, ",
+      "usage": {
+        "prompt_tokens": 1550,
+        "total_tokens": 1806,
+        "completion_tokens": 256
+      },
+      "cached_prompt_tokens_reported": null,
+      "prefix_cache_counter_deltas": {
+        "vllm:prefix_cache_queries_total": 1550.0,
+        "vllm:prefix_cache_hits_total": 0.0
+      },
+      "valid_speed_sample": true
+    },
+    {
+      "case": "34k_prefix_warmed_plus_6k_new",
+      "prompt_tokens": 40000,
+      "completion_tokens": 256,
+      "ttft_s": 16.293499880004674,
+      "total_s": 39.605035121086985,
+      "observed_decode_tok_s": 10.938812854078739,
+      "total_output_tok_s": 6.4638245924366675,
+      "finish_reason": "length",
+      "text_events": 256,
+      "output_excerpt": "Explain a careful implementation and test plan for a transactional queue.\nExplain a careful implementation and test plan for a transactional queue.\nExplain a careful implementation and test plan for a transactional queue.\nExplain a careful implementation and test plan for a transactional queue.\nExplain a careful implementation and test plan for a transactional queue.\nExplain a careful implementation and test plan for a transactional queue.\nExplain a careful implementation and test plan for a tra",
+      "usage": {
+        "prompt_tokens": 40000,
+        "total_tokens": 40256,
+        "completion_tokens": 256
+      },
+      "cached_prompt_tokens_reported": null,
+      "prefix_cache_counter_deltas": {
+        "vllm:prefix_cache_queries_total": 40000.0,
+        "vllm:prefix_cache_hits_total": 33920.0
+      },
+      "valid_speed_sample": true,
+      "cache_verification": "some_cache_hits_verified_amount_unverified"
+    }
+  ],
+  "memory": {
+    "correctness_and_speed": {
+      "samples": 233,
+      "gpu_sampled_peak_mib": 97280.0,
+      "container_cgroup_peak_bytes": 107374190592,
+      "container_sampled_peak_current_bytes_including_file_cache": 107373109248,
+      "container_sampled_peak_anon_bytes": 103327023104,
+      "container_sampled_peak_file_cache_bytes": 4139376640,
+      "container_sampled_peak_swap_bytes": 0,
+      "host_minimum_MemAvailable_bytes": 17599389696,
+      "host_total_bytes": 134282588160
+    },
+    "loading_tp1_eager": {
+      "samples": 841,
+      "gpu_sampled_peak_mib": 97098.0,
+      "container_cgroup_peak_bytes": 107374190592,
+      "container_sampled_peak_current_bytes_including_file_cache": 107374182400,
+      "container_sampled_peak_anon_bytes": 102967336960,
+      "container_sampled_peak_file_cache_bytes": 5435146240,
+      "container_sampled_peak_swap_bytes": 0,
+      "host_minimum_MemAvailable_bytes": 18165297152,
+      "host_total_bytes": 134282588160
+    },
+    "all_observed_phases": {
+      "samples": 1074,
+      "gpu_sampled_peak_mib": 97280.0,
+      "container_cgroup_peak_bytes": 107374190592,
+      "container_sampled_peak_current_bytes_including_file_cache": 107374182400,
+      "container_sampled_peak_anon_bytes": 103327023104,
+      "container_sampled_peak_file_cache_bytes": 5435146240,
+      "container_sampled_peak_swap_bytes": 0,
+      "host_minimum_MemAvailable_bytes": 17599389696,
+      "host_total_bytes": 134282588160
+    }
+  },
+  "notes": [
+    "Null means not measured, never zero.",
+    "GPU peaks are sampled; cgroup memory.peak is kernel-maintained and includes page cache.",
+    "Per-phase cgroup peak can include earlier startup allocations; sampled current/anon/file values are phase-local.",
+    "Whole-host MemAvailable includes all workloads; container cgroup accounting isolates this server.",
+    "A low eager/bootstrap score is not an optimized CUDA-graph throughput result."
+  ]
+}

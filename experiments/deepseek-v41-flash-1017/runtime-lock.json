@@ -1,0 +1,774 @@
+{
+  "schema_version": 1,
+  "status": "experimental-first-gate; manual entry point, not main CLI registered",
+  "model_revision": "a8006e99931e7d67c4d218c66543f478b521b857",
+  "recipe_revision": "2c3797578722747dad3593531fd447b1d3d4c732",
+  "sfxnz_helper_revision": "19e0c56620a7b9748fd901cdf3ef533a0f6ed917",
+  "base_image": "vllm/vllm-openai:nightly-5555a2d8f7116b2b4877f66516f4128176cf722a@sha256:8896fd7b29fc4ee7ce839f146cb4757984c476ec79d0234ffa8c995dee6e339a",
+  "plugin_revision": "d3cfd394920360d69f820d2dc96f8292a9e10283",
+  "exllamav3_revision": "5be886578ec80324c2c715269387be2058724b6e",
+  "measured_image_id": "sha256:5c5a4d3e1bbf46aa24db3c6da126cfa3c628076137dccdf5935d81b912443664",
+  "image_note": "Local evidence identity, not a published image. Rebuild IDs may differ; apt/compiler artifacts are not fully locked.",
+  "source_files": [
+    {
+      "path": "recipe/.gitignore",
+      "url": "https://huggingface.co/diffbot/DeepSeek-V4.1-Flash-EXL3-3bpw-2x-RTX-PRO-6000/resolve/2c3797578722747dad3593531fd447b1d3d4c732/recipe/.gitignore",
+      "sha256": "a4707ef6451fc4d9b3b4121a125cd4171b1d440971f9ca75b255fb5dddb5ba57"
+    },
+    {
+      "path": "recipe/LICENSE",
+      "url": "https://huggingface.co/diffbot/DeepSeek-V4.1-Flash-EXL3-3bpw-2x-RTX-PRO-6000/resolve/2c3797578722747dad3593531fd447b1d3d4c732/recipe/LICENSE",
+      "sha256": "72d0add5aad86c1a452b789df4822a681300694de0c275939a76f3c386d50d2a"
+    },
+    {
+      "path": "recipe/MODEL_CARD.md",
+      "url": "https://huggingface.co/diffbot/DeepSeek-V4.1-Flash-EXL3-3bpw-2x-RTX-PRO-6000/resolve/2c3797578722747dad3593531fd447b1d3d4c732/recipe/MODEL_CARD.md",
+      "sha256": "5a105234fc1112a88d8bd14ca0b66e30d6f758336c54974025af74611623e71d"
+    },
+    {
+      "path": "recipe/README.md",
+      "url": "https://huggingface.co/diffbot/DeepSeek-V4.1-Flash-EXL3-3bpw-2x-RTX-PRO-6000/resolve/2c3797578722747dad3593531fd447b1d3d4c732/recipe/README.md",
+      "sha256": "54269713d8adad206edaffbcdf96248c311125d3db56c2adf64c495c93245b43"
+    },
+    {
+      "path": "recipe/THIRD_PARTY_NOTICES.md",
+      "url": "https://huggingface.co/diffbot/DeepSeek-V4.1-Flash-EXL3-3bpw-2x-RTX-PRO-6000/resolve/2c3797578722747dad3593531fd447b1d3d4c732/recipe/THIRD_PARTY_NOTICES.md",
+      "sha256": "452be3546f79c32600d08f3653ec93e539099b3a636fdb482905ae53f772c786"
+    },
+    {
+      "path": "recipe/bench/ab-run.sh",
+      "url": "https://huggingface.co/diffbot/DeepSeek-V4.1-Flash-EXL3-3bpw-2x-RTX-PRO-6000/resolve/2c3797578722747dad3593531fd447b1d3d4c732/recipe/bench/ab-run.sh",
+      "sha256": "e5cda640af3e66ab24b89c9f59000320a654eb8a10cdfd117abcf10eb6e6d94f"
+    },
+    {
+      "path": "recipe/bench/bench-fanout.py",
+      "url": "https://huggingface.co/diffbot/DeepSeek-V4.1-Flash-EXL3-3bpw-2x-RTX-PRO-6000/resolve/2c3797578722747dad3593531fd447b1d3d4c732/recipe/bench/bench-fanout.py",
+      "sha256": "7d9648fe61b26059b9df8a441e90bf15ccd4f82716cbdf1b2449a95eac1aaf38"
+    },
+    {
+      "path": "recipe/bench/bench-fixed.py",
+      "url": "https://huggingface.co/diffbot/DeepSeek-V4.1-Flash-EXL3-3bpw-2x-RTX-PRO-6000/resolve/2c3797578722747dad3593531fd447b1d3d4c732/recipe/bench/bench-fixed.py",
+      "sha256": "205717acb384ef81a95cccb40b7221774deb8490291470837596aee185310bee"
+    },
+    {
+      "path": "recipe/bench/bench-sbs.py",
+      "url": "https://huggingface.co/diffbot/DeepSeek-V4.1-Flash-EXL3-3bpw-2x-RTX-PRO-6000/resolve/2c3797578722747dad3593531fd447b1d3d4c732/recipe/bench/bench-sbs.py",
+      "sha256": "d407392420e4455980814511318b1ed3af93407497c9edbc8f90cd9d07f7ae5b"
+    },
+    {
+      "path": "recipe/bench/fetch-evaldata.sh",
+      "url": "https://huggingface.co/diffbot/DeepSeek-V4.1-Flash-EXL3-3bpw-2x-RTX-PRO-6000/resolve/2c3797578722747dad3593531fd447b1d3d4c732/recipe/bench/fetch-evaldata.sh",
+      "sha256": "6a4ebd9429ffa6ae4cb2e858172a8b9c5bc123c09dbc42c0693dc995b536a77a"
+    },
+    {
+      "path": "recipe/bench/greedy-ref.py",
+      "url": "https://huggingface.co/diffbot/DeepSeek-V4.1-Flash-EXL3-3bpw-2x-RTX-PRO-6000/resolve/2c3797578722747dad3593531fd447b1d3d4c732/recipe/bench/greedy-ref.py",
+      "sha256": "2dfd70a09d073b0ac8990ddc7769d6c78ab6272b4f1a4dceecbb95027d64ca80"
+    },
+    {
+      "path": "recipe/bench/hit_bench.py",
+      "url": "https://huggingface.co/diffbot/DeepSeek-V4.1-Flash-EXL3-3bpw-2x-RTX-PRO-6000/resolve/2c3797578722747dad3593531fd447b1d3d4c732/recipe/bench/hit_bench.py",
+      "sha256": "dbe8d8e551cd95545e0446451be7ef6430a8a1e2c9cfce4c72896721b4bb00ce"
+    },
+    {
+      "path": "recipe/bench/korean_check.py",
+      "url": "https://huggingface.co/diffbot/DeepSeek-V4.1-Flash-EXL3-3bpw-2x-RTX-PRO-6000/resolve/2c3797578722747dad3593531fd447b1d3d4c732/recipe/bench/korean_check.py",
+      "sha256": "cf56688f23b625e87db1c1feaca4c6a68f5d1623e3d2d01735425997e5d94785"
+    },
+    {
+      "path": "recipe/bench/len_sweep.py",
+      "url": "https://huggingface.co/diffbot/DeepSeek-V4.1-Flash-EXL3-3bpw-2x-RTX-PRO-6000/resolve/2c3797578722747dad3593531fd447b1d3d4c732/recipe/bench/len_sweep.py",
+      "sha256": "d550dfdc0c97aee059854d3dc018a5a3bcdd851678dd6a862fcc70a1ccdd09e5"
+    },
+    {
+      "path": "recipe/bench/make_corpus.py",
+      "url": "https://huggingface.co/diffbot/DeepSeek-V4.1-Flash-EXL3-3bpw-2x-RTX-PRO-6000/resolve/2c3797578722747dad3593531fd447b1d3d4c732/recipe/bench/make_corpus.py",
+      "sha256": "2e339ac9cefa45f4d27ac2161eb97e1ac03c1afc9113521bcde855c439703b35"
+    },
+    {
+      "path": "recipe/bench/needle-test.py",
+      "url": "https://huggingface.co/diffbot/DeepSeek-V4.1-Flash-EXL3-3bpw-2x-RTX-PRO-6000/resolve/2c3797578722747dad3593531fd447b1d3d4c732/recipe/bench/needle-test.py",
+      "sha256": "e21a40a77cff2b0ee982da49f34a438f847d77b624b96783214a1a82a0b91633"
+    },
+    {
+      "path": "recipe/bench/profile-run.sh",
+      "url": "https://huggingface.co/diffbot/DeepSeek-V4.1-Flash-EXL3-3bpw-2x-RTX-PRO-6000/resolve/2c3797578722747dad3593531fd447b1d3d4c732/recipe/bench/profile-run.sh",
+      "sha256": "a6985e3dbc3db9d85cc2af597f61bbafd54a73126d270c6d3f03c63443147b0a"
+    },
+    {
+      "path": "recipe/bench/quality-probe.py",
+      "url": "https://huggingface.co/diffbot/DeepSeek-V4.1-Flash-EXL3-3bpw-2x-RTX-PRO-6000/resolve/2c3797578722747dad3593531fd447b1d3d4c732/recipe/bench/quality-probe.py",
+      "sha256": "1b38c5deb52628b11e8a2fc5f0f8ff8eb8e8fc667c8f6b08d4362058aecee1f3"
+    },
+    {
+      "path": "recipe/bench/test-image.png",
+      "url": "https://huggingface.co/diffbot/DeepSeek-V4.1-Flash-EXL3-3bpw-2x-RTX-PRO-6000/resolve/2c3797578722747dad3593531fd447b1d3d4c732/recipe/bench/test-image.png",
+      "sha256": "cefb1a0e0ad66dab8f43f6ed9fcad2c4c96f3c15aeffd0cf43cf7b1dc6c693c8"
+    },
+    {
+      "path": "recipe/bench/test-image.py",
+      "url": "https://huggingface.co/diffbot/DeepSeek-V4.1-Flash-EXL3-3bpw-2x-RTX-PRO-6000/resolve/2c3797578722747dad3593531fd447b1d3d4c732/recipe/bench/test-image.py",
+      "sha256": "a0919657e6dbb4c2ec82186839b35f520d392c0d1a2fa8d240550afa5d51bcc6"
+    },
+    {
+      "path": "recipe/bench/test-toolcall.py",
+      "url": "https://huggingface.co/diffbot/DeepSeek-V4.1-Flash-EXL3-3bpw-2x-RTX-PRO-6000/resolve/2c3797578722747dad3593531fd447b1d3d4c732/recipe/bench/test-toolcall.py",
+      "sha256": "c87a2791c8d71aa810642b4288d86df7ab2ff73e083b6407711e406092e1bf53"
+    },
+    {
+      "path": "recipe/bench/trace_breakdown.py",
+      "url": "https://huggingface.co/diffbot/DeepSeek-V4.1-Flash-EXL3-3bpw-2x-RTX-PRO-6000/resolve/2c3797578722747dad3593531fd447b1d3d4c732/recipe/bench/trace_breakdown.py",
+      "sha256": "7e38ee64a28020037f730c0d9339894ee2e64b6727cbc8b7126a186869f34c53"
+    },
+    {
+      "path": "recipe/bench/validate.sh",
+      "url": "https://huggingface.co/diffbot/DeepSeek-V4.1-Flash-EXL3-3bpw-2x-RTX-PRO-6000/resolve/2c3797578722747dad3593531fd447b1d3d4c732/recipe/bench/validate.sh",
+      "sha256": "4f9f7653f569222c7325d011b8811985da6db47807c60f1180698c6f68f062dd"
+    },
+    {
+      "path": "recipe/cpuexp/README.md",
+      "url": "https://huggingface.co/diffbot/DeepSeek-V4.1-Flash-EXL3-3bpw-2x-RTX-PRO-6000/resolve/2c3797578722747dad3593531fd447b1d3d4c732/recipe/cpuexp/README.md",
+      "sha256": "e9be26bce2577cff351b164c4e09f3254d459042bc9d9526d9b24509c8ae4791"
+    },
+    {
+      "path": "recipe/cpuexp/build.sh",
+      "url": "https://huggingface.co/diffbot/DeepSeek-V4.1-Flash-EXL3-3bpw-2x-RTX-PRO-6000/resolve/2c3797578722747dad3593531fd447b1d3d4c732/recipe/cpuexp/build.sh",
+      "sha256": "1c84387ef886b1e4e3282fe57f68591ff1f9ee27022624310fb84b8fd0cd846f"
+    },
+    {
+      "path": "recipe/cpuexp/build_inner.sh",
+      "url": "https://huggingface.co/diffbot/DeepSeek-V4.1-Flash-EXL3-3bpw-2x-RTX-PRO-6000/resolve/2c3797578722747dad3593531fd447b1d3d4c732/recipe/cpuexp/build_inner.sh",
+      "sha256": "c10af38bf73e4722754bd1232540e3f45aec20e6aa2a5cf646fa071a9b0429e1"
+    },
+    {
+      "path": "recipe/cpuexp/bwprobe.cpp",
+      "url": "https://huggingface.co/diffbot/DeepSeek-V4.1-Flash-EXL3-3bpw-2x-RTX-PRO-6000/resolve/2c3797578722747dad3593531fd447b1d3d4c732/recipe/cpuexp/bwprobe.cpp",
+      "sha256": "a8f06077f2f2b1655a46b9a2b993de0158fc0b1e355d0302d100be3a1923593b"
+    },
+    {
+      "path": "recipe/cpuexp/check_host.sh",
+      "url": "https://huggingface.co/diffbot/DeepSeek-V4.1-Flash-EXL3-3bpw-2x-RTX-PRO-6000/resolve/2c3797578722747dad3593531fd447b1d3d4c732/recipe/cpuexp/check_host.sh",
+      "sha256": "4c8ddd1f99a8734164fd70eaa97b1d2173aff6d4131f56d09f1167f0d57a4822"
+    },
+    {
+      "path": "recipe/cpuexp/cpuexp_gpu.cu",
+      "url": "https://huggingface.co/diffbot/DeepSeek-V4.1-Flash-EXL3-3bpw-2x-RTX-PRO-6000/resolve/2c3797578722747dad3593531fd447b1d3d4c732/recipe/cpuexp/cpuexp_gpu.cu",
+      "sha256": "1dc54d636f8b174daeca56e459d360d6df1bc97b5d29771b8dea194d1524455c"
+    },
+    {
+      "path": "recipe/cpuexp/cpuexp_mbox.h",
+      "url": "https://huggingface.co/diffbot/DeepSeek-V4.1-Flash-EXL3-3bpw-2x-RTX-PRO-6000/resolve/2c3797578722747dad3593531fd447b1d3d4c732/recipe/cpuexp/cpuexp_mbox.h",
+      "sha256": "e178fce2863daf389945d8ea35dad256e52e5059a86c2cd0aaacb153d0a642ca"
+    },
+    {
+      "path": "recipe/cpuexp/cpuexp_pf.cpp",
+      "url": "https://huggingface.co/diffbot/DeepSeek-V4.1-Flash-EXL3-3bpw-2x-RTX-PRO-6000/resolve/2c3797578722747dad3593531fd447b1d3d4c732/recipe/cpuexp/cpuexp_pf.cpp",
+      "sha256": "107dc83d0d5eaf9a30fc8375310df2c8b0f9feba2297c1a1fbedb4717051ecbf"
+    },
+    {
+      "path": "recipe/cpuexp/cpuexp_pf.h",
+      "url": "https://huggingface.co/diffbot/DeepSeek-V4.1-Flash-EXL3-3bpw-2x-RTX-PRO-6000/resolve/2c3797578722747dad3593531fd447b1d3d4c732/recipe/cpuexp/cpuexp_pf.h",
+      "sha256": "7efc3ec848c7455ab755b99f7fac2285ed2bea3ff78574513914213bde5a0f5d"
+    },
+    {
+      "path": "recipe/cpuexp/cpuexp_pf_gpu.cu",
+      "url": "https://huggingface.co/diffbot/DeepSeek-V4.1-Flash-EXL3-3bpw-2x-RTX-PRO-6000/resolve/2c3797578722747dad3593531fd447b1d3d4c732/recipe/cpuexp/cpuexp_pf_gpu.cu",
+      "sha256": "54c6c166717e0ef53530347718ca61813ba9aeb30696c7b94e77c288d99c3c66"
+    },
+    {
+      "path": "recipe/cpuexp/cpuexp_rt.cpp",
+      "url": "https://huggingface.co/diffbot/DeepSeek-V4.1-Flash-EXL3-3bpw-2x-RTX-PRO-6000/resolve/2c3797578722747dad3593531fd447b1d3d4c732/recipe/cpuexp/cpuexp_rt.cpp",
+      "sha256": "3a6f85c6951fdd8ebf4c667ad98531d7b9d23a3b5ca04c98519b4883378aae3e"
+    },
+    {
+      "path": "recipe/cpuexp/cpuexp_rt.py",
+      "url": "https://huggingface.co/diffbot/DeepSeek-V4.1-Flash-EXL3-3bpw-2x-RTX-PRO-6000/resolve/2c3797578722747dad3593531fd447b1d3d4c732/recipe/cpuexp/cpuexp_rt.py",
+      "sha256": "db00dc578e2c544e5dd1913ddf9d1b9909e20316ba964201ca5fc8d962b4da97"
+    },
+    {
+      "path": "recipe/docker/LICENSE.sfxnz-recipe",
+      "url": "https://huggingface.co/diffbot/DeepSeek-V4.1-Flash-EXL3-3bpw-2x-RTX-PRO-6000/resolve/2c3797578722747dad3593531fd447b1d3d4c732/recipe/docker/LICENSE.sfxnz-recipe",
+      "sha256": "f2c6c602815669d292889e5be8c802f2ed950653b77999b1584e8e6aed25d040"
+    },
+    {
+      "path": "recipe/docker/build.sh",
+      "url": "https://huggingface.co/diffbot/DeepSeek-V4.1-Flash-EXL3-3bpw-2x-RTX-PRO-6000/resolve/2c3797578722747dad3593531fd447b1d3d4c732/recipe/docker/build.sh",
+      "sha256": "f303f966fcee38b4080e5dab693d84bea50fc59caa85c5b3d79ff23f46e1498a"
+    },
+    {
+      "path": "recipe/kernels/build.sh",
+      "url": "https://huggingface.co/diffbot/DeepSeek-V4.1-Flash-EXL3-3bpw-2x-RTX-PRO-6000/resolve/2c3797578722747dad3593531fd447b1d3d4c732/recipe/kernels/build.sh",
+      "sha256": "79e0654d5d2425aa632daaafb5c3be3061c120b0e63a4a20905dab492e534c1e"
+    },
+    {
+      "path": "recipe/kernels/build_fp8ar.py",
+      "url": "https://huggingface.co/diffbot/DeepSeek-V4.1-Flash-EXL3-3bpw-2x-RTX-PRO-6000/resolve/2c3797578722747dad3593531fd447b1d3d4c732/recipe/kernels/build_fp8ar.py",
+      "sha256": "cf7f0712f16e69463c34e6f391a2c519270f5309858d1c6982b1c556120e1587"
+    },
+    {
+      "path": "recipe/kernels/build_xmoe.py",
+      "url": "https://huggingface.co/diffbot/DeepSeek-V4.1-Flash-EXL3-3bpw-2x-RTX-PRO-6000/resolve/2c3797578722747dad3593531fd447b1d3d4c732/recipe/kernels/build_xmoe.py",
+      "sha256": "2234c47b8c6fffedd5f466ee2b54a6b2cd10daec9ed08f63a388d5fee8c31d9b"
+    },
+    {
+      "path": "recipe/kernels/build_xmoe_do.py",
+      "url": "https://huggingface.co/diffbot/DeepSeek-V4.1-Flash-EXL3-3bpw-2x-RTX-PRO-6000/resolve/2c3797578722747dad3593531fd447b1d3d4c732/recipe/kernels/build_xmoe_do.py",
+      "sha256": "1cd249d852d82c3c069569dd05398ab795c3ad524a2454ab49affafe8b70ebd3"
+    },
+    {
+      "path": "recipe/kernels/build_xmoe_do_i8.py",
+      "url": "https://huggingface.co/diffbot/DeepSeek-V4.1-Flash-EXL3-3bpw-2x-RTX-PRO-6000/resolve/2c3797578722747dad3593531fd447b1d3d4c732/recipe/kernels/build_xmoe_do_i8.py",
+      "sha256": "6e618900e8c4444433be9f3fb9d03e0d013696069ef76e9d0fdbf17fd744b7bc"
+    },
+    {
+      "path": "recipe/kernels/exllamav3-5be8865-exl3_moe.patch",
+      "url": "https://huggingface.co/diffbot/DeepSeek-V4.1-Flash-EXL3-3bpw-2x-RTX-PRO-6000/resolve/2c3797578722747dad3593531fd447b1d3d4c732/recipe/kernels/exllamav3-5be8865-exl3_moe.patch",
+      "sha256": "84e0d0f52382314d239e457284f10a46dce40ef55979dcdf5d5f843761eda4f7"
+    },
+    {
+      "path": "recipe/kernels/fp8ar/fp8ar_ext.cpp",
+      "url": "https://huggingface.co/diffbot/DeepSeek-V4.1-Flash-EXL3-3bpw-2x-RTX-PRO-6000/resolve/2c3797578722747dad3593531fd447b1d3d4c732/recipe/kernels/fp8ar/fp8ar_ext.cpp",
+      "sha256": "e19311256be10466d790e126c255c2db9a95e599073d6bee639a1965e1d3b2b3"
+    },
+    {
+      "path": "recipe/kernels/fp8ar/fp8ar_kernels.cu",
+      "url": "https://huggingface.co/diffbot/DeepSeek-V4.1-Flash-EXL3-3bpw-2x-RTX-PRO-6000/resolve/2c3797578722747dad3593531fd447b1d3d4c732/recipe/kernels/fp8ar/fp8ar_kernels.cu",
+      "sha256": "3bbd87c8de8e359a694efd1a9b4f3158841ae8bb1630dc20af143052a4052dd1"
+    },
+    {
+      "path": "recipe/kernels/fp8ar/fp8ar_ref.py",
+      "url": "https://huggingface.co/diffbot/DeepSeek-V4.1-Flash-EXL3-3bpw-2x-RTX-PRO-6000/resolve/2c3797578722747dad3593531fd447b1d3d4c732/recipe/kernels/fp8ar/fp8ar_ref.py",
+      "sha256": "38cf2c0a1458911faa920726cbd7cb67a510c2f46429702aedc72a292862b161"
+    },
+    {
+      "path": "recipe/kernels/fp8ar/fp8ar_runtime.py",
+      "url": "https://huggingface.co/diffbot/DeepSeek-V4.1-Flash-EXL3-3bpw-2x-RTX-PRO-6000/resolve/2c3797578722747dad3593531fd447b1d3d4c732/recipe/kernels/fp8ar/fp8ar_runtime.py",
+      "sha256": "7d23949dc79b58ec28220af492dbf51c05232cb1ae99094d1a0340f7ed0a4472"
+    },
+    {
+      "path": "recipe/kernels/sm120_dense.py",
+      "url": "https://huggingface.co/diffbot/DeepSeek-V4.1-Flash-EXL3-3bpw-2x-RTX-PRO-6000/resolve/2c3797578722747dad3593531fd447b1d3d4c732/recipe/kernels/sm120_dense.py",
+      "sha256": "de5da50e008478b08f773418459a30942124b1462cce0e9b5ccfa01c91bb7d37"
+    },
+    {
+      "path": "recipe/kernels/sm120_dense2.py",
+      "url": "https://huggingface.co/diffbot/DeepSeek-V4.1-Flash-EXL3-3bpw-2x-RTX-PRO-6000/resolve/2c3797578722747dad3593531fd447b1d3d4c732/recipe/kernels/sm120_dense2.py",
+      "sha256": "398391725eee45cb555915c9fb84031ae5946ea8969da571f37daf9f443eb1b0"
+    },
+    {
+      "path": "recipe/kernels/sm120_dense_table_v2.json",
+      "url": "https://huggingface.co/diffbot/DeepSeek-V4.1-Flash-EXL3-3bpw-2x-RTX-PRO-6000/resolve/2c3797578722747dad3593531fd447b1d3d4c732/recipe/kernels/sm120_dense_table_v2.json",
+      "sha256": "b9e719ac5991aba84df0d2c2ac7b00e4432fc763372b0a708b8dd06f469527e1"
+    },
+    {
+      "path": "recipe/kernels/xmoe/LICENSE.exllamav3",
+      "url": "https://huggingface.co/diffbot/DeepSeek-V4.1-Flash-EXL3-3bpw-2x-RTX-PRO-6000/resolve/2c3797578722747dad3593531fd447b1d3d4c732/recipe/kernels/xmoe/LICENSE.exllamav3",
+      "sha256": "27a32b6263fcd96c79d3beeecf221c4366780bdf15ad51986f48650bd7369bff"
+    },
+    {
+      "path": "recipe/kernels/xmoe/bindings.cpp",
+      "url": "https://huggingface.co/diffbot/DeepSeek-V4.1-Flash-EXL3-3bpw-2x-RTX-PRO-6000/resolve/2c3797578722747dad3593531fd447b1d3d4c732/recipe/kernels/xmoe/bindings.cpp",
+      "sha256": "2ab889bffc9c1e9de7bb50efb4deca0e1905f0b8117f886118eef7c6901da6e5"
+    },
+    {
+      "path": "recipe/kernels/xmoe/compat.cuh",
+      "url": "https://huggingface.co/diffbot/DeepSeek-V4.1-Flash-EXL3-3bpw-2x-RTX-PRO-6000/resolve/2c3797578722747dad3593531fd447b1d3d4c732/recipe/kernels/xmoe/compat.cuh",
+      "sha256": "dd6038fa6eb8b28df56b184e358e5633421af76eeb40bad4abc522ce6ba54f57"
+    },
+    {
+      "path": "recipe/kernels/xmoe/graph.cuh",
+      "url": "https://huggingface.co/diffbot/DeepSeek-V4.1-Flash-EXL3-3bpw-2x-RTX-PRO-6000/resolve/2c3797578722747dad3593531fd447b1d3d4c732/recipe/kernels/xmoe/graph.cuh",
+      "sha256": "6fe8e3d3ab39d885ff8447f6f8f3397c35387619722fca0222eddcc753b6d074"
+    },
+    {
+      "path": "recipe/kernels/xmoe/ptx.cuh",
+      "url": "https://huggingface.co/diffbot/DeepSeek-V4.1-Flash-EXL3-3bpw-2x-RTX-PRO-6000/resolve/2c3797578722747dad3593531fd447b1d3d4c732/recipe/kernels/xmoe/ptx.cuh",
+      "sha256": "8ceacb1b321af5877a9a3d651e038fb1f44b543c3011e2f814f448830efe27ee"
+    },
+    {
+      "path": "recipe/kernels/xmoe/quant/codebook.cuh",
+      "url": "https://huggingface.co/diffbot/DeepSeek-V4.1-Flash-EXL3-3bpw-2x-RTX-PRO-6000/resolve/2c3797578722747dad3593531fd447b1d3d4c732/recipe/kernels/xmoe/quant/codebook.cuh",
+      "sha256": "0e3c63b323f8d3cc15c6a8f2e2b3816efafd71e149a99997b30b2f806375138a"
+    },
+    {
+      "path": "recipe/kernels/xmoe/quant/comp_units/exl3_moe_inst_k2_cb1.cu",
+      "url": "https://huggingface.co/diffbot/DeepSeek-V4.1-Flash-EXL3-3bpw-2x-RTX-PRO-6000/resolve/2c3797578722747dad3593531fd447b1d3d4c732/recipe/kernels/xmoe/quant/comp_units/exl3_moe_inst_k2_cb1.cu",
+      "sha256": "b2d87f4a8475d96acc0dcaa6b86908fe67f34786b1f042651eaffbdcd582a316"
+    },
+    {
+      "path": "recipe/kernels/xmoe/quant/comp_units/exl3_moe_inst_k3_cb1.cu",
+      "url": "https://huggingface.co/diffbot/DeepSeek-V4.1-Flash-EXL3-3bpw-2x-RTX-PRO-6000/resolve/2c3797578722747dad3593531fd447b1d3d4c732/recipe/kernels/xmoe/quant/comp_units/exl3_moe_inst_k3_cb1.cu",
+      "sha256": "4c604187f6f639f96438ba48275c63c256080075c554a73899517fc29a7ecc97"
+    },
+    {
+      "path": "recipe/kernels/xmoe/quant/comp_units/exl3_moe_inst_k3_cb2.cu",
+      "url": "https://huggingface.co/diffbot/DeepSeek-V4.1-Flash-EXL3-3bpw-2x-RTX-PRO-6000/resolve/2c3797578722747dad3593531fd447b1d3d4c732/recipe/kernels/xmoe/quant/comp_units/exl3_moe_inst_k3_cb2.cu",
+      "sha256": "8fcabb650c4b2d6c59bf854f1b97078218ddf87f56aed7430256625637092b45"
+    },
+    {
+      "path": "recipe/kernels/xmoe/quant/comp_units/exl3_moe_inst_pb_s3.cu",
+      "url": "https://huggingface.co/diffbot/DeepSeek-V4.1-Flash-EXL3-3bpw-2x-RTX-PRO-6000/resolve/2c3797578722747dad3593531fd447b1d3d4c732/recipe/kernels/xmoe/quant/comp_units/exl3_moe_inst_pb_s3.cu",
+      "sha256": "3248ec9c5311ed82ef135245cfc28c3db31493cb0c0a2c9cffb6b94e6d687794"
+    },
+    {
+      "path": "recipe/kernels/xmoe/quant/comp_units/exl3_moe_inst_pb_s4.cu",
+      "url": "https://huggingface.co/diffbot/DeepSeek-V4.1-Flash-EXL3-3bpw-2x-RTX-PRO-6000/resolve/2c3797578722747dad3593531fd447b1d3d4c732/recipe/kernels/xmoe/quant/comp_units/exl3_moe_inst_pb_s4.cu",
+      "sha256": "6675038ad7b6595e467ad4d83ccca391126bf8993e62f2ee61e08cbf7ff7a614"
+    },
+    {
+      "path": "recipe/kernels/xmoe/quant/comp_units/exl3_moe_inst_pb_s6.cu",
+      "url": "https://huggingface.co/diffbot/DeepSeek-V4.1-Flash-EXL3-3bpw-2x-RTX-PRO-6000/resolve/2c3797578722747dad3593531fd447b1d3d4c732/recipe/kernels/xmoe/quant/comp_units/exl3_moe_inst_pb_s6.cu",
+      "sha256": "7e49912ff76cfe8402079923ced26280bbd8aa13eb7a5b882a6965de74bcf61e"
+    },
+    {
+      "path": "recipe/kernels/xmoe/quant/comp_units/exl3_moe_inst_pb_s8.cu",
+      "url": "https://huggingface.co/diffbot/DeepSeek-V4.1-Flash-EXL3-3bpw-2x-RTX-PRO-6000/resolve/2c3797578722747dad3593531fd447b1d3d4c732/recipe/kernels/xmoe/quant/comp_units/exl3_moe_inst_pb_s8.cu",
+      "sha256": "2bbde79c8c2de1d20f69b11dbdeb70204cbc068ed7a5e9a3650826c528aafb20"
+    },
+    {
+      "path": "recipe/kernels/xmoe/quant/comp_units/exl3_moe_instances.cuh",
+      "url": "https://huggingface.co/diffbot/DeepSeek-V4.1-Flash-EXL3-3bpw-2x-RTX-PRO-6000/resolve/2c3797578722747dad3593531fd447b1d3d4c732/recipe/kernels/xmoe/quant/comp_units/exl3_moe_instances.cuh",
+      "sha256": "bc3b11b527093dc1c1a9324c07e4ddb86caac06f329e7b329a1fa6a1010adc9d"
+    },
+    {
+      "path": "recipe/kernels/xmoe/quant/exl3_dense_flat.cu",
+      "url": "https://huggingface.co/diffbot/DeepSeek-V4.1-Flash-EXL3-3bpw-2x-RTX-PRO-6000/resolve/2c3797578722747dad3593531fd447b1d3d4c732/recipe/kernels/xmoe/quant/exl3_dense_flat.cu",
+      "sha256": "a4dbcf1eef2c60e5525613de035188a7bcb84be522c566e96a34a396b0c9706a"
+    },
+    {
+      "path": "recipe/kernels/xmoe/quant/exl3_devctx.cu",
+      "url": "https://huggingface.co/diffbot/DeepSeek-V4.1-Flash-EXL3-3bpw-2x-RTX-PRO-6000/resolve/2c3797578722747dad3593531fd447b1d3d4c732/recipe/kernels/xmoe/quant/exl3_devctx.cu",
+      "sha256": "3567282f9e509b3562d1bc73b4063094ff17307bdd489cde4d21fe9c0f47a904"
+    },
+    {
+      "path": "recipe/kernels/xmoe/quant/exl3_devctx.cuh",
+      "url": "https://huggingface.co/diffbot/DeepSeek-V4.1-Flash-EXL3-3bpw-2x-RTX-PRO-6000/resolve/2c3797578722747dad3593531fd447b1d3d4c732/recipe/kernels/xmoe/quant/exl3_devctx.cuh",
+      "sha256": "8a3d2d7734116c9a7b03bfc32c212e617eedbe781efb4e8fb5a8e508ace66022"
+    },
+    {
+      "path": "recipe/kernels/xmoe/quant/exl3_dq.cuh",
+      "url": "https://huggingface.co/diffbot/DeepSeek-V4.1-Flash-EXL3-3bpw-2x-RTX-PRO-6000/resolve/2c3797578722747dad3593531fd447b1d3d4c732/recipe/kernels/xmoe/quant/exl3_dq.cuh",
+      "sha256": "7e3009b0f70635e8a98edf8b929832ca0fe16b6a5ad20f13b77ebfa72723feac"
+    },
+    {
+      "path": "recipe/kernels/xmoe/quant/exl3_gemm.cuh",
+      "url": "https://huggingface.co/diffbot/DeepSeek-V4.1-Flash-EXL3-3bpw-2x-RTX-PRO-6000/resolve/2c3797578722747dad3593531fd447b1d3d4c732/recipe/kernels/xmoe/quant/exl3_gemm.cuh",
+      "sha256": "820486720e4de26146b27a6ed5c2974a24fe840de70328b6a6f4e46c3843ea83"
+    },
+    {
+      "path": "recipe/kernels/xmoe/quant/exl3_gemm_inner.cuh",
+      "url": "https://huggingface.co/diffbot/DeepSeek-V4.1-Flash-EXL3-3bpw-2x-RTX-PRO-6000/resolve/2c3797578722747dad3593531fd447b1d3d4c732/recipe/kernels/xmoe/quant/exl3_gemm_inner.cuh",
+      "sha256": "b1d4a8f051ad55d6c6d1b31d2e7d7301994654a0686edc10720465108d4ab923"
+    },
+    {
+      "path": "recipe/kernels/xmoe/quant/exl3_gemm_inner_flat.cuh",
+      "url": "https://huggingface.co/diffbot/DeepSeek-V4.1-Flash-EXL3-3bpw-2x-RTX-PRO-6000/resolve/2c3797578722747dad3593531fd447b1d3d4c732/recipe/kernels/xmoe/quant/exl3_gemm_inner_flat.cuh",
+      "sha256": "e06e021f968f69c920aaa19fb38d26b7f11d83e2998de139642d9b905a377d22"
+    },
+    {
+      "path": "recipe/kernels/xmoe/quant/exl3_gemm_inner_flat_dense.cuh",
+      "url": "https://huggingface.co/diffbot/DeepSeek-V4.1-Flash-EXL3-3bpw-2x-RTX-PRO-6000/resolve/2c3797578722747dad3593531fd447b1d3d4c732/recipe/kernels/xmoe/quant/exl3_gemm_inner_flat_dense.cuh",
+      "sha256": "a004e14a0a98af013478f805b0823ba83e5e11ba2401ec4677dd4f2145832c3a"
+    },
+    {
+      "path": "recipe/kernels/xmoe/quant/exl3_gemm_inner_flat_p.cuh",
+      "url": "https://huggingface.co/diffbot/DeepSeek-V4.1-Flash-EXL3-3bpw-2x-RTX-PRO-6000/resolve/2c3797578722747dad3593531fd447b1d3d4c732/recipe/kernels/xmoe/quant/exl3_gemm_inner_flat_p.cuh",
+      "sha256": "f5f1af3805e6e271179fb320e38c57064d47bc9b2189d884c47f61dff1c6aaaa"
+    },
+    {
+      "path": "recipe/kernels/xmoe/quant/exl3_gemm_inner_flat_t.cuh",
+      "url": "https://huggingface.co/diffbot/DeepSeek-V4.1-Flash-EXL3-3bpw-2x-RTX-PRO-6000/resolve/2c3797578722747dad3593531fd447b1d3d4c732/recipe/kernels/xmoe/quant/exl3_gemm_inner_flat_t.cuh",
+      "sha256": "b3ed4b5b19edf4f80395f4e550a1d514553cd253eb11d5c7340eb9caf3f65d0f"
+    },
+    {
+      "path": "recipe/kernels/xmoe/quant/exl3_gemm_inner_mt.cuh",
+      "url": "https://huggingface.co/diffbot/DeepSeek-V4.1-Flash-EXL3-3bpw-2x-RTX-PRO-6000/resolve/2c3797578722747dad3593531fd447b1d3d4c732/recipe/kernels/xmoe/quant/exl3_gemm_inner_mt.cuh",
+      "sha256": "2b41fad6bce373b2fc99102a2610b7c7fa96d2db69a01ad6478c3e1a6af77b64"
+    },
+    {
+      "path": "recipe/kernels/xmoe/quant/exl3_gemm_inner_mt_pb.cuh",
+      "url": "https://huggingface.co/diffbot/DeepSeek-V4.1-Flash-EXL3-3bpw-2x-RTX-PRO-6000/resolve/2c3797578722747dad3593531fd447b1d3d4c732/recipe/kernels/xmoe/quant/exl3_gemm_inner_mt_pb.cuh",
+      "sha256": "5c975aef6602752cbbc71a9bc1955f6192c7d6f86bd0dd85d88dee5dcb5f2955"
+    },
+    {
+      "path": "recipe/kernels/xmoe/quant/exl3_kernel_map.cuh",
+      "url": "https://huggingface.co/diffbot/DeepSeek-V4.1-Flash-EXL3-3bpw-2x-RTX-PRO-6000/resolve/2c3797578722747dad3593531fd447b1d3d4c732/recipe/kernels/xmoe/quant/exl3_kernel_map.cuh",
+      "sha256": "6db5f3ab7ed173236080d641309076608c32c97c923555fbdeb699e08515729e"
+    },
+    {
+      "path": "recipe/kernels/xmoe/quant/exl3_moe.cu",
+      "url": "https://huggingface.co/diffbot/DeepSeek-V4.1-Flash-EXL3-3bpw-2x-RTX-PRO-6000/resolve/2c3797578722747dad3593531fd447b1d3d4c732/recipe/kernels/xmoe/quant/exl3_moe.cu",
+      "sha256": "5ecdd78ed2afd1edc0d14bf0a4c141305d7a4a47301c71d9f6044189d83e838d"
+    },
+    {
+      "path": "recipe/kernels/xmoe/quant/exl3_moe.cuh",
+      "url": "https://huggingface.co/diffbot/DeepSeek-V4.1-Flash-EXL3-3bpw-2x-RTX-PRO-6000/resolve/2c3797578722747dad3593531fd447b1d3d4c732/recipe/kernels/xmoe/quant/exl3_moe.cuh",
+      "sha256": "42a46e7f4b0cfd3ca688c1dc288f6964a9fec2fc53d8d3a9a6ec813804a689f5"
+    },
+    {
+      "path": "recipe/kernels/xmoe/quant/exl3_moe_common.cuh",
+      "url": "https://huggingface.co/diffbot/DeepSeek-V4.1-Flash-EXL3-3bpw-2x-RTX-PRO-6000/resolve/2c3797578722747dad3593531fd447b1d3d4c732/recipe/kernels/xmoe/quant/exl3_moe_common.cuh",
+      "sha256": "76b7c96b6ed88ca15e855791129a3f278b46f6dc54c1c72133f57f2daf060842"
+    },
+    {
+      "path": "recipe/kernels/xmoe/quant/exl3_moe_flat_kernel.cuh",
+      "url": "https://huggingface.co/diffbot/DeepSeek-V4.1-Flash-EXL3-3bpw-2x-RTX-PRO-6000/resolve/2c3797578722747dad3593531fd447b1d3d4c732/recipe/kernels/xmoe/quant/exl3_moe_flat_kernel.cuh",
+      "sha256": "ff9cd8a5f8ca6ddd36d5a4f2e677e1886d97a0e83286b7dbd0d0b39d30db7abc"
+    },
+    {
+      "path": "recipe/kernels/xmoe/quant/exl3_moe_kernel.cuh",
+      "url": "https://huggingface.co/diffbot/DeepSeek-V4.1-Flash-EXL3-3bpw-2x-RTX-PRO-6000/resolve/2c3797578722747dad3593531fd447b1d3d4c732/recipe/kernels/xmoe/quant/exl3_moe_kernel.cuh",
+      "sha256": "ecaf2573cc6123d177e20aee20b20dc4dc814b50c1ae9a493f032fc8b01420c8"
+    },
+    {
+      "path": "recipe/kernels/xmoe/quant/exl3_moe_kernel_pb.cuh",
+      "url": "https://huggingface.co/diffbot/DeepSeek-V4.1-Flash-EXL3-3bpw-2x-RTX-PRO-6000/resolve/2c3797578722747dad3593531fd447b1d3d4c732/recipe/kernels/xmoe/quant/exl3_moe_kernel_pb.cuh",
+      "sha256": "7cd59707a6f881dce2fad72997698d9b0aec3eb065e61be49461c26487c4565c"
+    },
+    {
+      "path": "recipe/kernels/xmoe/quant/hadamard_inner.cuh",
+      "url": "https://huggingface.co/diffbot/DeepSeek-V4.1-Flash-EXL3-3bpw-2x-RTX-PRO-6000/resolve/2c3797578722747dad3593531fd447b1d3d4c732/recipe/kernels/xmoe/quant/hadamard_inner.cuh",
+      "sha256": "63ca981a4a706924b4ab87047a903bc51ed86d6abe713b8d8034d8812d3467f3"
+    },
+    {
+      "path": "recipe/kernels/xmoe/util.cuh",
+      "url": "https://huggingface.co/diffbot/DeepSeek-V4.1-Flash-EXL3-3bpw-2x-RTX-PRO-6000/resolve/2c3797578722747dad3593531fd447b1d3d4c732/recipe/kernels/xmoe/util.cuh",
+      "sha256": "1907cea115260db7c3b0de540e375e7733b7ffc9019bec190c1d92abea1d964e"
+    },
+    {
+      "path": "recipe/kernels/xmoe/util.h",
+      "url": "https://huggingface.co/diffbot/DeepSeek-V4.1-Flash-EXL3-3bpw-2x-RTX-PRO-6000/resolve/2c3797578722747dad3593531fd447b1d3d4c732/recipe/kernels/xmoe/util.h",
+      "sha256": "ba89ac6793bf31cfe123d13baa2e34531a18a24bc3b2ff4add8cf4856b75a1c8"
+    },
+    {
+      "path": "recipe/kernels/xmoe_do/do_gemm.cu",
+      "url": "https://huggingface.co/diffbot/DeepSeek-V4.1-Flash-EXL3-3bpw-2x-RTX-PRO-6000/resolve/2c3797578722747dad3593531fd447b1d3d4c732/recipe/kernels/xmoe_do/do_gemm.cu",
+      "sha256": "8074377d3d54c9237a363c8b4065dcb5ba8824aaa0cc201a6033a53fd423aa4a"
+    },
+    {
+      "path": "recipe/kernels/xmoe_do_i8/dof_gemm.cu",
+      "url": "https://huggingface.co/diffbot/DeepSeek-V4.1-Flash-EXL3-3bpw-2x-RTX-PRO-6000/resolve/2c3797578722747dad3593531fd447b1d3d4c732/recipe/kernels/xmoe_do_i8/dof_gemm.cu",
+      "sha256": "847e54ad1768b85b42740a3c00d29d565d5b5128169c5594d241a399ada3cd63"
+    },
+    {
+      "path": "recipe/kl/README.md",
+      "url": "https://huggingface.co/diffbot/DeepSeek-V4.1-Flash-EXL3-3bpw-2x-RTX-PRO-6000/resolve/2c3797578722747dad3593531fd447b1d3d4c732/recipe/kl/README.md",
+      "sha256": "41340233511a2733307daee96f15fb0eea08c3f56167cc18707c579b785d052d"
+    },
+    {
+      "path": "recipe/kl/capture_server.py",
+      "url": "https://huggingface.co/diffbot/DeepSeek-V4.1-Flash-EXL3-3bpw-2x-RTX-PRO-6000/resolve/2c3797578722747dad3593531fd447b1d3d4c732/recipe/kl/capture_server.py",
+      "sha256": "1cfa2f35f54842af4515cadfd19c9362e9ed7522def018cff1db343a4c763adc"
+    },
+    {
+      "path": "recipe/kl/kyuz0_kld.py",
+      "url": "https://huggingface.co/diffbot/DeepSeek-V4.1-Flash-EXL3-3bpw-2x-RTX-PRO-6000/resolve/2c3797578722747dad3593531fd447b1d3d4c732/recipe/kl/kyuz0_kld.py",
+      "sha256": "b120e21e8ea045789e0eaae613f369b3e3aae2c3ff26cda998ee2b07e6d2e3a5"
+    },
+    {
+      "path": "recipe/patches/vllm/pr59585-dsml-finite-args.diff",
+      "url": "https://huggingface.co/diffbot/DeepSeek-V4.1-Flash-EXL3-3bpw-2x-RTX-PRO-6000/resolve/2c3797578722747dad3593531fd447b1d3d4c732/recipe/patches/vllm/pr59585-dsml-finite-args.diff",
+      "sha256": "349de1fd6893d48f0cdea47884e7eafed2d3efb06ee1cda44dc092fff1898fd3"
+    },
+    {
+      "path": "recipe/patches/vllm/pr60792-v41-image-order.diff",
+      "url": "https://huggingface.co/diffbot/DeepSeek-V4.1-Flash-EXL3-3bpw-2x-RTX-PRO-6000/resolve/2c3797578722747dad3593531fd447b1d3d4c732/recipe/patches/vllm/pr60792-v41-image-order.diff",
+      "sha256": "7bb53d41f1de12083cf10453623db07c10e4d538bfa04a13c1616b0f484d0000"
+    },
+    {
+      "path": "recipe/patches/vllm/pr61039-length-aware-candidate-blocks.diff",
+      "url": "https://huggingface.co/diffbot/DeepSeek-V4.1-Flash-EXL3-3bpw-2x-RTX-PRO-6000/resolve/2c3797578722747dad3593531fd447b1d3d4c732/recipe/patches/vllm/pr61039-length-aware-candidate-blocks.diff",
+      "sha256": "0a255791128ccb602a7a4a38ad6b6f6841a06c929006879817efd63da8d910e0"
+    },
+    {
+      "path": "recipe/patches/vllm/pr61142-dsml-drifted-openers.diff",
+      "url": "https://huggingface.co/diffbot/DeepSeek-V4.1-Flash-EXL3-3bpw-2x-RTX-PRO-6000/resolve/2c3797578722747dad3593531fd447b1d3d4c732/recipe/patches/vllm/pr61142-dsml-drifted-openers.diff",
+      "sha256": "0f663d51c3bc15a28a9b64e6c95474356e3109ca9ed04f62b30a0c1b673553dc"
+    },
+    {
+      "path": "recipe/patches/vllm/pr62196-v41-1017-encoder.diff",
+      "url": "https://huggingface.co/diffbot/DeepSeek-V4.1-Flash-EXL3-3bpw-2x-RTX-PRO-6000/resolve/2c3797578722747dad3593531fd447b1d3d4c732/recipe/patches/vllm/pr62196-v41-1017-encoder.diff",
+      "sha256": "399b997dcb126718a368aad14d4128bcc26243479ec7534309aea6d7f05ef5d8"
+    },
+    {
+      "path": "recipe/patches/vllm/sitecustomize.py",
+      "url": "https://huggingface.co/diffbot/DeepSeek-V4.1-Flash-EXL3-3bpw-2x-RTX-PRO-6000/resolve/2c3797578722747dad3593531fd447b1d3d4c732/recipe/patches/vllm/sitecustomize.py",
+      "sha256": "268da54c008254026af3d9d559c02d1f91026aa67be532c0587bceaf4e1d6cc3"
+    },
+    {
+      "path": "recipe/patches/vllm/sm120-fixes.diff",
+      "url": "https://huggingface.co/diffbot/DeepSeek-V4.1-Flash-EXL3-3bpw-2x-RTX-PRO-6000/resolve/2c3797578722747dad3593531fd447b1d3d4c732/recipe/patches/vllm/sm120-fixes.diff",
+      "sha256": "3402f734d039b06b0eeb757dc271a88c2d3ffee94fbc92b41e2a303e3fd9e800"
+    },
+    {
+      "path": "recipe/patches/vllm/test_dsml_nan_args.py",
+      "url": "https://huggingface.co/diffbot/DeepSeek-V4.1-Flash-EXL3-3bpw-2x-RTX-PRO-6000/resolve/2c3797578722747dad3593531fd447b1d3d4c732/recipe/patches/vllm/test_dsml_nan_args.py",
+      "sha256": "e899ffedbc6d90d3145f62c8aaad005ca8e87f9e3c2ed5c83f96b7f239545389"
+    },
+    {
+      "path": "recipe/patches/vllm/v41-encoder-api.diff",
+      "url": "https://huggingface.co/diffbot/DeepSeek-V4.1-Flash-EXL3-3bpw-2x-RTX-PRO-6000/resolve/2c3797578722747dad3593531fd447b1d3d4c732/recipe/patches/vllm/v41-encoder-api.diff",
+      "sha256": "3e2d65caeb7702e6d522d48f6e62155f7c6b7cd093af1d4168c51871061fd594"
+    },
+    {
+      "path": "recipe/patches/vllm/v41-engram-post-lifetime.diff",
+      "url": "https://huggingface.co/diffbot/DeepSeek-V4.1-Flash-EXL3-3bpw-2x-RTX-PRO-6000/resolve/2c3797578722747dad3593531fd447b1d3d4c732/recipe/patches/vllm/v41-engram-post-lifetime.diff",
+      "sha256": "26d4ae43ba586c524321874c2f82d6da90eb4d6dbc194cd3c6ecf431ad8ee447"
+    },
+    {
+      "path": "recipe/patches/vllm/v41-parser-strict-dsml.diff",
+      "url": "https://huggingface.co/diffbot/DeepSeek-V4.1-Flash-EXL3-3bpw-2x-RTX-PRO-6000/resolve/2c3797578722747dad3593531fd447b1d3d4c732/recipe/patches/vllm/v41-parser-strict-dsml.diff",
+      "sha256": "26033dcb7825204b5012ac2a302eba605d0088e6b882ec33ee65f22e23791da1"
+    },
+    {
+      "path": "recipe/patches/vllm/v41-replay-final-window.diff",
+      "url": "https://huggingface.co/diffbot/DeepSeek-V4.1-Flash-EXL3-3bpw-2x-RTX-PRO-6000/resolve/2c3797578722747dad3593531fd447b1d3d4c732/recipe/patches/vllm/v41-replay-final-window.diff",
+      "sha256": "366f19d7f2124fe7af8ae74782c7cce1a52d27868fc9c89b64e11d838401dfdd"
+    },
+    {
+      "path": "recipe/patches/vllm-exl3/LICENSE",
+      "url": "https://huggingface.co/diffbot/DeepSeek-V4.1-Flash-EXL3-3bpw-2x-RTX-PRO-6000/resolve/2c3797578722747dad3593531fd447b1d3d4c732/recipe/patches/vllm-exl3/LICENSE",
+      "sha256": "cf0b6664ce73f379c829d162e2c738dcd867448fbc2ee3962ef2b000297a6083"
+    },
+    {
+      "path": "recipe/patches/vllm-exl3/NOTICE.vllm-exl3",
+      "url": "https://huggingface.co/diffbot/DeepSeek-V4.1-Flash-EXL3-3bpw-2x-RTX-PRO-6000/resolve/2c3797578722747dad3593531fd447b1d3d4c732/recipe/patches/vllm-exl3/NOTICE.vllm-exl3",
+      "sha256": "2a30702aef1ca3af34bc324c160cb0908841dad92dc7871b005cd177e4fa695b"
+    },
+    {
+      "path": "recipe/patches/vllm-exl3/README.md",
+      "url": "https://huggingface.co/diffbot/DeepSeek-V4.1-Flash-EXL3-3bpw-2x-RTX-PRO-6000/resolve/2c3797578722747dad3593531fd447b1d3d4c732/recipe/patches/vllm-exl3/README.md",
+      "sha256": "b89734ab383998035b2714a1fe1a121a47ffdcb1a4b7b226d69d75526ba897a1"
+    },
+    {
+      "path": "recipe/patches/vllm-exl3/exl3-sm120.patch",
+      "url": "https://huggingface.co/diffbot/DeepSeek-V4.1-Flash-EXL3-3bpw-2x-RTX-PRO-6000/resolve/2c3797578722747dad3593531fd447b1d3d4c732/recipe/patches/vllm-exl3/exl3-sm120.patch",
+      "sha256": "b1e0f7f0f5b089ac4c322133f2eb32c55bbab477d3a5570857a585f9ca7b0d6c"
+    },
+    {
+      "path": "recipe/plans/README.md",
+      "url": "https://huggingface.co/diffbot/DeepSeek-V4.1-Flash-EXL3-3bpw-2x-RTX-PRO-6000/resolve/2c3797578722747dad3593531fd447b1d3d4c732/recipe/plans/README.md",
+      "sha256": "5c2d94b045502868b733789076994ccfd905be4aced720defed0f83229cb7cc4"
+    },
+    {
+      "path": "recipe/plans/make_plan.py",
+      "url": "https://huggingface.co/diffbot/DeepSeek-V4.1-Flash-EXL3-3bpw-2x-RTX-PRO-6000/resolve/2c3797578722747dad3593531fd447b1d3d4c732/recipe/plans/make_plan.py",
+      "sha256": "b52bf06c5b11fcc3141f813060e56744e5881c1e66b0b7bbc1d3dbd3a07e2867"
+    },
+    {
+      "path": "recipe/plans/plan-1017-agent30-c512.json",
+      "url": "https://huggingface.co/diffbot/DeepSeek-V4.1-Flash-EXL3-3bpw-2x-RTX-PRO-6000/resolve/2c3797578722747dad3593531fd447b1d3d4c732/recipe/plans/plan-1017-agent30-c512.json",
+      "sha256": "83e47525e7346d9eb73133eb1ae9f229d5b5ccde79c660185c63c98a0f218bb4"
+    },
+    {
+      "path": "recipe/plans/plan-1017-agent30.json",
+      "url": "https://huggingface.co/diffbot/DeepSeek-V4.1-Flash-EXL3-3bpw-2x-RTX-PRO-6000/resolve/2c3797578722747dad3593531fd447b1d3d4c732/recipe/plans/plan-1017-agent30.json",
+      "sha256": "26c02d82699b589e9e35772ab4b4632267e0160e1e209219e962e00b1dab7189"
+    },
+    {
+      "path": "recipe/quantize/README.md",
+      "url": "https://huggingface.co/diffbot/DeepSeek-V4.1-Flash-EXL3-3bpw-2x-RTX-PRO-6000/resolve/2c3797578722747dad3593531fd447b1d3d4c732/recipe/quantize/README.md",
+      "sha256": "9368694cf77750895765d064b0b930b1c967424231bc97ac001c92749a9d0ac4"
+    },
+    {
+      "path": "recipe/quantize/assemble_pack.py",
+      "url": "https://huggingface.co/diffbot/DeepSeek-V4.1-Flash-EXL3-3bpw-2x-RTX-PRO-6000/resolve/2c3797578722747dad3593531fd447b1d3d4c732/recipe/quantize/assemble_pack.py",
+      "sha256": "c0f6f8b7a6c1007eed488da221fe8d24afa10cfefabd89393891f61577cdefa7"
+    },
+    {
+      "path": "recipe/quantize/calib_client.py",
+      "url": "https://huggingface.co/diffbot/DeepSeek-V4.1-Flash-EXL3-3bpw-2x-RTX-PRO-6000/resolve/2c3797578722747dad3593531fd447b1d3d4c732/recipe/quantize/calib_client.py",
+      "sha256": "adb0c60190084468624881f74ab5e4138a81e01793b4a0eb3af25090b64df7b4"
+    },
+    {
+      "path": "recipe/quantize/convert_engram_int4.py",
+      "url": "https://huggingface.co/diffbot/DeepSeek-V4.1-Flash-EXL3-3bpw-2x-RTX-PRO-6000/resolve/2c3797578722747dad3593531fd447b1d3d4c732/recipe/quantize/convert_engram_int4.py",
+      "sha256": "424fb973802802f6d1967d2639e074f926f499d425978d574d3be5cf35c86585"
+    },
+    {
+      "path": "recipe/quantize/hooks/capture_hook.py",
+      "url": "https://huggingface.co/diffbot/DeepSeek-V4.1-Flash-EXL3-3bpw-2x-RTX-PRO-6000/resolve/2c3797578722747dad3593531fd447b1d3d4c732/recipe/quantize/hooks/capture_hook.py",
+      "sha256": "b5db5d51c39ae5059298c5fda4e0d3eff678ac732b4edd60784f68d81ee114d9"
+    },
+    {
+      "path": "recipe/quantize/hooks/engram_mmap_hook.py",
+      "url": "https://huggingface.co/diffbot/DeepSeek-V4.1-Flash-EXL3-3bpw-2x-RTX-PRO-6000/resolve/2c3797578722747dad3593531fd447b1d3d4c732/recipe/quantize/hooks/engram_mmap_hook.py",
+      "sha256": "1ddbd97482755b768e09d40d6cd4112b17bb42c1277141cff0e493b0ef6a44b4"
+    },
+    {
+      "path": "recipe/quantize/quantize_ds41_experts.py",
+      "url": "https://huggingface.co/diffbot/DeepSeek-V4.1-Flash-EXL3-3bpw-2x-RTX-PRO-6000/resolve/2c3797578722747dad3593531fd447b1d3d4c732/recipe/quantize/quantize_ds41_experts.py",
+      "sha256": "585c8c93dc81876f3ac9c1bbbcd45494677fa87e1f423bc903db5165af3fb5ea"
+    },
+    {
+      "path": "recipe/quantize/quantize_mtp_exl3.diff",
+      "url": "https://huggingface.co/diffbot/DeepSeek-V4.1-Flash-EXL3-3bpw-2x-RTX-PRO-6000/resolve/2c3797578722747dad3593531fd447b1d3d4c732/recipe/quantize/quantize_mtp_exl3.diff",
+      "sha256": "8b7cb4667030256b7d5588ddf86283c269aaa486b13566b7df5a95d3f1d71b11"
+    },
+    {
+      "path": "recipe/quantize/quantize_mtp_exl3.py",
+      "url": "https://huggingface.co/diffbot/DeepSeek-V4.1-Flash-EXL3-3bpw-2x-RTX-PRO-6000/resolve/2c3797578722747dad3593531fd447b1d3d4c732/recipe/quantize/quantize_mtp_exl3.py",
+      "sha256": "270d6323088383d5a378d3696e877e84c494ee725a0c5179bd9f7e7f1587789f"
+    },
+    {
+      "path": "recipe/quantize/selftest_experts.py",
+      "url": "https://huggingface.co/diffbot/DeepSeek-V4.1-Flash-EXL3-3bpw-2x-RTX-PRO-6000/resolve/2c3797578722747dad3593531fd447b1d3d4c732/recipe/quantize/selftest_experts.py",
+      "sha256": "b6cd205e2c20f3482494f2c2b71fc812e007c8b9d34cb29c7cdd432eca6f6055"
+    },
+    {
+      "path": "recipe/quantize/serve_original.sh",
+      "url": "https://huggingface.co/diffbot/DeepSeek-V4.1-Flash-EXL3-3bpw-2x-RTX-PRO-6000/resolve/2c3797578722747dad3593531fd447b1d3d4c732/recipe/quantize/serve_original.sh",
+      "sha256": "077e473f558b07b0ee3574be714d1b1357eac46c44cf886c7b374fcae8a87a38"
+    },
+    {
+      "path": "recipe/results/RESULTS.md",
+      "url": "https://huggingface.co/diffbot/DeepSeek-V4.1-Flash-EXL3-3bpw-2x-RTX-PRO-6000/resolve/2c3797578722747dad3593531fd447b1d3d4c732/recipe/results/RESULTS.md",
+      "sha256": "4eebb89d2d3ae326247a5ed0bbe3b6568a84e4f949d6a4cb6720b24122f4e0ae"
+    },
+    {
+      "path": "recipe/results/raw/agentic-1017.txt",
+      "url": "https://huggingface.co/diffbot/DeepSeek-V4.1-Flash-EXL3-3bpw-2x-RTX-PRO-6000/resolve/2c3797578722747dad3593531fd447b1d3d4c732/recipe/results/raw/agentic-1017.txt",
+      "sha256": "a9a349671536888df126b251b734f7783557b4c21914c0de08ce2fbf5c8db039"
+    },
+    {
+      "path": "recipe/results/raw/agentic-1stream-1001.txt",
+      "url": "https://huggingface.co/diffbot/DeepSeek-V4.1-Flash-EXL3-3bpw-2x-RTX-PRO-6000/resolve/2c3797578722747dad3593531fd447b1d3d4c732/recipe/results/raw/agentic-1stream-1001.txt",
+      "sha256": "37cd8a937cab48e4478b81f179253d64162b2ac9478db0756dedccad02d21d1b"
+    },
+    {
+      "path": "recipe/results/raw/agentic-4stream-1001.txt",
+      "url": "https://huggingface.co/diffbot/DeepSeek-V4.1-Flash-EXL3-3bpw-2x-RTX-PRO-6000/resolve/2c3797578722747dad3593531fd447b1d3d4c732/recipe/results/raw/agentic-4stream-1001.txt",
+      "sha256": "c32e16dbfabde0d804e02a31c6822ad11920f91ed1b8eb4fdc3d41ec5b0fdec8"
+    },
+    {
+      "path": "recipe/results/raw/ctx1m-1017.txt",
+      "url": "https://huggingface.co/diffbot/DeepSeek-V4.1-Flash-EXL3-3bpw-2x-RTX-PRO-6000/resolve/2c3797578722747dad3593531fd447b1d3d4c732/recipe/results/raw/ctx1m-1017.txt",
+      "sha256": "9b0e693a68e84cb1d8762117d7806ac3107e3026edfabb17f9eda80d41edee0f"
+    },
+    {
+      "path": "recipe/results/raw/dev-1017b.txt",
+      "url": "https://huggingface.co/diffbot/DeepSeek-V4.1-Flash-EXL3-3bpw-2x-RTX-PRO-6000/resolve/2c3797578722747dad3593531fd447b1d3d4c732/recipe/results/raw/dev-1017b.txt",
+      "sha256": "ffa8760742e87e98cfc150b3de8930236c0dce147e08fd11a8e980d7fbc9ec0e"
+    },
+    {
+      "path": "recipe/results/raw/fp8ar-1017.txt",
+      "url": "https://huggingface.co/diffbot/DeepSeek-V4.1-Flash-EXL3-3bpw-2x-RTX-PRO-6000/resolve/2c3797578722747dad3593531fd447b1d3d4c732/recipe/results/raw/fp8ar-1017.txt",
+      "sha256": "3d5cadac345d9406a023a6089b6fb069629eb05da2ac1cf88d7cdda84287d726"
+    },
+    {
+      "path": "recipe/results/raw/kl-1017.txt",
+      "url": "https://huggingface.co/diffbot/DeepSeek-V4.1-Flash-EXL3-3bpw-2x-RTX-PRO-6000/resolve/2c3797578722747dad3593531fd447b1d3d4c732/recipe/results/raw/kl-1017.txt",
+      "sha256": "434284783fc6f21c8b80a6d4e928d7d3da2c34678eaed10debcd846705bfefdc"
+    },
+    {
+      "path": "recipe/results/raw/kl-served-1001b.txt",
+      "url": "https://huggingface.co/diffbot/DeepSeek-V4.1-Flash-EXL3-3bpw-2x-RTX-PRO-6000/resolve/2c3797578722747dad3593531fd447b1d3d4c732/recipe/results/raw/kl-served-1001b.txt",
+      "sha256": "c103052f39ea4b5bfe9bb80b8304d9cec7445da3c8d533da233aed62e690a4cc"
+    },
+    {
+      "path": "recipe/results/raw/kl-served-rope-bug.txt",
+      "url": "https://huggingface.co/diffbot/DeepSeek-V4.1-Flash-EXL3-3bpw-2x-RTX-PRO-6000/resolve/2c3797578722747dad3593531fd447b1d3d4c732/recipe/results/raw/kl-served-rope-bug.txt",
+      "sha256": "490619e931d4d52958ad6cc9d2b697109d00b6ef4178da7e6e52fadf96c8ca15"
+    },
+    {
+      "path": "recipe/results/raw/kl-served.txt",
+      "url": "https://huggingface.co/diffbot/DeepSeek-V4.1-Flash-EXL3-3bpw-2x-RTX-PRO-6000/resolve/2c3797578722747dad3593531fd447b1d3d4c732/recipe/results/raw/kl-served.txt",
+      "sha256": "e03a767576a839439502d6230fbdb54776d3e33d50aff49247788e01779473a4"
+    },
+    {
+      "path": "recipe/results/raw/korean_check.json",
+      "url": "https://huggingface.co/diffbot/DeepSeek-V4.1-Flash-EXL3-3bpw-2x-RTX-PRO-6000/resolve/2c3797578722747dad3593531fd447b1d3d4c732/recipe/results/raw/korean_check.json",
+      "sha256": "192dc2a13da2c4065a5fb58c2366568ca84cc4c6a0533004525e8d2594e3e9d7"
+    },
+    {
+      "path": "recipe/results/raw/power-1017.txt",
+      "url": "https://huggingface.co/diffbot/DeepSeek-V4.1-Flash-EXL3-3bpw-2x-RTX-PRO-6000/resolve/2c3797578722747dad3593531fd447b1d3d4c732/recipe/results/raw/power-1017.txt",
+      "sha256": "bd31a2b3cc5db4ba9d1f557d4b8b2c9284d8487b9132e48be52b917ef011d27f"
+    },
+    {
+      "path": "recipe/results/raw/pr58560-1005.txt",
+      "url": "https://huggingface.co/diffbot/DeepSeek-V4.1-Flash-EXL3-3bpw-2x-RTX-PRO-6000/resolve/2c3797578722747dad3593531fd447b1d3d4c732/recipe/results/raw/pr58560-1005.txt",
+      "sha256": "a39568541f615d3815e496ac5ef756a49f7104bb18d066667805902d14de317a"
+    },
+    {
+      "path": "recipe/results/raw/pr59894-ab-1004.txt",
+      "url": "https://huggingface.co/diffbot/DeepSeek-V4.1-Flash-EXL3-3bpw-2x-RTX-PRO-6000/resolve/2c3797578722747dad3593531fd447b1d3d4c732/recipe/results/raw/pr59894-ab-1004.txt",
+      "sha256": "c8c2239f1a314e2341af26b218daf3e1b10403b4264e3aaccc0ba77cb5cf8f6b"
+    },
+    {
+      "path": "recipe/results/raw/quality-1017.txt",
+      "url": "https://huggingface.co/diffbot/DeepSeek-V4.1-Flash-EXL3-3bpw-2x-RTX-PRO-6000/resolve/2c3797578722747dad3593531fd447b1d3d4c732/recipe/results/raw/quality-1017.txt",
+      "sha256": "2c02bf170468592a82f1b5b5d3ca1ec2b4567fc9be1825fcd22ba35c5bc7d6f9"
+    },
+    {
+      "path": "recipe/results/raw/rebase-1015.txt",
+      "url": "https://huggingface.co/diffbot/DeepSeek-V4.1-Flash-EXL3-3bpw-2x-RTX-PRO-6000/resolve/2c3797578722747dad3593531fd447b1d3d4c732/recipe/results/raw/rebase-1015.txt",
+      "sha256": "8ce8e50a868d1400f09e3617163e20157d5f48dc0b717871a76da09616cd02f6"
+    },
+    {
+      "path": "recipe/results/raw/recipe-1m-smoke.txt",
+      "url": "https://huggingface.co/diffbot/DeepSeek-V4.1-Flash-EXL3-3bpw-2x-RTX-PRO-6000/resolve/2c3797578722747dad3593531fd447b1d3d4c732/recipe/results/raw/recipe-1m-smoke.txt",
+      "sha256": "7676f003d2ee9e4c99fe0856d705323a242e212f3d6d0ebe3bc013817750f539"
+    },
+    {
+      "path": "recipe/results/raw/recipe-path-1017.txt",
+      "url": "https://huggingface.co/diffbot/DeepSeek-V4.1-Flash-EXL3-3bpw-2x-RTX-PRO-6000/resolve/2c3797578722747dad3593531fd447b1d3d4c732/recipe/results/raw/recipe-path-1017.txt",
+      "sha256": "669f3658e389c36b73e3985e0f06eda080e2bf92fc7cd193028a6f9e619a600c"
+    },
+    {
+      "path": "recipe/results/raw/recipe-path-1017b.txt",
+      "url": "https://huggingface.co/diffbot/DeepSeek-V4.1-Flash-EXL3-3bpw-2x-RTX-PRO-6000/resolve/2c3797578722747dad3593531fd447b1d3d4c732/recipe/results/raw/recipe-path-1017b.txt",
+      "sha256": "570e23fc9158a55c1afd17707418aea0f0fb10ea3db96ea8b17e142dc4e181b0"
+    },
+    {
+      "path": "recipe/results/raw/recipe-path-fp8ar-1017.txt",
+      "url": "https://huggingface.co/diffbot/DeepSeek-V4.1-Flash-EXL3-3bpw-2x-RTX-PRO-6000/resolve/2c3797578722747dad3593531fd447b1d3d4c732/recipe/results/raw/recipe-path-fp8ar-1017.txt",
+      "sha256": "cd9d317b311af9d962fe017e6f5296ffad0317be6015cf003cb5cf281bdbd01e"
+    },
+    {
+      "path": "recipe/results/raw/validate-recipe-1001b.txt",
+      "url": "https://huggingface.co/diffbot/DeepSeek-V4.1-Flash-EXL3-3bpw-2x-RTX-PRO-6000/resolve/2c3797578722747dad3593531fd447b1d3d4c732/recipe/results/raw/validate-recipe-1001b.txt",
+      "sha256": "9fdff74abc77c334209b6b9ba83513d406e05333c372b7f45c7d75d4368a17a8"
+    },
+    {
+      "path": "recipe/results/raw/validate-recipe-vision.txt",
+      "url": "https://huggingface.co/diffbot/DeepSeek-V4.1-Flash-EXL3-3bpw-2x-RTX-PRO-6000/resolve/2c3797578722747dad3593531fd447b1d3d4c732/recipe/results/raw/validate-recipe-vision.txt",
+      "sha256": "8269b3195876aab147c72f7e7a20374f522f27f70b3a6ff66cdd2b258f91a891"
+    },
+    {
+      "path": "recipe/results/raw/validate-recipe.txt",
+      "url": "https://huggingface.co/diffbot/DeepSeek-V4.1-Flash-EXL3-3bpw-2x-RTX-PRO-6000/resolve/2c3797578722747dad3593531fd447b1d3d4c732/recipe/results/raw/validate-recipe.txt",
+      "sha256": "b7f0c2704f7a18327499dd5ce629fe77b8cbafd8e604129dd2c06554b43a955e"
+    },
+    {
+      "path": "recipe/serve/serve.sh",
+      "url": "https://huggingface.co/diffbot/DeepSeek-V4.1-Flash-EXL3-3bpw-2x-RTX-PRO-6000/resolve/2c3797578722747dad3593531fd447b1d3d4c732/recipe/serve/serve.sh",
+      "sha256": "26d277a688d23be14a9d2b70ba91ebc1dc950a3593e363eeaeb25b4bbe959e1a"
+    },
+    {
+      "path": "source/sfxnz/docker/patch/widen_p2b_kbits.py",
+      "url": "https://raw.githubusercontent.com/sfxnz/DeepSeek-V4.1-Flash-1017-EXL3-2.7bpw-vLLM-2x-DGX-Spark/19e0c56620a7b9748fd901cdf3ef533a0f6ed917/docker/patch/widen_p2b_kbits.py",
+      "sha256": "c37b2ab664af1bd5940cfd0a88138f1d14a795e8b59d7bcf256d63b05edb38da"
+    },
+    {
+      "path": "source/sfxnz/docker/patch/engram_disk.py",
+      "url": "https://raw.githubusercontent.com/sfxnz/DeepSeek-V4.1-Flash-1017-EXL3-2.7bpw-vLLM-2x-DGX-Spark/19e0c56620a7b9748fd901cdf3ef533a0f6ed917/docker/patch/engram_disk.py",
+      "sha256": "2b278dfd7016790d1640474ff49066877bb755d4ff7f172c082e4a27283f0740"
+    },
+    {
+      "path": "source/sfxnz/docker/patch/lmhead_mxfp8.py",
+      "url": "https://raw.githubusercontent.com/sfxnz/DeepSeek-V4.1-Flash-1017-EXL3-2.7bpw-vLLM-2x-DGX-Spark/19e0c56620a7b9748fd901cdf3ef533a0f6ed917/docker/patch/lmhead_mxfp8.py",
+      "sha256": "67438720b91200dd43fb27ccbf2fe02f63a4543adaf029766675054433adde1a"
+    },
+    {
+      "path": "source/sfxnz/LICENSE",
+      "url": "https://raw.githubusercontent.com/sfxnz/DeepSeek-V4.1-Flash-1017-EXL3-2.7bpw-vLLM-2x-DGX-Spark/19e0c56620a7b9748fd901cdf3ef533a0f6ed917/LICENSE",
+      "sha256": "f2c6c602815669d292889e5be8c802f2ed950653b77999b1584e8e6aed25d040"
+    },
+    {
+      "path": "evidence/sfxnz-config.json",
+      "url": "https://huggingface.co/sfxnz/DeepSeek-V4.1-Flash-1017-EXL3/resolve/a8006e99931e7d67c4d218c66543f478b521b857/config.json",
+      "sha256": "af5a69352a19b8b0928509703068597596d231709a06a544e0b07879fb70512c"
+    }
+  ]
+}

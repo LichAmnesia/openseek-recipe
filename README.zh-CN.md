@@ -6,7 +6,15 @@
 **SparkDash**。统一入口是仓库内的 `./recipe`，不会替换现有 `openseek` 命令。
 
 首个已验证 recipe：**Qwen3.8-Flash-Next + 单张 RTX PRO 6000 Blackwell Max-Q 96GB**。
-其他模型、硬件和自制量化制品属于后续计划，尚未验证支持。配置与命令见 [CLI 指南](docs/CLI.md)。
+新增 [DeepSeek-V4.1-Flash-1017 2.7bpw 实验版跑法](docs/deepseek-v41-flash-1017.md)：
+96GB 显存 +128GB 内存，TP1/eager 实测 **10.64 tok/s、TTFT 5.31 秒**。
+包含固定版本、下载/校验、混合位宽与磁盘 Engram、MXFP8 输出层补丁、启动与视频服务交接。
+尚未通过速度门槛，KL/SWE-bench/256K 质量未验收；通过独立实验入口运行。
+其余配置与命令见 [CLI 指南](docs/CLI.md)。
+
+DeepSeek 权重、固定跑法快照与原始实测数据已发布至
+[OpenSeek EXL3 Hugging Face 仓库](https://huggingface.co/LichAmnesia/DeepSeek-V4.1-Flash-1017-OpenSeek-EXL3)
+（`v0.1.0-eager`，保留 sfxnz 原权重与署名，运行栈仍为实验版）。
 
 仓库原名 `qwen38-flash-next-rtx6000`。
 
@@ -73,3 +81,8 @@ runtime commit、基础镜像 digest 和 LMCache wheel hash 固定于 `locks/`�
 真正难的工程在 [tpurtell/sm12x-exl3-qwen3.8-flash-next](https://github.com/tpurtell/sm12x-exl3-qwen3.8-flash-next)（Apache-2.0）。本仓库做的是：钉住它的版本，补上体检、生命周期管理、冒烟测试、客户端配置，以及第一份 Max-Q 300W 的实测数据。权重来自 [wrldsuksgo2mars](https://huggingface.co/wrldsuksgo2mars/Qwen3.8-Flash-Next-EXL3-K4.25-PLE-FP8-v1)，模型来自 [Qwen](https://huggingface.co/Qwen/Qwen3.8-Flash-Next)。
 
 本仓库不分发任何模型权重或镜像，`setup.sh` 会从原始来源下载。Qwen 模型和 EXL3 量化权重在 Hugging Face 上的许可都是 `license: other`，使用前请自行阅读并接受，商用前尤其要看清楚。
+
+DeepSeek 实验权重来自 [sfxnz](https://huggingface.co/sfxnz/DeepSeek-V4.1-Flash-1017-EXL3)，
+host 专家底座来自 [Diffbot](https://huggingface.co/diffbot/DeepSeek-V4.1-Flash-EXL3-3bpw-2x-RTX-PRO-6000)。
+编排脚本采用 MIT；混合位宽插件补丁及生成的插件修改采用 **AGPL-3.0-only**，
+详见 [来源与许可说明](experiments/deepseek-v41-flash-1017/THIRD_PARTY_NOTICES.md)。

@@ -123,6 +123,12 @@ new containers; it is not an automatic zero-downtime deployment.
 
 ## Registering another HF release
 
+The measured [DeepSeek 1017 2.7bpw experiment](deepseek-v41-flash-1017.md)
+currently uses an independent manual reproduction bundle in `experiments/`.
+It is not registered in `./recipe models list`: this CLI's lifecycle adapter
+remains Qwen-specific. Its patches/results do not imply quality or optimized
+speed qualification. Use the experiment's preparation/serve commands.
+
 Add an actual published checkpoint, complete immutable lock, a compatible
 backend adapter, and a qualified hardware profile. The current backend binds to
 the pinned upstream Qwen profile and rejects another checkpoint identity until

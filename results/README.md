@@ -2,6 +2,7 @@
 
 | Run | Card | Profile | Notes |
 |---|---|---|---|
+| [2026-10-26-deepseek-2.7bpw-eager](2026-10-26-deepseek-2.7bpw-eager/SUMMARY.md) | RTX PRO 6000 Max-Q, 300 W | DeepSeek 1017 2.7bpw TP1/eager, 92GiB host experts | 10.64tok/s, TTFT5.31s; API smoke passed; speed gates missed, quality acceptance not run |
 | [2026-09-21-maxq-300w](2026-09-21-maxq-300w/SUMMARY.md) | RTX PRO 6000 Max-Q, 300 W | exl3-ple8, MTP 3 | `PART=core` + SWE-bench Pro 50-subset (no KV offload) |
 | [2026-10-21-maxq-kv-ram-offload](2026-10-21-maxq-kv-ram-offload/SUMMARY.md) | RTX PRO 6000 Max-Q, 300 W | exl3-ple8, MTP 3, LMCache 0.5.6 | `scripts/kv_bench.py`: no tier vs 32 GiB vs 64 GiB RAM tier |
 

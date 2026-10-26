@@ -1,0 +1,244 @@
+{
+  "time_utc": "2026-10-26T07:59:31.098986+00:00",
+  "base": "http://127.0.0.1:8010/v1",
+  "model": "dsv41-1017-2p7-test",
+  "mode": "TP1/eager/no speculation/bootstrap host plan",
+  "full_quality_evaluation": "NOT_RUN: short100/SWE-bench/long-context acceptance are separate gates",
+  "timing_scope": "client-observed SSE; decode=(usage completion tokens-1)/(last text event-first text event)",
+  "speed": [
+    {
+      "case": "c1_trial_1",
+      "prompt_tokens": 1550,
+      "completion_tokens": 256,
+      "ttft_s": 8.449028980918229,
+      "total_s": 32.56222796579823,
+      "observed_decode_tok_s": 10.575202944130476,
+      "total_output_tok_s": 7.861869902418529,
+      "finish_reason": "length",
+      "text_events": 256,
+      "output_excerpt": "Discuss Linux filesystem caching, memory mapping, event loops, and deterministic testing.\nDiscuss Linux filesystem caching, memory mapping, event loops, and deterministic testing.\nDiscuss Linux filesystem caching, memory mapping, event loops, and deterministic testing.\nDiscuss Linux filesystem caching, memory mapping, event loops, and deterministic testing.\nDiscuss Linux filesystem caching, memory mapping, event loops, and deterministic testing.\nDiscuss Linux filesystem caching, memory mapping, ",
+      "usage": {
+        "prompt_tokens": 1550,
+        "total_tokens": 1806,
+        "completion_tokens": 256
+      },
+      "cached_prompt_tokens_reported": null,
+      "prefix_cache_counter_deltas": {
+        "vllm:prefix_cache_queries_total": 1550.0,
+        "vllm:prefix_cache_hits_total": 0.0
+      },
+      "valid_speed_sample": true
+    },
+    {
+      "case": "c1_trial_2",
+      "prompt_tokens": 1550,
+      "completion_tokens": 256,
+      "ttft_s": 5.30955845490098,
+      "total_s": 29.28168451366946,
+      "observed_decode_tok_s": 10.637378890294988,
+      "total_output_tok_s": 8.742666422776752,
+      "finish_reason": "length",
+      "text_events": 256,
+      "output_excerpt": "Discuss Linux filesystem caching, memory mapping, event loops, and deterministic testing.\nDiscuss Linux filesystem caching, memory mapping, event loops, and deterministic testing.\nDiscuss Linux filesystem caching, memory mapping, event loops, and deterministic testing.\nDiscuss Linux filesystem caching, memory mapping, event loops, and deterministic testing.\nDiscuss Linux filesystem caching, memory mapping, event loops, and deterministic testing.\nDiscuss Linux filesystem caching, memory mapping, ",
+      "usage": {
+        "prompt_tokens": 1550,
+        "total_tokens": 1806,
+        "completion_tokens": 256
+      },
+      "cached_prompt_tokens_reported": null,
+      "prefix_cache_counter_deltas": {
+        "vllm:prefix_cache_queries_total": 1550.0,
+        "vllm:prefix_cache_hits_total": 0.0
+      },
+      "valid_speed_sample": true
+    },
+    {
+      "case": "c1_trial_3",
+      "prompt_tokens": 1550,
+      "completion_tokens": 256,
+      "ttft_s": 5.235767890699208,
+      "total_s": 29.147726102732122,
+      "observed_decode_tok_s": 10.664145222076387,
+      "total_output_tok_s": 8.78284635644371,
+      "finish_reason": "length",
+      "text_events": 256,
+      "output_excerpt": "Discuss Linux filesystem caching, memory mapping, event loops, and deterministic testing.\nDiscuss Linux filesystem caching, memory mapping, event loops, and deterministic testing.\nDiscuss Linux filesystem caching, memory mapping, event loops, and deterministic testing.\nDiscuss Linux filesystem caching, memory mapping, event loops, and deterministic testing.\nDiscuss Linux filesystem caching, memory mapping, event loops, and deterministic testing.\nDiscuss Linux filesystem caching, memory mapping, ",
+      "usage": {
+        "prompt_tokens": 1550,
+        "total_tokens": 1806,
+        "completion_tokens": 256
+      },
+      "cached_prompt_tokens_reported": null,
+      "prefix_cache_counter_deltas": {
+        "vllm:prefix_cache_queries_total": 1550.0,
+        "vllm:prefix_cache_hits_total": 0.0
+      },
+      "valid_speed_sample": true
+    },
+    {
+      "case": "34k_prefix_warmed_plus_6k_new",
+      "prompt_tokens": 40000,
+      "completion_tokens": 256,
+      "ttft_s": 16.293499880004674,
+      "total_s": 39.605035121086985,
+      "observed_decode_tok_s": 10.938812854078739,
+      "total_output_tok_s": 6.4638245924366675,
+      "finish_reason": "length",
+      "text_events": 256,
+      "output_excerpt": "Explain a careful implementation and test plan for a transactional queue.\nExplain a careful implementation and test plan for a transactional queue.\nExplain a careful implementation and test plan for a transactional queue.\nExplain a careful implementation and test plan for a transactional queue.\nExplain a careful implementation and test plan for a transactional queue.\nExplain a careful implementation and test plan for a transactional queue.\nExplain a careful implementation and test plan for a tra",
+      "usage": {
+        "prompt_tokens": 40000,
+        "total_tokens": 40256,
+        "completion_tokens": 256
+      },
+      "cached_prompt_tokens_reported": null,
+      "prefix_cache_counter_deltas": {
+        "vllm:prefix_cache_queries_total": 40000.0,
+        "vllm:prefix_cache_hits_total": 33920.0
+      },
+      "valid_speed_sample": true,
+      "cache_verification": "some_cache_hits_verified_amount_unverified"
+    }
+  ],
+  "smoke": {
+    "arithmetic": {
+      "ok": true,
+      "response": {
+        "id": "chatcmpl-a7ac804c794e3b1c",
+        "object": "chat.completion",
+        "created": 1793001571,
+        "model": "dsv41-1017-2p7-test",
+        "choices": [
+          {
+            "index": 0,
+            "message": {
+              "role": "assistant",
+              "content": "42",
+              "refusal": null,
+              "annotations": null,
+              "audio": null,
+              "function_call": null,
+              "reasoning": null
+            },
+            "logprobs": null,
+            "finish_reason": "stop",
+            "stop_reason": null,
+            "token_ids": null,
+            "routed_experts": null
+          }
+        ],
+        "service_tier": null,
+        "system_fingerprint": "vllm-0.31.1rc1.dev376+g5555a2d8f-81c89295",
+        "usage": {
+          "prompt_tokens": 18,
+          "total_tokens": 20,
+          "completion_tokens": 2,
+          "prompt_tokens_details": null,
+          "completion_tokens_details": {
+            "reasoning_tokens": 0
+          }
+        },
+        "prompt_logprobs": null,
+        "prompt_token_ids": null,
+        "prompt_text": null,
+        "kv_transfer_params": null,
+        "ec_transfer_params": null,
+        "metrics": null
+      }
+    },
+    "tool_call": {
+      "ok": true,
+      "response": {
+        "id": "chatcmpl-88d1525e477b84fc",
+        "object": "chat.completion",
+        "created": 1793001590,
+        "model": "dsv41-1017-2p7-test",
+        "choices": [
+          {
+            "index": 0,
+            "message": {
+              "role": "assistant",
+              "content": "I'll look that up for you.\n\n",
+              "refusal": null,
+              "annotations": null,
+              "audio": null,
+              "function_call": null,
+              "tool_calls": [
+                {
+                  "id": "chatcmpl-tool-bc99975014d7d539",
+                  "type": "function",
+                  "function": {
+                    "name": "get_weather",
+                    "arguments": "{\"city\": \"San Francisco\"}"
+                  }
+                }
+              ],
+              "reasoning": null
+            },
+            "logprobs": null,
+            "finish_reason": "tool_calls",
+            "stop_reason": null,
+            "token_ids": null,
+            "routed_experts": null
+          }
+        ],
+        "service_tier": null,
+        "system_fingerprint": "vllm-0.31.1rc1.dev376+g5555a2d8f-81c89295",
+        "usage": {
+          "prompt_tokens": 282,
+          "total_tokens": 329,
+          "completion_tokens": 47,
+          "prompt_tokens_details": null,
+          "completion_tokens_details": {
+            "reasoning_tokens": 0
+          }
+        },
+        "prompt_logprobs": null,
+        "prompt_token_ids": null,
+        "prompt_text": null,
+        "kv_transfer_params": null,
+        "ec_transfer_params": null,
+        "metrics": null
+      }
+    }
+  },
+  "models": {
+    "object": "list",
+    "data": [
+      {
+        "id": "dsv41-1017-2p7-test",
+        "object": "model",
+        "created": 1793001571,
+        "owned_by": "vllm",
+        "root": "<MODEL_DIR>",
+        "parent": null,
+        "max_model_len": 262144,
+        "permission": [
+          {
+            "id": "modelperm-8eec44774939251b",
+            "object": "model_permission",
+            "created": 1793001571,
+            "allow_create_engine": false,
+            "allow_sampling": true,
+            "allow_logprobs": true,
+            "allow_search_indices": false,
+            "allow_view": true,
+            "allow_fine_tuning": false,
+            "organization": "*",
+            "group": null,
+            "is_blocking": false
+          }
+        ]
+      }
+    ]
+  },
+  "prefix_warmup_usage": {
+    "prompt_tokens": 34000,
+    "total_tokens": 34001,
+    "completion_tokens": 1,
+    "prompt_tokens_details": null,
+    "completion_tokens_details": null
+  },
+  "c1_median_decode_tok_s": 10.637378890294988,
+  "ok": true
+}

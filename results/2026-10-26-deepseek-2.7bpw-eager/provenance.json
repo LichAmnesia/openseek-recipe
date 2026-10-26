@@ -1,0 +1,16 @@
+{
+  "source_run": "261023-1230-dsv41-flash-1017-rtx6000-vllm-port/execution/20261025-1545",
+  "image_id": "sha256:5c5a4d3e1bbf46aa24db3c6da126cfa3c628076137dccdf5935d81b912443664",
+  "model_revision": "a8006e99931e7d67c4d218c66543f478b521b857",
+  "recipe_revision": "2c3797578722747dad3593531fd447b1d3d4c732",
+  "anonymization": [
+    "model path to <MODEL_DIR>",
+    "cgroup path to <MODEL_CGROUP>"
+  ],
+  "numeric_values_unchanged": true,
+  "source_sha256": {
+    "benchmark.json": "f535d068636ac0bfce7bd46aebdf36246669b72878fc12e8080796a314846044",
+    "measurements.json": "c3644b9c201398cab574453dd2d6b795240f05c83794888e8969dce4ace1eafd",
+    "resources.jsonl": "3ada3e5bb99b116a2baa4a17db7370d6cc03ce15a7f9b6227cf47a65d6600607"
+  }
+}

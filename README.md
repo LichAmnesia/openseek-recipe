@@ -10,8 +10,16 @@ entry point is `./recipe`, so it does not replace your `openseek` command.
 
 **First validated recipe:** Qwen3.8-Flash-Next on one RTX PRO 6000 Blackwell Max-Q
 96 GB. The supported setup is described below. Additional models, hardware,
-and project-produced quantizations are planned, not validated support. See the
+and project-produced quantizations require separate qualification. An
+[experimental DeepSeek-V4.1-Flash-1017 2.7bpw recipe](docs/deepseek-v41-flash-1017.md)
+now records the measured TP1/eager port: **10.64 tok/s, 5.31 s TTFT**, on 96GB
+VRAM +128GB host RAM. Its speed/quality acceptance is incomplete; use its
+standalone reproduction guide rather than selecting it in the Qwen CLI. See the
 [CLI/configuration guide](docs/CLI.md).
+
+DeepSeek weights, frozen portable recipe and measured traces:
+[OpenSeek EXL3 HF release](https://huggingface.co/LichAmnesia/DeepSeek-V4.1-Flash-1017-OpenSeek-EXL3)
+(`v0.1.0-eager`; attributed sfxnz weights, experimental runtime).
 
 Previously published as `qwen38-flash-next-rtx6000`.
 
@@ -204,14 +212,19 @@ matters:
 - Serving recipe, patched vLLM image, benchmark suite: [tpurtell/sm12x-exl3-qwen3.8-flash-next](https://github.com/tpurtell/sm12x-exl3-qwen3.8-flash-next) (Apache-2.0)
 - EXL3 K4.25 + FP8 PLE checkpoint: [wrldsuksgo2mars/Qwen3.8-Flash-Next-EXL3-K4.25-PLE-FP8-v1](https://huggingface.co/wrldsuksgo2mars/Qwen3.8-Flash-Next-EXL3-K4.25-PLE-FP8-v1)
 - Model: [Qwen/Qwen3.8-Flash-Next](https://huggingface.co/Qwen/Qwen3.8-Flash-Next)
+- DeepSeek experimental checkpoint: [sfxnz](https://huggingface.co/sfxnz/DeepSeek-V4.1-Flash-1017-EXL3);
+  host-expert foundation: [Diffbot](https://huggingface.co/diffbot/DeepSeek-V4.1-Flash-EXL3-3bpw-2x-RTX-PRO-6000).
+  See the [experiment's attribution and licenses](experiments/deepseek-v41-flash-1017/THIRD_PARTY_NOTICES.md).
 
 **This repo does not redistribute any model weights or container images.** `scripts/setup.sh`
 downloads them from their original sources. Both the Qwen model and the EXL3 quant are
 listed on Hugging Face under `license: other`. Read and accept those terms yourself,
 especially before any commercial use.
 
-The scripts in this repo are MIT-licensed. The upstream recipe is cloned at run time
-into `vendor/` and is not redistributed here.
+The orchestration scripts are MIT-licensed. The DeepSeek mixed-bit plugin patch
+and resulting plugin modifications are **AGPL-3.0-only**; see the experiment's
+notices above. The Qwen upstream recipe is cloned at run time into `vendor/`
+and is not redistributed here.
 
 ---
 
