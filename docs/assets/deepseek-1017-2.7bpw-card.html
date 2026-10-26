@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=1600, initial-scale=1">
+  <title>DeepSeek 1017 2.7bpw — OpenSeek measured eager port</title>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+  <!-- Source: results/2026-10-26-deepseek-2.7bpw-eager/measurements.json.
+       C1 median of 3 ×1550/256; 40K=34K warmed prefix+6K new. Memory peaks
+       are independent observations, not additive. No new GPU run for this card.
+       Render at1600×900, device scale1. Matches the prior Qwen KV card style. -->
+  <style>
+    :root{--bg:#121211;--panel:#1a1b1c;--text:#f0efec;--muted:#a3a7ad;--blue:#559bf3;--line:#343638;--amber:#e6b978}
+    *{box-sizing:border-box;margin:0}
+    body{position:relative;width:1600px;height:900px;overflow:hidden;background:radial-gradient(1100px 650px at 94% -28%,#203247 0%,var(--bg) 74%);color:var(--text);font-family:'Space Grotesk',sans-serif;padding:48px 72px}
+    .mono{font-family:'JetBrains Mono',monospace}
+    header{position:relative}
+    .eyebrow{font-size:17px;letter-spacing:2px;color:var(--muted);font-weight:500}
+    .brand{position:absolute;right:0;top:-3px;font-size:27px;font-weight:700;letter-spacing:-1px;color:var(--blue)}
+    h1{font-size:53px;letter-spacing:-1.5px;line-height:1.12;margin-top:18px;font-weight:700}
+    .model{font-size:25px;color:var(--text);margin-top:10px}
+    .hardware{font-size:18px;line-height:1.5;margin-top:13px;color:var(--muted)}
+    main{display:grid;grid-template-columns:850px 1fr;gap:42px;margin-top:36px}
+    h2{font-size:24px;letter-spacing:-.4px;font-weight:500}
+    .section-note{font-size:16px;color:var(--muted);margin-top:8px;white-space:nowrap}
+    .metrics{display:grid;grid-template-columns:1fr 1fr;gap:28px;margin-top:26px}
+    .metric{border-top:2px solid var(--line);padding-top:16px}
+    .metric .value{font-size:106px;line-height:1.12;letter-spacing:-7px;font-weight:700;color:var(--blue)}
+    .metric .caption{font-size:22px;margin-top:5px;color:var(--text)}
+    .metric .caption span{color:var(--muted);font-size:19px;margin-left:6px}
+    .long{margin-top:27px;background:var(--panel);border-left:3px solid var(--blue);padding:16px 20px}
+    .long .label{font-size:17px;color:var(--muted)}
+    .long .numbers{font-size:23px;margin-top:9px;white-space:nowrap;letter-spacing:-.6px}
+    .long b{font-weight:700;color:var(--text)}
+    .memory{border-left:1px solid var(--line);padding-left:34px}
+    .memory h2{font-size:24px}
+    .memrow{display:flex;align-items:baseline;justify-content:space-between;border-bottom:1px solid var(--line);padding:18px 0 15px;gap:14px}
+    .memrow .value{font-size:36px;font-weight:700;letter-spacing:-1.5px;white-space:nowrap}
+    .memrow .value span{font-size:17px;color:var(--muted);font-weight:400;letter-spacing:0}
+    .memrow .label{font-size:18px;color:var(--text)}
+    .memrow .note{font-size:13px;line-height:1.5;color:var(--muted);margin-top:5px}
+    .placement{font-size:15px;line-height:1.65;color:var(--muted);margin-top:14px}
+    .placement b{font-weight:500;color:var(--text)}
+    footer{position:absolute;left:72px;right:72px;bottom:40px}
+    .config{border-top:1px solid var(--line);padding-top:19px;font-size:18px;color:var(--muted);white-space:nowrap}
+    .status{margin-top:17px;color:var(--amber);font-size:20px;line-height:1.4;font-weight:500;white-space:nowrap}
+    .detail{margin-top:6px;font-size:15px;color:var(--muted)}
+    .credit{margin-top:21px;display:flex;justify-content:space-between;gap:20px;font-size:14px;color:var(--muted)}
+  </style>
+</head>
+<body>
+  <header>
+    <div class="eyebrow mono">LOCAL MODEL FIELD NOTES / 02</div>
+    <div class="brand">OpenSeek</div>
+    <h1 data-fit>DeepSeek 1017 on one 96 GB GPU</h1>
+    <div class="model" data-fit>DeepSeek-V4.1-Flash-1017 · sfxnz 2.7bpw</div>
+    <div class="hardware mono" data-fit>RTX PRO 6000 Blackwell Max-Q · 96 GB VRAM + 128 GB RAM · 300 W</div>
+  </header>
+  <main>
+    <section class="speed">
+      <h2>Measured speed</h2>
+      <div class="section-note mono" data-fit>C1 · 1,550 input / 256 output · median of 3 trials</div>
+      <div class="metrics">
+        <div class="metric">
+          <div class="value mono" data-fit>10.64</div>
+          <div class="caption">tok/s <span>decode</span></div>
+        </div>
+        <div class="metric">
+          <div class="value mono" data-fit>5.31</div>
+          <div class="caption">seconds <span>time to first token</span></div>
+        </div>
+      </div>
+      <div class="long">
+        <div class="label" data-fit>Synthetic 40K input: 34K warmed prefix + 6K new · 256 output</div>
+        <div class="numbers mono" data-fit><b>10.94</b> tok/s decode &nbsp;·&nbsp; <b>16.29 s</b> TTFT</div>
+      </div>
+    </section>
+    <section class="memory">
+      <h2>Actual memory observations</h2>
+      <div class="memrow">
+        <div><div class="label">GPU peak</div><div class="note">inference · sampled</div></div>
+        <div class="value mono">95.00 <span>GiB</span></div>
+      </div>
+      <div class="memrow">
+        <div><div class="label">Container peak</div><div class="note">includes load + file cache</div></div>
+        <div class="value mono">~100 <span>GiB</span></div>
+      </div>
+      <div class="memrow">
+        <div><div class="label">Host RAM available</div><div class="note">minimum observed</div></div>
+        <div class="value mono">16.39 <span>GiB</span></div>
+      </div>
+      <div class="placement"><b>8,220 cold experts in RAM · Engram on NVMe</b><br>Container swap / OOM / OOM kills: 0 / 0 / 0</div>
+    </section>
+  </main>
+  <footer>
+    <div class="config mono" data-fit>TP1 · eager · no CUDA graphs · batch 512 · seq 1 · FP8 KV 1.1 GiB</div>
+    <div class="status" data-fit>EXPERIMENTAL · Speed targets missed · KL / SWE-bench / 256K quality untested</div>
+    <div class="detail" data-fit>Repeated-text SSE throughput, not coding-task performance. Independent memory peaks cannot be added.</div>
+    <div class="credit"><span>Quant: sfxnz · Host-expert foundation: Diffbot · Port + measurements: OpenSeek</span><span class="mono">MEASURED 2026-10-26</span></div>
+  </footer>
+  <script>
+    document.fonts.ready.then(() => {
+      const overflow = [...document.querySelectorAll('[data-fit]')].filter(el => el.scrollWidth > el.clientWidth + 1).map(el => el.textContent);
+      const footer = document.querySelector('footer').getBoundingClientRect();
+      const main = document.querySelector('main').getBoundingClientRect();
+      const canvas = document.body.getBoundingClientRect();
+      const audit = {width:canvas.width,height:canvas.height,viewport:[innerWidth,innerHeight],overflow,mainBottom:main.bottom,footerTop:footer.top,
+        fontsLoaded:document.fonts.check('700 48px "Space Grotesk"') && document.fonts.check('700 48px "JetBrains Mono"')};
+      document.documentElement.dataset.layoutAudit = JSON.stringify(audit);
+    });
+  </script>
+</body>
+</html>

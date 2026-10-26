@@ -16,6 +16,8 @@ DeepSeek 权重、固定跑法快照与原始实测数据已发布至
 [OpenSeek EXL3 Hugging Face 仓库](https://huggingface.co/LichAmnesia/DeepSeek-V4.1-Flash-1017-OpenSeek-EXL3)
 （`v0.1.0-eager`，保留 sfxnz 原权重与署名，运行栈仍为实验版）。
 
+![DeepSeek 1017 2.7bpw eager 实测：10.64 tok/s、TTFT 5.31秒，附显存和内存占用](docs/assets/deepseek-1017-2.7bpw-card.png)
+
 仓库原名 `qwen38-flash-next-rtx6000`。
 
 ## 单张 RTX PRO 6000 跑 Qwen3.8-Flash-Next

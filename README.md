@@ -21,6 +21,8 @@ DeepSeek weights, frozen portable recipe and measured traces:
 [OpenSeek EXL3 HF release](https://huggingface.co/LichAmnesia/DeepSeek-V4.1-Flash-1017-OpenSeek-EXL3)
 (`v0.1.0-eager`; attributed sfxnz weights, experimental runtime).
 
+![DeepSeek 1017 2.7bpw experimental eager port: 10.64 tok/s, 5.31-second TTFT; GPU, container and host-memory observations](docs/assets/deepseek-1017-2.7bpw-card.png)
+
 Previously published as `qwen38-flash-next-rtx6000`.
 
 ## Qwen3.8-Flash-Next on one RTX PRO 6000

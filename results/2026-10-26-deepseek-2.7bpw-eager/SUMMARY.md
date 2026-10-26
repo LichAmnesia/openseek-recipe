@@ -1,5 +1,7 @@
 # DeepSeek 1017 2.7bpw first gate — 2026-10-26
 
+![DeepSeek 1017 actual eager speed and resource summary](../../docs/assets/deepseek-1017-2.7bpw-card.png)
+
 One RTX PRO 6000 Blackwell Max-Q96GB / 300W, host128GB, local NVMe.
 TP1/eager, batch512, seq1, FP8KV1.1GiB, NVMe Engram, 8220 host experts /
 92GiB trellis. No graphs, DSpark, vision, host cache, CPU experts or DMA.

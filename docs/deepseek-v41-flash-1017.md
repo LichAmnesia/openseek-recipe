@@ -7,6 +7,12 @@ tool call passed. This eager port misses the original speed stop lines
 (decode <20 tok/s; warmed agent-shaped TTFT >6 s). KL, SWE-bench, real coding
 traffic and full 256K quality acceptance remain untested.
 
+![Measured DeepSeek eager throughput and memory observations](assets/deepseek-1017-2.7bpw-card.png)
+
+[Download the 1600×900 card](assets/deepseek-1017-2.7bpw-card.png) ·
+[Editable HTML source](assets/deepseek-1017-2.7bpw-card.html).
+The card summarizes the archived run; generating it did not rerun the GPU benchmark.
+
 The main `./recipe` CLI remains the qualified Qwen adapter. This manual experiment
 has its own [locked sources and patches](../experiments/deepseek-v41-flash-1017/),
 [measured evidence](../results/2026-10-26-deepseek-2.7bpw-eager/SUMMARY.md),
