@@ -23,6 +23,24 @@ DeepSeek weights, frozen portable recipe and measured traces:
 
 ![DeepSeek 1017 2.7bpw experimental eager port: 10.64 tok/s, 5.31-second TTFT; GPU, container and host-memory observations](docs/assets/deepseek-1017-2.7bpw-card.png)
 
+### DeepSeek: where the GPU memory, RAM and SSD go
+
+This measured setup uses **95 GiB GPU memory + about 100 GiB host RAM + NVMe SSD** together.
+
+| Location | Amount | What lives there |
+|---|---:|---|
+| GPU memory | **95 GiB** sampled peak | About **79 GiB** of expert weights in the allocation plan, plus other model layers, KV cache and compute workspace |
+| Host RAM | About **100 GiB** container peak, including loading/file cache | About **92 GiB** for **8,220 experts**, plus runtime buffers and file cache |
+| NVMe SSD | About **405 GB** for the complete checkpoint | Includes about **203 GB of Engram tables**, retained on SSD and read on demand |
+
+The GPU still computes the RAM-resident experts, accessing their weights over PCIe.
+Across the whole host, total minus available memory reached about **109 GiB**, including
+the OS and other workloads. **16.39 GiB in the figure is the remaining available host RAM.**
+The 203 GB Engram files are included in the 405 GB checkpoint; images/build caches need
+additional disk space. SSD reads are explicit model-table I/O; measured container **swap was 0**.
+Expert allocations are planned components; the memory peaks were observed independently.
+See the [detailed allocation notes](docs/deepseek-v41-flash-1017.md#where-the-gpu-memory-ram-and-ssd-go).
+
 Previously published as `qwen38-flash-next-rtx6000`.
 
 ## Qwen3.8-Flash-Next on one RTX PRO 6000

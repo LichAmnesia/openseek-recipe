@@ -35,6 +35,28 @@ API amount unverified. Not actual OpenCode traffic.
 1074 raw1-second samples, 233 in correctness/speed phase. Memory max-limit events
 968412 are not OOM events; independent peaks should not be summed.
 
+## Where the memory and SSD go
+
+This run uses **95 GiB GPU memory + about100 GiB host RAM + NVMe SSD** together.
+
+| Location | Amount | Contents |
+|---|---:|---|
+| GPU memory | 95 GiB sampled peak | Allocation plan: about79 GiB expert weights; also other layers, KV and compute workspace |
+| Host RAM | About100 GiB container peak, including loading/file cache | About92 GiB for8,220 experts; also runtime buffers and file cache |
+| NVMe SSD | About405 GB complete checkpoint | Includes about203 GB Engram tables, retained on disk and read on demand |
+
+RAM-resident experts are still computed by the GPU over PCIe; CPU-expert compute
+was disabled. The plan's exact expert trellis allocations were78.8599 GiB GPU /
+91.9995 GiB RAM, excluding small scales. These are planned components, separate
+from the independently observed total peaks.
+
+**16.39 GiB is remaining available host RAM.** Whole-host total minus minimum
+available was108.6697 GiB (about109 GiB), including the OS and other workloads.
+The405.05 GB (377.23 GiB) checkpoint already includes the203.07 GB (189.13 GiB)
+Engram files; other model files also remain on disk. Images/build caches are extra.
+Container swap was0; NVMe serves explicit model-table reads, with OS page caching.
+No new GPU measurement was made for this explanation.
+
 **Below the original speed gates**: C1<20tok/s; warmed agent-shaped TTFT>6s.
 This is an experimental port, not a qualified resident replacement. No short100
 KL, SWE-bench, 256K quality, graphs or optimized routing acceptance.

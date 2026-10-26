@@ -25,6 +25,34 @@ documents downloading this release and using the mapped verification manifest;
 the original upstream download below remains valid. Container images are local
 builds, not public registry artifacts.
 
+## Where the GPU memory, RAM and SSD go
+
+In plain English, this run uses **95 GiB GPU memory + about 100 GiB host RAM + NVMe SSD** together.
+
+| Location | Amount | What lives there |
+|---|---:|---|
+| GPU memory | **95 GiB** sampled peak | About **79 GiB** of expert weights in the allocation plan, plus other model layers, KV cache and compute workspace |
+| Host RAM | About **100 GiB** container peak, including loading/file cache | About **92 GiB** for **8,220 experts**, plus runtime buffers and file cache |
+| NVMe SSD | About **405 GB** for the complete checkpoint | Includes about **203 GB of Engram tables**, retained on SSD and read on demand |
+
+The RAM tier stores expert weights; **the GPU still performs their computation**,
+accessing those weights over PCIe. CPU-expert compute was disabled in this run.
+The expert trellis allocation plan was 78.8599 GiB on GPU and 91.9995 GiB in RAM;
+these components exclude small scales and are separate from the measured total peaks.
+The GPU's total also includes the 1.1 GiB KV allocation and other runtime memory.
+
+**16.39 GiB in the figure is remaining available host RAM.** The host reported
+125.0604 GiB total; total minus minimum available was 108.6697 GiB (about109 GiB),
+including the OS and other workloads. The model container's measured peak was
+about100 GiB, including file cache and earlier loading. Peaks are observed independently.
+
+The full checkpoint is 405.05 GB (377.23 GiB); its two Engram shards total
+203.07 GB (189.13 GiB), already included in that total. Other weight files also
+remain on SSD after loading. Docker images/build caches require additional space.
+Engram rows are read on demand from the NVMe-backed files; the OS can cache rows.
+Measured container **swap was0**: SSD participates through explicit model-table reads.
+These are the archived run's measurements and allocation plan, not a new benchmark.
+
 ## What was required
 
 | Input / setting | Fixed value |
