@@ -36,7 +36,8 @@ wait_ready() {
 
 wait_lmcache() {
   local start=$SECONDS
-  until docker logs "$LMCACHE_CONTAINER" 2>&1 | grep -q 'cache server is running'; do
+  # Consume all logs so docker does not hit SIGPIPE under pipefail after a match.
+  until docker logs "$LMCACHE_CONTAINER" 2>&1 | grep 'cache server is running' >/dev/null; do
     running "$LMCACHE_CONTAINER" || { docker logs --tail 30 "$LMCACHE_CONTAINER" >&2; die "LMCache server exited"; }
     (( SECONDS - start < 120 )) || die "LMCache server not up after 120s (scripts/ctl.sh logs lmcache)"
     sleep 2
