@@ -193,7 +193,8 @@ vllm serve <exl3-ple8 snapshot> --served-model-name qwen38-exl3-ple8 --port 8001
   --enable-auto-tool-choice --tool-call-parser qwen3_coder --reasoning-parser qwen3 \
   --speculative-config '{"method":"mtp","num_speculative_tokens":3}' \
   --enable-prefix-caching --mamba-cache-mode align \
-  --kv-transfer-config '{"kv_connector":"LMCacheMPConnector","kv_connector_module_path":"lmcache.integration.vllm.lmcache_mp_connector","kv_role":"kv_both","kv_connector_extra_config":{"lmcache.mp.port":6555}}'
+  --kv-transfer-config '{"kv_connector":"LMCacheMPConnector","kv_connector_module_path":"lmcache.integration.vllm.lmcache_mp_connector","kv_role":"kv_both","kv_connector_extra_config":{"lmcache.mp.port":6555}}' \
+  --enable-force-include-usage --enable-prompt-tokens-details
 ```
 
 The container also gets `VLLM_PLE_MMAP=1` and related env from the recipe. Why each part
@@ -202,6 +203,7 @@ matters:
 | Choice | Why |
 |---|---|
 | `exl3-ple8` profile | EXL3 K4.25 experts on GPU. The 51B-param n-gram (PLE) table is FP8 and **mmap'd from NVMe**, so the host only needs page cache, not 95 GB of pinned RAM. Best fit for a 128 GB box |
+| Usage flags | `--enable-force-include-usage` ends every stream with a `usage` block, even for clients that do not ask for one; `--enable-prompt-tokens-details` adds `prompt_tokens_details.cached_tokens`. The osp proxy on `:8002` sums both into its token-usage ledger (cache-read tokens, hit rate) |
 | FP8 KV cache | KV pool of 842K tokens, 3.2× the full 262K context, with 16 slots |
 | MTP 3 | 52% draft acceptance on mixed work and 97% on repetitive output. This is where the 100→200 tok/s spread comes from |
 | `qwen3_coder` tool parser + `qwen3` reasoning parser | Tool calls arrive as proper `tool_calls` and thinking goes to `reasoning_content`. Coding agents need both |
