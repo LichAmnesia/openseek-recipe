@@ -71,9 +71,13 @@ create() {
   kv_cfg="$(printf '{"kv_connector":"LMCacheMPConnector","kv_connector_module_path":"lmcache.integration.vllm.lmcache_mp_connector","kv_role":"kv_both","kv_connector_extra_config":{"lmcache.mp.port":%s}}' "$LMCACHE_PORT")"
   # Usage reporting for the osp proxy token ledger: every stream ends with a usage block
   # (clients that never ask for one included), and usage carries the prefix-cache hits.
+  # Per-request engine spans (queue/prefill/decode) for the osp proxy: vLLM's OTLP
+  # gRPC exporter -> osp proxy on this host, which joins them to its request records.
+  local trace_args=()
+  [[ -n "${OTLP_TRACES_ENDPOINT:-}" ]] && trace_args=(--otlp-traces-endpoint "$OTLP_TRACES_ENDPOINT")
   IMAGE="$KV_IMAGE" bash "$RECIPE_DIR/start.sh" \
     --enable-prefix-caching --mamba-cache-mode align --kv-transfer-config "$kv_cfg" \
-    --enable-force-include-usage --enable-prompt-tokens-details "$@" >/dev/null
+    --enable-force-include-usage --enable-prompt-tokens-details "${trace_args[@]}" "$@" >/dev/null
   docker update --restart "$RESTART_POLICY" "$CONTAINER_NAME" >/dev/null
   ok "restart policy: $RESTART_POLICY (both containers)"
 }
