@@ -1,0 +1,809 @@
+{
+  "label": "dsv41",
+  "model": "deepseek-v4.1-flash",
+  "base_url": "http://127.0.0.1:8010/v1",
+  "n_concurrent": 4,
+  "max_steps": 200,
+  "timeout_multiplier": 2.0,
+  "harbor": "0.26.0",
+  "dataset": "terminal-bench/terminal-bench-2-1@sha256:7d7bdc1cbedad549fc1140404bd4dc45e5fd0ea7c4186773687d177ad3a0699a (89 tasks)",
+  "agent": "openseek 0.0.11 @ 8f68c0e (bun 1.3.13), one-shot -p, --provider openai; static ripgrep 14.1.1 appended to PATH",
+  "sampling": "OpenSeek sends no temperature/top_p/max_tokens: server defaults apply",
+  "resolved": 31,
+  "total": 89,
+  "rate_pct": 34.8,
+  "wilson95_pct": [
+    25.7,
+    45.2
+  ],
+  "trials_recorded": 51,
+  "not_run": [
+    "mteb-retrieve",
+    "multi-source-data-merger",
+    "nginx-request-logging",
+    "openssl-selfsigned-cert",
+    "overfull-hbox",
+    "password-recovery",
+    "path-tracing",
+    "path-tracing-reverse",
+    "polyglot-c-py",
+    "polyglot-rust-c",
+    "portfolio-optimization",
+    "protein-assembly",
+    "prove-plus-comm",
+    "pypi-server",
+    "pytorch-model-cli",
+    "pytorch-model-recovery",
+    "qemu-alpine-ssh",
+    "qemu-startup",
+    "query-optimize",
+    "raman-fitting",
+    "regex-chess",
+    "regex-log",
+    "reshard-c4-data",
+    "rstan-to-pystan",
+    "sam-cell-seg",
+    "sanitize-git-repo",
+    "schemelike-metacircular-eval",
+    "sparql-university",
+    "sqlite-db-truncate",
+    "sqlite-with-gcov",
+    "torch-pipeline-parallelism",
+    "torch-tensor-parallelism",
+    "train-fasttext",
+    "tune-mjcf",
+    "video-processing",
+    "vulnerable-secret",
+    "winning-avg-corewars",
+    "write-compressor"
+  ],
+  "errors_total": 26,
+  "errors_by_type": {
+    "AgentTimeoutError": 22,
+    "CancelledError": 4
+  },
+  "agent_timeouts": 22,
+  "verifier_timeouts": 0,
+  "model_connection_errors": 0,
+  "openseek_status_failed": 0,
+  "openseek_status_counts": {
+    "None": 26,
+    "completed": 25
+  },
+  "passed_despite_exception": 6,
+  "wall_clock_sec": 24892,
+  "first_trial_start": "2026-11-17T10:15:33.813497+00:00",
+  "last_trial_end": "2026-11-17T17:10:25.990215+00:00",
+  "tokens": {
+    "input": 28334899,
+    "output": 479053
+  },
+  "per_task": {
+    "adaptive-rejection-sampler": {
+      "passed": false,
+      "reward": 0.0,
+      "exception": "AgentTimeoutError",
+      "agent_sec": 1800.1,
+      "total_sec": 1831.2,
+      "openseek_status": null,
+      "openseek_exit_code": null,
+      "n_tool_calls": null,
+      "n_input_tokens": null,
+      "n_output_tokens": null
+    },
+    "bn-fit-modify": {
+      "passed": true,
+      "reward": 1.0,
+      "exception": null,
+      "agent_sec": 640.5,
+      "total_sec": 679.2,
+      "openseek_status": "completed",
+      "openseek_exit_code": 0,
+      "n_tool_calls": 18,
+      "n_input_tokens": 270913,
+      "n_output_tokens": 9892
+    },
+    "break-filter-js-from-html": {
+      "passed": true,
+      "reward": 1.0,
+      "exception": null,
+      "agent_sec": 616.8,
+      "total_sec": 638.1,
+      "openseek_status": "completed",
+      "openseek_exit_code": 0,
+      "n_tool_calls": 9,
+      "n_input_tokens": 140317,
+      "n_output_tokens": 9253
+    },
+    "build-cython-ext": {
+      "passed": true,
+      "reward": 1.0,
+      "exception": "AgentTimeoutError",
+      "agent_sec": 1800.1,
+      "total_sec": 1815.3,
+      "openseek_status": null,
+      "openseek_exit_code": null,
+      "n_tool_calls": null,
+      "n_input_tokens": null,
+      "n_output_tokens": null
+    },
+    "build-pmars": {
+      "passed": true,
+      "reward": 1.0,
+      "exception": null,
+      "agent_sec": 1144.9,
+      "total_sec": 1161.5,
+      "openseek_status": "completed",
+      "openseek_exit_code": 0,
+      "n_tool_calls": 73,
+      "n_input_tokens": 1513797,
+      "n_output_tokens": 19048
+    },
+    "build-pov-ray": {
+      "passed": true,
+      "reward": 1.0,
+      "exception": null,
+      "agent_sec": 2184.0,
+      "total_sec": 2214.1,
+      "openseek_status": "completed",
+      "openseek_exit_code": 0,
+      "n_tool_calls": 93,
+      "n_input_tokens": 3927824,
+      "n_output_tokens": 37990
+    },
+    "caffe-cifar-10": {
+      "passed": true,
+      "reward": 1.0,
+      "exception": null,
+      "agent_sec": 2798.5,
+      "total_sec": 2839.4,
+      "openseek_status": "completed",
+      "openseek_exit_code": 0,
+      "n_tool_calls": 61,
+      "n_input_tokens": 2151493,
+      "n_output_tokens": 26864
+    },
+    "cancel-async-tasks": {
+      "passed": true,
+      "reward": 1.0,
+      "exception": "AgentTimeoutError",
+      "agent_sec": 1800.1,
+      "total_sec": 1834.8,
+      "openseek_status": null,
+      "openseek_exit_code": null,
+      "n_tool_calls": null,
+      "n_input_tokens": null,
+      "n_output_tokens": null
+    },
+    "chess-best-move": {
+      "passed": false,
+      "reward": 0.0,
+      "exception": "AgentTimeoutError",
+      "agent_sec": 1800.1,
+      "total_sec": 1828.6,
+      "openseek_status": null,
+      "openseek_exit_code": null,
+      "n_tool_calls": null,
+      "n_input_tokens": null,
+      "n_output_tokens": null
+    },
+    "circuit-fibsqrt": {
+      "passed": true,
+      "reward": 1.0,
+      "exception": null,
+      "agent_sec": 3199.4,
+      "total_sec": 3219.3,
+      "openseek_status": "completed",
+      "openseek_exit_code": 0,
+      "n_tool_calls": 35,
+      "n_input_tokens": 1820127,
+      "n_output_tokens": 53412
+    },
+    "cobol-modernization": {
+      "passed": false,
+      "reward": 0.0,
+      "exception": "AgentTimeoutError",
+      "agent_sec": 1800.2,
+      "total_sec": 1819.4,
+      "openseek_status": null,
+      "openseek_exit_code": null,
+      "n_tool_calls": null,
+      "n_input_tokens": null,
+      "n_output_tokens": null
+    },
+    "code-from-image": {
+      "passed": false,
+      "reward": 0.0,
+      "exception": "AgentTimeoutError",
+      "agent_sec": 2400.1,
+      "total_sec": 2415.8,
+      "openseek_status": null,
+      "openseek_exit_code": null,
+      "n_tool_calls": null,
+      "n_input_tokens": null,
+      "n_output_tokens": null
+    },
+    "compile-compcert": {
+      "passed": true,
+      "reward": 1.0,
+      "exception": null,
+      "agent_sec": 4547.6,
+      "total_sec": 4569.6,
+      "openseek_status": "completed",
+      "openseek_exit_code": 0,
+      "n_tool_calls": 97,
+      "n_input_tokens": 2737064,
+      "n_output_tokens": 30884
+    },
+    "configure-git-webserver": {
+      "passed": true,
+      "reward": 1.0,
+      "exception": "AgentTimeoutError",
+      "agent_sec": 1800.1,
+      "total_sec": 1821.5,
+      "openseek_status": null,
+      "openseek_exit_code": null,
+      "n_tool_calls": null,
+      "n_input_tokens": null,
+      "n_output_tokens": null
+    },
+    "constraints-scheduling": {
+      "passed": true,
+      "reward": 1.0,
+      "exception": null,
+      "agent_sec": 277.0,
+      "total_sec": 308.5,
+      "openseek_status": "completed",
+      "openseek_exit_code": 0,
+      "n_tool_calls": 7,
+      "n_input_tokens": 93350,
+      "n_output_tokens": 5889
+    },
+    "count-dataset-tokens": {
+      "passed": true,
+      "reward": 1.0,
+      "exception": null,
+      "agent_sec": 887.7,
+      "total_sec": 909.5,
+      "openseek_status": "completed",
+      "openseek_exit_code": 0,
+      "n_tool_calls": 28,
+      "n_input_tokens": 903359,
+      "n_output_tokens": 15844
+    },
+    "crack-7z-hash": {
+      "passed": true,
+      "reward": 1.0,
+      "exception": null,
+      "agent_sec": 885.9,
+      "total_sec": 906.3,
+      "openseek_status": "completed",
+      "openseek_exit_code": 0,
+      "n_tool_calls": 24,
+      "n_input_tokens": 731396,
+      "n_output_tokens": 18163
+    },
+    "custom-memory-heap-crash": {
+      "passed": true,
+      "reward": 1.0,
+      "exception": null,
+      "agent_sec": 2802.8,
+      "total_sec": 2831.0,
+      "openseek_status": "completed",
+      "openseek_exit_code": 0,
+      "n_tool_calls": 69,
+      "n_input_tokens": 2866857,
+      "n_output_tokens": 52859
+    },
+    "db-wal-recovery": {
+      "passed": true,
+      "reward": 1.0,
+      "exception": null,
+      "agent_sec": 765.8,
+      "total_sec": 788.1,
+      "openseek_status": "completed",
+      "openseek_exit_code": 0,
+      "n_tool_calls": 23,
+      "n_input_tokens": 525303,
+      "n_output_tokens": 16450
+    },
+    "distribution-search": {
+      "passed": true,
+      "reward": 1.0,
+      "exception": null,
+      "agent_sec": 647.4,
+      "total_sec": 668.5,
+      "openseek_status": "completed",
+      "openseek_exit_code": 0,
+      "n_tool_calls": 17,
+      "n_input_tokens": 360279,
+      "n_output_tokens": 12224
+    },
+    "dna-assembly": {
+      "passed": false,
+      "reward": 0.0,
+      "exception": "AgentTimeoutError",
+      "agent_sec": 3600.2,
+      "total_sec": 3619.5,
+      "openseek_status": null,
+      "openseek_exit_code": null,
+      "n_tool_calls": null,
+      "n_input_tokens": null,
+      "n_output_tokens": null
+    },
+    "dna-insert": {
+      "passed": false,
+      "reward": 0.0,
+      "exception": "AgentTimeoutError",
+      "agent_sec": 3600.2,
+      "total_sec": 3623.9,
+      "openseek_status": null,
+      "openseek_exit_code": null,
+      "n_tool_calls": null,
+      "n_input_tokens": null,
+      "n_output_tokens": null
+    },
+    "extract-elf": {
+      "passed": false,
+      "reward": 0.0,
+      "exception": "AgentTimeoutError",
+      "agent_sec": 1800.1,
+      "total_sec": 1824.8,
+      "openseek_status": null,
+      "openseek_exit_code": null,
+      "n_tool_calls": null,
+      "n_input_tokens": null,
+      "n_output_tokens": null
+    },
+    "extract-moves-from-video": {
+      "passed": false,
+      "reward": 0.0,
+      "exception": "AgentTimeoutError",
+      "agent_sec": 3600.1,
+      "total_sec": 3621.3,
+      "openseek_status": null,
+      "openseek_exit_code": null,
+      "n_tool_calls": null,
+      "n_input_tokens": null,
+      "n_output_tokens": null
+    },
+    "feal-differential-cryptanalysis": {
+      "passed": true,
+      "reward": 1.0,
+      "exception": "AgentTimeoutError",
+      "agent_sec": 3600.1,
+      "total_sec": 3638.2,
+      "openseek_status": null,
+      "openseek_exit_code": null,
+      "n_tool_calls": null,
+      "n_input_tokens": null,
+      "n_output_tokens": null
+    },
+    "feal-linear-cryptanalysis": {
+      "passed": false,
+      "reward": 0.0,
+      "exception": "AgentTimeoutError",
+      "agent_sec": 3600.1,
+      "total_sec": 3619.0,
+      "openseek_status": null,
+      "openseek_exit_code": null,
+      "n_tool_calls": null,
+      "n_input_tokens": null,
+      "n_output_tokens": null
+    },
+    "filter-js-from-html": {
+      "passed": false,
+      "reward": 0.0,
+      "exception": "AgentTimeoutError",
+      "agent_sec": 3600.1,
+      "total_sec": 3737.3,
+      "openseek_status": null,
+      "openseek_exit_code": null,
+      "n_tool_calls": null,
+      "n_input_tokens": null,
+      "n_output_tokens": null
+    },
+    "financial-document-processor": {
+      "passed": true,
+      "reward": 1.0,
+      "exception": null,
+      "agent_sec": 860.3,
+      "total_sec": 882.1,
+      "openseek_status": "completed",
+      "openseek_exit_code": 0,
+      "n_tool_calls": 31,
+      "n_input_tokens": 774033,
+      "n_output_tokens": 15723
+    },
+    "fix-code-vulnerability": {
+      "passed": true,
+      "reward": 1.0,
+      "exception": null,
+      "agent_sec": 396.5,
+      "total_sec": 410.4,
+      "openseek_status": "completed",
+      "openseek_exit_code": 0,
+      "n_tool_calls": 29,
+      "n_input_tokens": 403648,
+      "n_output_tokens": 8028
+    },
+    "fix-git": {
+      "passed": true,
+      "reward": 1.0,
+      "exception": null,
+      "agent_sec": 307.8,
+      "total_sec": 328.5,
+      "openseek_status": "completed",
+      "openseek_exit_code": 0,
+      "n_tool_calls": 17,
+      "n_input_tokens": 204024,
+      "n_output_tokens": 4713
+    },
+    "fix-ocaml-gc": {
+      "passed": true,
+      "reward": 1.0,
+      "exception": null,
+      "agent_sec": 2515.6,
+      "total_sec": 2852.8,
+      "openseek_status": "completed",
+      "openseek_exit_code": 0,
+      "n_tool_calls": 68,
+      "n_input_tokens": 4755527,
+      "n_output_tokens": 25066
+    },
+    "gcode-to-text": {
+      "passed": false,
+      "reward": 0.0,
+      "exception": "AgentTimeoutError",
+      "agent_sec": 1800.1,
+      "total_sec": 1819.6,
+      "openseek_status": null,
+      "openseek_exit_code": null,
+      "n_tool_calls": null,
+      "n_input_tokens": null,
+      "n_output_tokens": null
+    },
+    "git-leak-recovery": {
+      "passed": true,
+      "reward": 1.0,
+      "exception": null,
+      "agent_sec": 401.5,
+      "total_sec": 448.7,
+      "openseek_status": "completed",
+      "openseek_exit_code": 0,
+      "n_tool_calls": 20,
+      "n_input_tokens": 269064,
+      "n_output_tokens": 7145
+    },
+    "git-multibranch": {
+      "passed": true,
+      "reward": 1.0,
+      "exception": null,
+      "agent_sec": 1248.4,
+      "total_sec": 1365.7,
+      "openseek_status": "completed",
+      "openseek_exit_code": 0,
+      "n_tool_calls": 44,
+      "n_input_tokens": 1021387,
+      "n_output_tokens": 22406
+    },
+    "gpt2-codegolf": {
+      "passed": false,
+      "reward": 0.0,
+      "exception": "AgentTimeoutError",
+      "agent_sec": 1800.2,
+      "total_sec": 1823.5,
+      "openseek_status": null,
+      "openseek_exit_code": null,
+      "n_tool_calls": null,
+      "n_input_tokens": null,
+      "n_output_tokens": null
+    },
+    "headless-terminal": {
+      "passed": false,
+      "reward": 0.0,
+      "exception": "AgentTimeoutError",
+      "agent_sec": 1800.2,
+      "total_sec": 1828.2,
+      "openseek_status": null,
+      "openseek_exit_code": null,
+      "n_tool_calls": null,
+      "n_input_tokens": null,
+      "n_output_tokens": null
+    },
+    "hf-model-inference": {
+      "passed": true,
+      "reward": 1.0,
+      "exception": null,
+      "agent_sec": 327.9,
+      "total_sec": 344.6,
+      "openseek_status": "completed",
+      "openseek_exit_code": 0,
+      "n_tool_calls": 17,
+      "n_input_tokens": 218645,
+      "n_output_tokens": 7714
+    },
+    "install-windows-3.11": {
+      "passed": false,
+      "reward": 0.0,
+      "exception": "AgentTimeoutError",
+      "agent_sec": 7200.1,
+      "total_sec": 7251.9,
+      "openseek_status": null,
+      "openseek_exit_code": null,
+      "n_tool_calls": null,
+      "n_input_tokens": null,
+      "n_output_tokens": null
+    },
+    "kv-store-grpc": {
+      "passed": true,
+      "reward": 1.0,
+      "exception": null,
+      "agent_sec": 273.7,
+      "total_sec": 288.0,
+      "openseek_status": "completed",
+      "openseek_exit_code": 0,
+      "n_tool_calls": 16,
+      "n_input_tokens": 194121,
+      "n_output_tokens": 7778
+    },
+    "large-scale-text-editing": {
+      "passed": true,
+      "reward": 1.0,
+      "exception": null,
+      "agent_sec": 1913.7,
+      "total_sec": 1956.4,
+      "openseek_status": "completed",
+      "openseek_exit_code": 0,
+      "n_tool_calls": 27,
+      "n_input_tokens": 732934,
+      "n_output_tokens": 28239
+    },
+    "largest-eigenval": {
+      "passed": false,
+      "reward": 0.0,
+      "exception": "AgentTimeoutError",
+      "agent_sec": 1800.1,
+      "total_sec": 1814.0,
+      "openseek_status": null,
+      "openseek_exit_code": null,
+      "n_tool_calls": null,
+      "n_input_tokens": null,
+      "n_output_tokens": null
+    },
+    "llm-inference-batching-scheduler": {
+      "passed": true,
+      "reward": 1.0,
+      "exception": "AgentTimeoutError",
+      "agent_sec": 3600.2,
+      "total_sec": 3623.4,
+      "openseek_status": null,
+      "openseek_exit_code": null,
+      "n_tool_calls": null,
+      "n_input_tokens": null,
+      "n_output_tokens": null
+    },
+    "log-summary-date-ranges": {
+      "passed": true,
+      "reward": 1.0,
+      "exception": null,
+      "agent_sec": 214.1,
+      "total_sec": 233.6,
+      "openseek_status": "completed",
+      "openseek_exit_code": 0,
+      "n_tool_calls": 14,
+      "n_input_tokens": 166120,
+      "n_output_tokens": 4249
+    },
+    "mailman": {
+      "passed": true,
+      "reward": 1.0,
+      "exception": "AgentTimeoutError",
+      "agent_sec": 3600.2,
+      "total_sec": 3653.1,
+      "openseek_status": null,
+      "openseek_exit_code": null,
+      "n_tool_calls": null,
+      "n_input_tokens": null,
+      "n_output_tokens": null
+    },
+    "make-doom-for-mips": {
+      "passed": false,
+      "reward": 0.0,
+      "exception": "AgentTimeoutError",
+      "agent_sec": 1800.1,
+      "total_sec": 1859.5,
+      "openseek_status": null,
+      "openseek_exit_code": null,
+      "n_tool_calls": null,
+      "n_input_tokens": null,
+      "n_output_tokens": null
+    },
+    "make-mips-interpreter": {
+      "passed": false,
+      "reward": null,
+      "exception": "CancelledError",
+      "agent_sec": 3214.7,
+      "total_sec": 3226.6,
+      "openseek_status": null,
+      "openseek_exit_code": null,
+      "n_tool_calls": null,
+      "n_input_tokens": null,
+      "n_output_tokens": null
+    },
+    "mcmc-sampling-stan": {
+      "passed": true,
+      "reward": 1.0,
+      "exception": null,
+      "agent_sec": 1181.3,
+      "total_sec": 1356.2,
+      "openseek_status": "completed",
+      "openseek_exit_code": 0,
+      "n_tool_calls": 34,
+      "n_input_tokens": 732297,
+      "n_output_tokens": 12666
+    },
+    "merge-diff-arc-agi-task": {
+      "passed": true,
+      "reward": 1.0,
+      "exception": null,
+      "agent_sec": 1254.2,
+      "total_sec": 1274.4,
+      "openseek_status": "completed",
+      "openseek_exit_code": 0,
+      "n_tool_calls": 29,
+      "n_input_tokens": 821020,
+      "n_output_tokens": 26554
+    },
+    "model-extraction-relu-logits": {
+      "passed": false,
+      "reward": null,
+      "exception": "CancelledError",
+      "agent_sec": 1266.8,
+      "total_sec": 1278.7,
+      "openseek_status": null,
+      "openseek_exit_code": null,
+      "n_tool_calls": null,
+      "n_input_tokens": null,
+      "n_output_tokens": null
+    },
+    "modernize-scientific-stack": {
+      "passed": false,
+      "reward": null,
+      "exception": "CancelledError",
+      "agent_sec": 463.9,
+      "total_sec": 476.0,
+      "openseek_status": null,
+      "openseek_exit_code": null,
+      "n_tool_calls": null,
+      "n_input_tokens": null,
+      "n_output_tokens": null
+    },
+    "mteb-leaderboard": {
+      "passed": false,
+      "reward": null,
+      "exception": "CancelledError",
+      "agent_sec": 376.6,
+      "total_sec": 388.4,
+      "openseek_status": null,
+      "openseek_exit_code": null,
+      "n_tool_calls": null,
+      "n_input_tokens": null,
+      "n_output_tokens": null
+    },
+    "mteb-retrieve": {
+      "status": "not_run"
+    },
+    "multi-source-data-merger": {
+      "status": "not_run"
+    },
+    "nginx-request-logging": {
+      "status": "not_run"
+    },
+    "openssl-selfsigned-cert": {
+      "status": "not_run"
+    },
+    "overfull-hbox": {
+      "status": "not_run"
+    },
+    "password-recovery": {
+      "status": "not_run"
+    },
+    "path-tracing": {
+      "status": "not_run"
+    },
+    "path-tracing-reverse": {
+      "status": "not_run"
+    },
+    "polyglot-c-py": {
+      "status": "not_run"
+    },
+    "polyglot-rust-c": {
+      "status": "not_run"
+    },
+    "portfolio-optimization": {
+      "status": "not_run"
+    },
+    "protein-assembly": {
+      "status": "not_run"
+    },
+    "prove-plus-comm": {
+      "status": "not_run"
+    },
+    "pypi-server": {
+      "status": "not_run"
+    },
+    "pytorch-model-cli": {
+      "status": "not_run"
+    },
+    "pytorch-model-recovery": {
+      "status": "not_run"
+    },
+    "qemu-alpine-ssh": {
+      "status": "not_run"
+    },
+    "qemu-startup": {
+      "status": "not_run"
+    },
+    "query-optimize": {
+      "status": "not_run"
+    },
+    "raman-fitting": {
+      "status": "not_run"
+    },
+    "regex-chess": {
+      "status": "not_run"
+    },
+    "regex-log": {
+      "status": "not_run"
+    },
+    "reshard-c4-data": {
+      "status": "not_run"
+    },
+    "rstan-to-pystan": {
+      "status": "not_run"
+    },
+    "sam-cell-seg": {
+      "status": "not_run"
+    },
+    "sanitize-git-repo": {
+      "status": "not_run"
+    },
+    "schemelike-metacircular-eval": {
+      "status": "not_run"
+    },
+    "sparql-university": {
+      "status": "not_run"
+    },
+    "sqlite-db-truncate": {
+      "status": "not_run"
+    },
+    "sqlite-with-gcov": {
+      "status": "not_run"
+    },
+    "torch-pipeline-parallelism": {
+      "status": "not_run"
+    },
+    "torch-tensor-parallelism": {
+      "status": "not_run"
+    },
+    "train-fasttext": {
+      "status": "not_run"
+    },
+    "tune-mjcf": {
+      "status": "not_run"
+    },
+    "video-processing": {
+      "status": "not_run"
+    },
+    "vulnerable-secret": {
+      "status": "not_run"
+    },
+    "winning-avg-corewars": {
+      "status": "not_run"
+    },
+    "write-compressor": {
+      "status": "not_run"
+    }
+  }
+}

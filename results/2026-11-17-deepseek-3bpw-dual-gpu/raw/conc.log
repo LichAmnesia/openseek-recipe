@@ -1,0 +1,8 @@
+INTERVAL {"pass": true, "err": "ok", "finish_reason": "stop", "completion_tokens": 10739, "reasoning_tokens": 9878, "total_s": 172.8}
+CONC {"streams": 1, "aggregate_tps": 61.1, "per_stream_tps": 61.1, "runs": [58.8, 63.5]}
+CONC {"streams": 2, "aggregate_tps": 76.4, "per_stream_tps": 38.2, "runs": [76.3, 76.5]}
+CONC {"streams": 3, "aggregate_tps": 84.0, "per_stream_tps": 28.0, "runs": [78.5, 89.5]}
+CONC {"streams": 4, "aggregate_tps": 101.1, "per_stream_tps": 25.3, "runs": [98.6, 103.5]}
+CONC {"streams": 6, "aggregate_tps": 99.1, "per_stream_tps": 16.5, "runs": [96.0, 102.1]}
+CONC {"streams": 8, "aggregate_tps": 112.0, "per_stream_tps": 14.0, "runs": [110.5, 113.5]}
+DONE

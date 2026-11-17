@@ -1,0 +1,10 @@
+index, name, memory.total [MiB], memory.used [MiB], pcie.link.gen.max, pcie.link.width.current, power.limit [W], driver_version
+0, NVIDIA RTX PRO 6000 Blackwell Max-Q Workstation Edition, 97887 MiB, 95458 MiB, 5, 8, 300.00 W, 610.57.04
+1, NVIDIA RTX PRO 6000 Blackwell Max-Q Workstation Edition, 97887 MiB, 95458 MiB, 5, 8, 300.00 W, 610.57.04
+ 	GPU0	GPU1	
+ GPU0	X	CNS	
+ GPU1	CNS	X	
+
+model name	: Intel(R) Core(TM) Ultra 9 285K
+host RAM GiB total: 125
+serving container memory: 83.47GiB / 108GiB

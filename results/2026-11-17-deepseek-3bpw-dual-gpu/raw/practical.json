@@ -1,0 +1,130 @@
+{
+ "speed": [
+  {
+   "case": "zh prose, thinking off",
+   "prompt_tokens": 24,
+   "out_tokens": 278,
+   "ttft_s": 0.99,
+   "total_s": 46.2,
+   "decode_tps": 6.1
+  },
+  {
+   "case": "en code, thinking off",
+   "prompt_tokens": 34,
+   "out_tokens": 900,
+   "ttft_s": 0.7,
+   "total_s": 19.6,
+   "decode_tps": 47.6
+  },
+  {
+   "case": "json, thinking off",
+   "prompt_tokens": 34,
+   "out_tokens": 1181,
+   "ttft_s": 0.59,
+   "total_s": 61.4,
+   "decode_tps": 19.4
+  },
+  {
+   "case": "reasoning, thinking on",
+   "prompt_tokens": 88,
+   "out_tokens": 1113,
+   "ttft_s": 1.46,
+   "total_s": 51.4,
+   "decode_tps": 22.3
+  },
+  {
+   "case": "60K-token code prompt (cold)",
+   "prompt_tokens": 51517,
+   "out_tokens": 400,
+   "ttft_s": 14.34,
+   "total_s": 25.6,
+   "decode_tps": 35.5
+  },
+  {
+   "case": "same 60K prompt again (cached)",
+   "prompt_tokens": 51517,
+   "out_tokens": 400,
+   "ttft_s": 1.41,
+   "total_s": 9.6,
+   "decode_tps": 48.6
+  },
+  {
+   "case": "4 concurrent code streams",
+   "out_tokens": 2400,
+   "total_s": 40.3,
+   "aggregate_tps": 59.6,
+   "per_stream_decode_tps": [
+    16.6,
+    15.5,
+    15.2,
+    16.3
+   ]
+  }
+ ],
+ "capability": [
+  {
+   "case": "code: regex matching (11 tests)",
+   "pass": true,
+   "detail": "ok",
+   "out_tokens": 556,
+   "total_s": 13.7,
+   "decode_tps": 43.8
+  },
+  {
+   "case": "code: trapping rain water 2D (5 tests)",
+   "pass": true,
+   "detail": "ok",
+   "out_tokens": 725,
+   "total_s": 16.1,
+   "decode_tps": 48.7
+  },
+  {
+   "case": "code: interval tree vs brute force (3,000 random ops)",
+   "pass": false,
+   "detail": "NameError: name 'IntervalTree' is not defined",
+   "out_tokens": 5000,
+   "total_s": 72.1,
+   "decode_tps": 70.3
+  },
+  {
+   "case": "math: modular arithmetic",
+   "pass": true,
+   "detail": "got 807, expected 807",
+   "out_tokens": 429,
+   "total_s": 14.8,
+   "decode_tps": 30.8
+  },
+  {
+   "case": "math: combinatorics",
+   "pass": true,
+   "detail": "got 126, expected 126",
+   "out_tokens": 466,
+   "total_s": 14.3,
+   "decode_tps": 35.1
+  },
+  {
+   "case": "math: probability",
+   "pass": true,
+   "detail": "got 133/216, expected 133/216",
+   "out_tokens": 472,
+   "total_s": 10.8,
+   "decode_tps": 48.4
+  },
+  {
+   "case": "long context: needle in 169,504 tokens",
+   "pass": true,
+   "detail": "ttft 41.42 s; answer: 'The NOTE comment appears in `exllamav3/exllamav3/architecture/hy_v3.py`, inside the `HyV3M'",
+   "out_tokens": 101,
+   "total_s": 44.1,
+   "decode_tps": 37.6
+  },
+  {
+   "case": "zh→en translation (keywords present)",
+   "pass": true,
+   "detail": "\"We keep frequently used experts in VRAM, lock the infrequently used ones in RAM, and leave the lookup tables on the SSD; before each computation step we read out the needed rows first, so the compile",
+   "out_tokens": 48,
+   "total_s": 5.6,
+   "decode_tps": 16.3
+  }
+ ]
+}

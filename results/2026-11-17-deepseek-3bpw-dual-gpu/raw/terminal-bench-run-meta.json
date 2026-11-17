@@ -1,0 +1,13 @@
+{
+  "label": "dsv41",
+  "model": "deepseek-v4.1-flash",
+  "base_url": "http://127.0.0.1:8010/v1",
+  "n_concurrent": 4,
+  "max_steps": 200,
+  "timeout_multiplier": 2.0,
+  "created": "2026-11-17T02:15:31-08:00",
+  "harbor": "0.26.0",
+  "dataset": "terminal-bench/terminal-bench-2-1@sha256:7d7bdc1cbedad549fc1140404bd4dc45e5fd0ea7c4186773687d177ad3a0699a (89 tasks)",
+  "agent": "openseek 0.0.11 @ 8f68c0e (bun 1.3.13), one-shot -p, --provider openai; static ripgrep 14.1.1 appended to PATH",
+  "sampling": "OpenSeek sends no temperature/top_p/max_tokens: server defaults apply"
+}

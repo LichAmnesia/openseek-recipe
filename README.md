@@ -41,6 +41,18 @@ additional disk space. SSD reads are explicit model-table I/O; measured containe
 Expert allocations are planned components; the memory peaks were observed independently.
 See the [detailed allocation notes](docs/deepseek-v41-flash-1017.md#where-the-gpu-memory-ram-and-ssd-go).
 
+### DeepSeek on two cards: 72 tok/s
+
+With a second RTX PRO 6000 Max-Q in the same host (still 128 GB of RAM), the
+[dual-GPU recipe](docs/deepseek-v41-flash-1017-dual-gpu.md) serves DeepSeek-V4.1-Flash-1017 at
+**72 tok/s on one stream and about 99 tok/s across four** on code prompts, with CUDA graphs, DSpark,
+vision and the 1M-token window. It runs Diffbot's 3-bit pack through yoloyash's SSD-Engram overlay;
+this repository adds the launcher, the board-specific settings and the measurements. Chinese prose
+decodes at 6–10 tok/s, and a Terminal-Bench 2.1 run with OpenSeek was stopped at 47 of 89 tasks
+(31 solved), so there is no benchmark score yet.
+
+![DeepSeek 1017 on two 96 GB GPUs: 72.4 tok/s on one stream, 99 tok/s across four; VRAM, host RAM and SSD placement](docs/assets/deepseek-1017-dual-gpu-card.png)
+
 Previously published as `qwen38-flash-next-rtx6000`.
 
 ## Qwen3.8-Flash-Next on one RTX PRO 6000
@@ -237,6 +249,8 @@ matters:
 - DeepSeek experimental checkpoint: [sfxnz](https://huggingface.co/sfxnz/DeepSeek-V4.1-Flash-1017-EXL3);
   host-expert foundation: [Diffbot](https://huggingface.co/diffbot/DeepSeek-V4.1-Flash-EXL3-3bpw-2x-RTX-PRO-6000).
   See the [experiment's attribution and licenses](experiments/deepseek-v41-flash-1017/THIRD_PARTY_NOTICES.md).
+- DeepSeek dual-GPU recipe: weights, image and serving scripts by [Diffbot](https://huggingface.co/diffbot/DeepSeek-V4.1-Flash-EXL3-3bpw-2x-RTX-PRO-6000);
+  Engram-on-SSD overlay by [yoloyash](https://github.com/yoloyash/dsv41-flash-1017-2x-rtx-pro-6000-ssd-engram).
 
 **This repo does not redistribute any model weights or container images.** `scripts/setup.sh`
 downloads them from their original sources. Both the Qwen model and the EXL3 quant are

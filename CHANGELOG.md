@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+- Add the DeepSeek-V4.1-Flash-1017 dual-GPU recipe (two RTX PRO 6000 Max-Q, 128 GB RAM):
+  launcher, probes, runbook, result card and measurements (72 tok/s on one stream,
+  about 99 tok/s across four; Terminal-Bench 2.1 run stopped early, no score).
 - Document the measured DeepSeek-V4.1-Flash-1017 2.7bpw TP1/eager experiment,
   including source/checkpoint locks, mixed-bit/disk-Engram/MXFP8-head patches,
   preparation and serving commands, numeric gates and shared-GPU handoff.

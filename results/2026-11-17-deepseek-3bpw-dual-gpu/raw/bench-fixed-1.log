@@ -1,0 +1,1 @@
+decode 1 stream: 2K 38.8 | 46K median 65.3 tok/s (33.6 43.9 44.8 61.8 55.1 57.9 68.8 84.1 80.5 80.0) | decode 4 streams 46K median 99.3 agg (99.2 99.3 100.2) | fresh prefill 1673:551 39962:3003 40266:3646 tok/s
